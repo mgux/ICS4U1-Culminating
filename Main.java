@@ -18,27 +18,10 @@ public class Main {
     // Main driver method
     public static void main(String[] args)
     {
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("\n" +
-                "▗▖  ▗▖▗▄▄▄▖▗▖ ▗▖▗▄▄▄▖ ▗▄▄▖▗▖   ▗▄▄▄▖    ▗▖  ▗▖ ▗▄▖ ▗▖  ▗▖ ▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▄▖ \n" +
-                "▐▌  ▐▌▐▌   ▐▌ ▐▌  █  ▐▌   ▐▌   ▐▌       ▐▛▚▞▜▌▐▌ ▐▌▐▛▚▖▐▌▐▌ ▐▌▐▌   ▐▌   ▐▌ ▐▌\n" +
-                "▐▌  ▐▌▐▛▀▀▘▐▛▀▜▌  █  ▐▌   ▐▌   ▐▛▀▀▘    ▐▌  ▐▌▐▛▀▜▌▐▌ ▝▜▌▐▛▀▜▌▐▌▝▜▌▐▛▀▀▘▐▛▀▚▖\n" +
-                " ▝▚▞▘ ▐▙▄▄▖▐▌ ▐▌▗▄█▄▖▝▚▄▄▖▐▙▄▄▖▐▙▄▄▖    ▐▌  ▐▌▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌▝▚▄▞▘▐▙▄▄▖▐▌ ▐▌\n" +
-                "                                                                             \n" +
-                "                                                                             " +
-                "                                                                             ");
-        System.out.println("MADE BY TIANYUE, LUKE, MICHAEL\n");
+        printMenu();
 
 
-        int selection;
-
-        System.out.println("[0] - Find Fastest Vehicle");
-        System.out.println("[1] - Find Vehicles Over Certain Age");
-        System.out.println("[2] - Find Certain Land Vehicle");
-        System.out.println("[3] - Find Certain Air Vehicle");
-        System.out.println("[2] - Find Certain Water Vehicle");
-        System.out.println("[3] - Find Certain Space Vehicle");
         // Printing the text on console prior adding
         // the desired color
 //        System.out.println(ANSI_YELLOW + "This text is cyan");
@@ -50,5 +33,29 @@ public class Main {
 //        System.out.println("ZAZA");
 //        System.out.println(ANSI_YELLOW);
 //        System.out.println("HI");
+    }
+
+    public static void printMenu() {
+        System.out.println("\n" +
+                "▗▖  ▗▖▗▄▄▄▖▗▖ ▗▖▗▄▄▄▖ ▗▄▄▖▗▖   ▗▄▄▄▖    ▗▖  ▗▖ ▗▄▖ ▗▖  ▗▖ ▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▄▖ \n" +
+                "▐▌  ▐▌▐▌   ▐▌ ▐▌  █  ▐▌   ▐▌   ▐▌       ▐▛▚▞▜▌▐▌ ▐▌▐▛▚▖▐▌▐▌ ▐▌▐▌   ▐▌   ▐▌ ▐▌\n" +
+                "▐▌  ▐▌▐▛▀▀▘▐▛▀▜▌  █  ▐▌   ▐▌   ▐▛▀▀▘    ▐▌  ▐▌▐▛▀▜▌▐▌ ▝▜▌▐▛▀▜▌▐▌▝▜▌▐▛▀▀▘▐▛▀▚▖\n" +
+                " ▝▚▞▘ ▐▙▄▄▖▐▌ ▐▌▗▄█▄▖▝▚▄▄▖▐▙▄▄▖▐▙▄▄▖    ▐▌  ▐▌▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌▝▚▄▞▘▐▙▄▄▖▐▌ ▐▌\n" +
+                "                                                                             \n" +
+                "                                                                             " +
+                "                                                                             ");
+        System.out.println("MADE BY TIANYUE, LUKE, MICHAEL\n");
+
+        Scanner sc = new Scanner(System.in);
+        int selection;
+
+        System.out.println("[0] - Find Fastest Vehicle");
+        System.out.println("[1] - Find Vehicles Over Certain Age");
+        System.out.println("[2] - Find Certain Land Vehicle");
+        System.out.println("[3] - Find Certain Air Vehicle");
+        System.out.println("[2] - Find Certain Water Vehicle");
+        System.out.println("[3] - Find Certain Space Vehicle");
+
+        selection = sc.nextInt();
     }
 }
