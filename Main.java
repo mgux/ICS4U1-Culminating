@@ -12,7 +12,7 @@ public class Main {
 
     // Declaring the color
     // Custom declaration
-    public static final String ANSI_YELLOW = "\u001B[36m";
+    public static final String ANSI_YELLOW = "\033[0;92m";
     public static final String ANSI_BG = "\u001B[41m";
 
     // Main driver method
@@ -36,6 +36,7 @@ public class Main {
     }
 
     public static void printMenu() {
+        System.out.print(ANSI_YELLOW);
         System.out.println("\n" +
                 "▗▖  ▗▖▗▄▄▄▖▗▖ ▗▖▗▄▄▄▖ ▗▄▄▖▗▖   ▗▄▄▄▖    ▗▖  ▗▖ ▗▄▖ ▗▖  ▗▖ ▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▄▖ \n" +
                 "▐▌  ▐▌▐▌   ▐▌ ▐▌  █  ▐▌   ▐▌   ▐▌       ▐▛▚▞▜▌▐▌ ▐▌▐▛▚▖▐▌▐▌ ▐▌▐▌   ▐▌   ▐▌ ▐▌\n" +
@@ -44,6 +45,7 @@ public class Main {
                 "                                                                             \n" +
                 "                                                                             " +
                 "                                                                             ");
+        System.out.print(ANSI_RESET);
         System.out.println("MADE BY TIANYUE, LUKE, MICHAEL\n");
 
         Scanner sc = new Scanner(System.in);
@@ -55,7 +57,8 @@ public class Main {
         System.out.println("[3] - Find Certain Air Vehicle");
         System.out.println("[2] - Find Certain Water Vehicle");
         System.out.println("[3] - Find Certain Space Vehicle");
-
+        System.out.println();
+        System.out.print("Enter Selection: ");
         selection = sc.nextInt();
     }
 }
