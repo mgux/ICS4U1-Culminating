@@ -14,6 +14,31 @@ public class Jet extends AirVehicle{
         return this.agility - jet.agility;
     }
 
+    public String getMissileType() {
+        return missileType;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public int getStorageTaken() {
+        return storageTaken;
+    }
+
+    public void setStorageTaken(int storageTaken) {
+        this.storageTaken = storageTaken;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
+    }
+
+    public void setMissileType(String missileType) {
+        this.missileType = missileType;
+    }
+
+
     public String toString() {
         return "Jet{" +
                 "missileType='" + missileType + '\'' +
