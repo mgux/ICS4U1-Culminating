@@ -1,27 +1,29 @@
 public abstract class LandVehicle
 {
-   private String serialNum;
-   private String location;
-   private int manufactureYear;
-   private int speed;
    private int tires;
    private int seats;
+   private int manufactureYear;
+   private String serialNum;
+   private int speed;
+   private String location;
    private int cost;
    private int parts;
    private int maxParts;
+   private int minParts;
    final static int PART_SWAP_WORTH = 4;
   
-   public LandVehicle(String s1, String s2, int n1, int n2, int n3, int n4, int n5, int n6, int n7)
+   public LandVehicle(int n1, int n2, int n3, String s1, int n4, String s2, int n5, int n6, int n7, int n8)
    {
+      tires = n1;
+      seats = n2;
+      manufactureYear = n3;
       serialNum = s1;
+      speed = n4;
       location = s2;
-      manufactureYear = n1;
-      speed = n2;
-      tires = n3;
-      seats = n4;
       cost = n5;
       parts = n6;
       maxParts = n7;
+      minParts = n8;
    }
   
    public int getTires()
@@ -60,6 +62,10 @@ public abstract class LandVehicle
    {
       return maxParts;
    }
+   public int getMinParts()
+   {
+      return minParts;
+   }
    public void setTires(int n)
    {
       tires = n;
@@ -96,6 +102,10 @@ public abstract class LandVehicle
    {
       maxParts = n;
    }
+   public void setMinParts(int n)
+   {
+      minParts = n;
+   }
   
    public LandVehicle compareSpeed(LandVehicle other)
    {
@@ -106,12 +116,17 @@ public abstract class LandVehicle
    {
       return ((this.getCost()>other.getCost())?this:other);
    }
+
+   public LandVehicle compareSeats(LandVehicle other)
+   {
+      return ((this.getSeats()>other.getSeats())?this:other);
+   }
    
    public abstract boolean isBroken();
    
    public boolean removeParts(int n)
    {
-      if (parts < n)
+      if (parts-n < minParts)
       {
          return false;
       }
