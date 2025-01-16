@@ -15,11 +15,10 @@ public abstract class AirVehicle {
     private int maxParts;
     private int minParts;
 
-    public AirVehicle(int engineNum, int wingNum, int manufactureYear, String serialNum, int speed, String location, int cost, int altitude, int partSwapWorth, int parts, int maxParts,int minParts) {
+    public AirVehicle(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int partSwapWorth, int parts, int maxParts,int minParts) {
         this.engineNum = engineNum;
         this.wingNum = wingNum;
         this.manufactureYear = manufactureYear;
-        this.serialNum = serialNum;
         this.speed = speed;
         this.location = location;
         this.cost = cost;
@@ -123,6 +122,26 @@ public abstract class AirVehicle {
 
     public int compareAltitude(AirVehicle air) {
         return this.altitude - air.altitude;
+    }
+
+    public int compareEngineNum(AirVehicle air) {
+        return this.engineNum - air.engineNum;
+    }
+
+    public int compareWingNum(AirVehicle air) {
+        return this.wingNum - air.wingNum;
+    }
+
+    public int compareSpeed(AirVehicle air) {
+        return this.speed - air.speed;
+    }
+
+    public boolean isBroken() {
+        if (parts < minParts) {
+            return true;
+        }
+
+        return false;
     }
 
     public String toString() {
