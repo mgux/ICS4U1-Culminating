@@ -213,7 +213,7 @@ public class Ship extends WaterVehicle {
     //remove methods
     public boolean removeTank(String serial) {
          for(Tank i : tankInShip){
-            if(i.getSerialNum == serial){
+            if(i.getSerialNum() == serial){
                tankInShip.remove(i);
                return true;
             }
@@ -223,7 +223,7 @@ public class Ship extends WaterVehicle {
     
     public boolean removeJet(String serial) {
          for(Jet i : jetInShip){
-            if(i.getSerialNum == serial){
+            if(i.getSerialNum() == serial){
                jetInShip.remove(i);
                return true;
             }
@@ -233,7 +233,7 @@ public class Ship extends WaterVehicle {
     
     public boolean removeAircraft(String serial) {
          for(Aircraft i : aircraftInShip){
-            if(i.getSerialNum == serial){
+            if(i.getSerialNum() == serial){
                aircraftInShip.remove(i);
                return true;
             }
