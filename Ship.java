@@ -51,6 +51,78 @@ public class Ship extends WaterVehicle {
         this.aircraftInShip = new ArrayList<>(); 
         this.docked = true; 
     }
+   // Getters and Setters for Ship class
+   public int getBuoyancy() {
+       return buoyancy;
+   }
+   
+   public void setBuoyancy(int buoyancy) {
+       this.buoyancy = buoyancy;
+   }
+   
+   public int getNumberOfGuns() {
+       return numberOfGuns;
+   }
+   
+   public void setNumberOfGuns(int numberOfGuns) {
+       this.numberOfGuns = numberOfGuns;
+   }
+   
+   public String getType() {
+       return type;
+   }
+   
+   public void setType(String type) {
+       this.type = type;
+   }
+   
+   public int getMaxTankStorage() {
+       return maxTankStorage;
+   }
+   
+   public void setMaxTankStorage(int maxTankStorage) {
+       this.maxTankStorage = maxTankStorage;
+   }
+   
+   public int getMaxJetStorage() {
+       return maxJetStorage;
+   }
+   
+   public void setMaxJetStorage(int maxJetStorage) {
+       this.maxJetStorage = maxJetStorage;
+   }
+   
+   public int getMaxSubmarineStorage() {
+       return maxSubmarineStorage;
+   }
+   
+   public void setMaxSubmarineStorage(int maxSubmarineStorage) {
+       this.maxSubmarineStorage = maxSubmarineStorage;
+   }
+   
+   public int getMaxRocketStorage() {
+       return maxRocketStorage;
+   }
+   
+   public void setMaxRocketStorage(int maxRocketStorage) {
+       this.maxRocketStorage = maxRocketStorage;
+   }
+   
+   public int getMaxAircraftStorage() {
+       return maxAircraftStorage;
+   }
+   
+   public void setMaxAircraftStorage(int maxAircraftStorage) {
+       this.maxAircraftStorage = maxAircraftStorage;
+   }
+   
+   public boolean isDocked() {
+       return docked;
+   }
+   
+   public void setDocked(boolean docked) {
+       this.docked = docked;
+   }
 
     //add methods
     public boolean addTank(Tank tank) {
@@ -81,7 +153,7 @@ public class Ship extends WaterVehicle {
                 return false;
             }
         } else {
-            System.out.println("Aircraft with serial number " + serialNumOfTank + " is already on the ship.");
+            System.out.println("Aircraft with serial number " + serialNumOfAircraft + " is already on the ship.");
             return false;
         }
     }
@@ -171,7 +243,7 @@ public class Ship extends WaterVehicle {
     
     public boolean removeRocket(String serial) {
          for(Rocket i : rocketInShip){
-            if(i.getSerialNum == serial){
+            if(i.getSerialNum() == serial){
                rocketInShip.remove(i);
                return true;
             }
@@ -181,7 +253,7 @@ public class Ship extends WaterVehicle {
     
    public boolean removeSubmarine(String serial) {
          for(Submarine i : submarineInShip){
-            if(i.getSerialNum == serial){
+            if(i.getSerialNum() == serial){
                submarineInShip.remove(i);
                return true;
             }
@@ -191,43 +263,43 @@ public class Ship extends WaterVehicle {
     
     //compare methods
     public double comparefuelCapacity(Ship other){
-        return (this.fuelCapacity - other.fuelCapacity);
+        return (this.getFuelCapacity() - other.getFuelCapacity());
     }
 
     public double compareSpeed(Ship other){
-        return (this.speed - other.speed);
+        return (this.getSpeed() - other.getSpeed());
     }
 
     public double compareCost(Ship other){
-        return (this.cost - other.cost);
+        return (this.getCost() - other.getCost());
     }
     
-   public double compareBuoancy(Ship other){
-        return (this.buoancy - other.buoancy);
+   public double compareBuoyancy(Ship other){
+        return (this.getBuoyancy() - other.getBuoyancy());
     }
 
     public double compareNumberOfGuns(Ship other){
-        return (this.numberOfGuns - other.numberOfGuns);
+        return (this.getNumberOfGuns() - other.getNumberOfGuns());
     }
 
     public double TankCapacity(Ship other){
-        return (this.tankCapacity - other.tankCapacity);
+        return (this.getMaxTankStorage() - other.getMaxTankStorage());
     }
     
    public double AircraftCapacity(Ship other){
-        return (this.aircraftCapacity - other.aircraftCapacity);
+        return (this.getMaxAircraftStorage() - other.getMaxAircraftStorage());
     }
 
     public double SubmarineCapacity(Ship other){
-        return (this.submarineCapacity - other.submarineCapacity);
+        return (this.getMaxSubmarineStorage() - other.getMaxSubmarineStorage());
     }
 
-    public double JetCapacity(Ship other){
-        return (this.jetCapacity - other.jetCapacity);
+    public double JetCapacity(Jet other){
+        return (this.getMaxJetStorage() - other.getMaxJetStorage());
     }
     
-    public double RocketCapacity(Ship other){
-        return (this.rocketCapacity - other.rocketCapacity);
+    public double RocketCapacity(Rocket other){
+        return (this.getMaxRocketStorage() - other.getMaxRocketStorage());
     }
     
     //get contained vehicles
@@ -247,7 +319,7 @@ public class Ship extends WaterVehicle {
       return jetInShip;
     }
     
-   public Submarine[] getAllSubmarine(){
+   public ArrayList<Submarine> getAllSubmarine(){
       return submarineInShip;
     }
     
