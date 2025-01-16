@@ -52,10 +52,10 @@ public class Ship extends WaterVehicle {
         this.docked = true; 
     }
 
-    //add vehicles into the Ship
+    //add methods
     public boolean addTank(Tank tank) {
         String serialNumOfTank = tank.getSerialNum();
-        if (!LandManager.isCarried(serialNumOfTank)) {
+        if (!LandManager.isCarriedTank(serialNumOfTank)) {
             if (tankInShip.size() < maxTankStorage) {
                 tankInShip.add(tank);
                 return true;
@@ -69,10 +69,27 @@ public class Ship extends WaterVehicle {
         }
     }
     
-
-        public boolean addJet(Jet jet) {
+    
+    public boolean addAricraft(Aircraft aircraft) {
+        String serialNumOfAircraft = aircraft.getSerialNum();
+        if (!AirManager.isCarriedAircraft(serialNumOfAircraft)) {
+            if (aircraftInShip.size() < maxAircraftStorage) {
+                aircraftInShip.add(aircraft);
+                return true;
+            } else {
+                System.out.println("Cannot add Aircraft. Maximum Aircraft storage reached!");
+                return false;
+            }
+        } else {
+            System.out.println("Aircraft with serial number " + serialNumOfTank + " is already on the ship.");
+            return false;
+        }
+    }
+    
+    
+    public boolean addJet(Jet jet) {
         String serialNumOfJet = jet.getSerialNum();
-        if (!AirManager.isCarried(serialNumOfJet)) {
+        if (!AirManager.isCarriedJet(serialNumOfJet)) {
             if (jetInShip.size() < maxJetStorage) {
                 jetInShip.add(jet);
                 return true;
@@ -87,9 +104,9 @@ public class Ship extends WaterVehicle {
     }
     
 
-        public boolean addSubmarine(Submarine submarine) {
+    public boolean addSubmarine(Submarine submarine) {
         String serialNumOfSubmarine = submarine.getSerialNum();
-        if (!WaterManager.isCarried(serialNumOfSubmarine)) {
+        if (!WaterManager.isCarriedSubmarine(serialNumOfSubmarine)) {
             if (submarineInShip.size() < maxSubmarineStorage) {
                 submarineInShip.add(submarine);
                 return true;
@@ -104,9 +121,9 @@ public class Ship extends WaterVehicle {
     }
     
 
-        public boolean addTank(Rocket rocket) {
+    public boolean addRocket(Rocket rocket) {
         String serialNumOfRocket = rocket.getSerialNum();
-        if (!SpaceManager.isCarried(serialNumOfRocket)) {
+        if (!SpaceManager.isCarriedRocket(serialNumOfRocket)) {
             if (rocketInShip.size() < maxRocketStorage) {
                 rocketInShip.add(rocket);
                 return true;
@@ -118,5 +135,124 @@ public class Ship extends WaterVehicle {
             System.out.println("Rocket with serial number " + serialNumOfRocket + " is already on the ship.");
             return false;
         }
+    }
+    
+    
+    //remove methods
+    public boolean removeTank(String serial) {
+         for(Tank i : tankInShip){
+            if(i.getSerialNum == serial){
+               tankInShip.remove(i);
+               return true;
+            }
+        }
+      return false;
+    }
+    
+    public boolean removeJet(String serial) {
+         for(Jet i : jetInShip){
+            if(i.getSerialNum == serial){
+               jetInShip.remove(i);
+               return true;
+            }
+        }
+      return false;
+    }
+    
+    public boolean removeAircraft(String serial) {
+         for(Aircraft i : aircraftInShip){
+            if(i.getSerialNum == serial){
+               aircraftInShip.remove(i);
+               return true;
+            }
+        }
+      return false;
+    }
+    
+    public boolean removeRocket(String serial) {
+         for(Rocket i : rocketInShip){
+            if(i.getSerialNum == serial){
+               rocketInShip.remove(i);
+               return true;
+            }
+        }
+      return false;
+    }
+    
+   public boolean removeSubmarine(String serial) {
+         for(Submarine i : submarineInShip){
+            if(i.getSerialNum == serial){
+               submarineInShip.remove(i);
+               return true;
+            }
+        }
+      return false;
+    }
+    
+    //compare methods
+    public double comparefuelCapacity(Ship other){
+        return (this.fuelCapacity - other.fuelCapacity);
+    }
+
+    public double compareSpeed(Ship other){
+        return (this.speed - other.speed);
+    }
+
+    public double compareCost(Ship other){
+        return (this.cost - other.cost);
+    }
+    
+   public double compareBuoancy(Ship other){
+        return (this.buoancy - other.buoancy);
+    }
+
+    public double compareNumberOfGuns(Ship other){
+        return (this.numberOfGuns - other.numberOfGuns);
+    }
+
+    public double TankCapacity(Ship other){
+        return (this.tankCapacity - other.tankCapacity);
+    }
+    
+   public double AircraftCapacity(Ship other){
+        return (this.aircraftCapacity - other.aircraftCapacity);
+    }
+
+    public double SubmarineCapacity(Ship other){
+        return (this.submarineCapacity - other.submarineCapacity);
+    }
+
+    public double JetCapacity(Ship other){
+        return (this.jetCapacity - other.jetCapacity);
+    }
+    
+    public double RocketCapacity(Ship other){
+        return (this.rocketCapacity - other.rocketCapacity);
+    }
+    
+    //get contained vehicles
+    public Tank[] getAllTank(){
+      return tankInShip;
+    }
+    
+   public Aricraft[] getAllAricraft(){
+      return aircraftInShip;
+    }
+    
+   public Rocket[] getAllRocket(){
+      return rocketInShip;
+    }
+    
+   public Jet[] getAllJet(){
+      return jetInShip;
+    }
+    
+   public Submarine[] getAllSubmarine(){
+      return submarineInShip;
+    }
+    
+   //toString
+   public String toString(){
+        return "";
     }
 }
