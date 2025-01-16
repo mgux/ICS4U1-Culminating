@@ -127,7 +127,7 @@ public class Ship extends WaterVehicle {
     //add methods
     public boolean addTank(Tank tank) {
         String serialNumOfTank = tank.getSerialNum();
-        if (!LandManager.isCarriedTank(serialNumOfTank)) {
+        if (LandManager.isCarriedTank(serialNumOfTank) == null) {
             if (tankInShip.size() < maxTankStorage) {
                 tankInShip.add(tank);
                 return true;
@@ -136,7 +136,7 @@ public class Ship extends WaterVehicle {
                 return false;
             }
         } else {
-            System.out.println("Tank with serial number " + serialNumOfTank + " is already on the ship.");
+            System.out.println("Tank with serial number " + serialNumOfTank + " is already on a ship.");
             return false;
         }
     }
@@ -144,7 +144,7 @@ public class Ship extends WaterVehicle {
     
     public boolean addAricraft(Aircraft aircraft) {
         String serialNumOfAircraft = aircraft.getSerialNum();
-        if (!AirManager.isCarriedAircraft(serialNumOfAircraft)) {
+        if (AirManager.isCarriedAircraft(serialNumOfAircraft) == null) {
             if (aircraftInShip.size() < maxAircraftStorage) {
                 aircraftInShip.add(aircraft);
                 return true;
@@ -153,7 +153,7 @@ public class Ship extends WaterVehicle {
                 return false;
             }
         } else {
-            System.out.println("Aircraft with serial number " + serialNumOfAircraft + " is already on the ship.");
+            System.out.println("Aircraft with serial number " + serialNumOfAircraft + " is already on a ship.");
             return false;
         }
     }
@@ -161,7 +161,7 @@ public class Ship extends WaterVehicle {
     
     public boolean addJet(Jet jet) {
         String serialNumOfJet = jet.getSerialNum();
-        if (!AirManager.isCarriedJet(serialNumOfJet)) {
+        if (!AirManager.isCarriedJet(serialNumOfJet) == null) {
             if (jetInShip.size() < maxJetStorage) {
                 jetInShip.add(jet);
                 return true;
@@ -170,7 +170,7 @@ public class Ship extends WaterVehicle {
                 return false;
             }
         } else {
-            System.out.println("Jet with serial number " + serialNumOfJet + " is already on the ship.");
+            System.out.println("Jet with serial number " + serialNumOfJet + " is already on a ship.");
             return false;
         }
     }
@@ -178,7 +178,7 @@ public class Ship extends WaterVehicle {
 
     public boolean addSubmarine(Submarine submarine) {
         String serialNumOfSubmarine = submarine.getSerialNum();
-        if (!WaterManager.isCarriedSubmarine(serialNumOfSubmarine)) {
+        if (!WaterManager.isCarriedSubmarine(serialNumOfSubmarine) == null) {
             if (submarineInShip.size() < maxSubmarineStorage) {
                 submarineInShip.add(submarine);
                 return true;
@@ -187,7 +187,7 @@ public class Ship extends WaterVehicle {
                 return false;
             }
         } else {
-            System.out.println("Submarine with serial number " + serialNumOfSubmarine + " is already on the ship.");
+            System.out.println("Submarine with serial number " + serialNumOfSubmarine + " is already on a ship.");
             return false;
         }
     }
@@ -195,7 +195,7 @@ public class Ship extends WaterVehicle {
 
     public boolean addRocket(Rocket rocket) {
         String serialNumOfRocket = rocket.getSerialNum();
-        if (!SpaceManager.isCarriedRocket(serialNumOfRocket)) {
+        if (SpaceManager.isCarriedRocket(serialNumOfRocket) == null) {
             if (rocketInShip.size() < maxRocketStorage) {
                 rocketInShip.add(rocket);
                 return true;
@@ -204,7 +204,7 @@ public class Ship extends WaterVehicle {
                 return false;
             }
         } else {
-            System.out.println("Rocket with serial number " + serialNumOfRocket + " is already on the ship.");
+            System.out.println("Rocket with serial number " + serialNumOfRocket + " is already on a ship.");
             return false;
         }
     }
@@ -215,9 +215,11 @@ public class Ship extends WaterVehicle {
          for(Tank i : tankInShip){
             if(i.getSerialNum() == serial){
                tankInShip.remove(i);
+                System.out.println("Removed Vehicle");
                return true;
             }
         }
+        System.out.println("No Vehicle with serial num: "+ serial);
       return false;
     }
     
@@ -225,9 +227,11 @@ public class Ship extends WaterVehicle {
          for(Jet i : jetInShip){
             if(i.getSerialNum() == serial){
                jetInShip.remove(i);
+                System.out.println("Removed Vehicle");
                return true;
             }
         }
+        System.out.println("No Vehicle with serial num: "+ serial);
       return false;
     }
     
@@ -235,9 +239,11 @@ public class Ship extends WaterVehicle {
          for(Aircraft i : aircraftInShip){
             if(i.getSerialNum() == serial){
                aircraftInShip.remove(i);
+                System.out.println("Removed Vehicle");
                return true;
             }
         }
+        System.out.println("No Vehicle with serial num: "+ serial);
       return false;
     }
     
@@ -245,9 +251,11 @@ public class Ship extends WaterVehicle {
          for(Rocket i : rocketInShip){
             if(i.getSerialNum() == serial){
                rocketInShip.remove(i);
+                System.out.println("Removed Vehicle");
                return true;
             }
         }
+        System.out.println("No Vehicle with serial num: "+ serial);
       return false;
     }
     
@@ -255,9 +263,11 @@ public class Ship extends WaterVehicle {
          for(Submarine i : submarineInShip){
             if(i.getSerialNum() == serial){
                submarineInShip.remove(i);
+                System.out.println("Removed Vehicle");
                return true;
             }
         }
+        System.out.println("No Vehicle with serial num: "+ serial);
       return false;
     }
     
