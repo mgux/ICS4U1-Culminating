@@ -27,8 +27,90 @@ public class Submarine extends WaterVehicle{
         super(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts);
         this.depth = depth;
         this.numberOfTorpedos = numberOfTorpedos;
-        this.underWaterVisibility = underWaterVisibility; 
-        this.maxTorpedos = maxTorpedos; 
-        this.docked = true;  
+        this.underWaterVisibility = underWaterVisibility;
+        this.maxTorpedos = maxTorpedos;
+        this.docked = true;
+    }
+ 
+   // Accessor (Getter) Methods
+   public int getDepth() {
+       return depth;
+   }
+   
+   public int getNumberOfTorpedos() {
+       return numberOfTorpedos;
+   }
+   
+   public int getUnderWaterVisibility() {
+       return underWaterVisibility;
+   }
+   
+   public int getMaxTorpedos() {
+       return maxTorpedos;
+   }
+   
+   public boolean isDocked() {
+       return docked;
+   }
+   
+   // Mutator (Setter) Methods
+   public void setDepth(int depth) {
+       this.depth = depth;
+   }
+   
+   public void setNumberOfTorpedos(int numberOfTorpedos) {
+       this.numberOfTorpedos = numberOfTorpedos;
+   }
+   
+   public void setUnderWaterVisibility(int underWaterVisibility) {
+       this.underWaterVisibility = underWaterVisibility;
+   }
+   
+   public void setMaxTorpedos(int maxTorpedos) {
+       this.maxTorpedos = maxTorpedos;
+   }
+   
+   public void setDocked(boolean docked) {
+       this.docked = docked;
+   }
+
+
+    //compare methods
+   public double comparefuelCapacity(Submarine other){
+        return (this.getFuelCapacity() - other.getFuelCapacity());
+    }
+
+    public double compareSpeed(Submarine other){
+        return (this.getSpeed() - other.getSpeed());
+    }
+
+    public double compareCost(Submarine other){
+        return (this.getCost() - other.getCost());
+    }
+    
+   public double compareDepth(Submarine other){
+        return (this.getDepth() - other.getDepth());
+    }
+    
+   public double compareUnderWaterVisibilty(Submarine other){
+        return (this.getUnderWaterVisibility() - other.getUnderWaterVisibility());
+    }
+    
+   public double compareMaxTorpedos(Submarine other){
+        return (this.getNumberOfTorpedos() - other.getNumberOfTorpedos());
+    }
+    
+    //class methods
+   public double shootTorpedo(int amount){
+      if(amount > numberOfTorpedos){
+         System.out.println("Not enough torpedos to shoot");
+      }else{
+      this.numberOfTorpedos = numberOfTorpedos - amount;
+      }
+   }
+   
+   //toString
+   public String toString(){
+      return "";
     }
 }
