@@ -1,5 +1,23 @@
+/*
+ICS4U1-12
+Luke
+00/00/0000
+A.Y Jackson SS
+
+An abstract class that is also the parent class of Ship and Submarine. 
+It contains fields and abstract methods that all the waterVehicles should have, such as the fuel capacity and whether it is nuclear powered. 
+It also contains the parts' worth and all the comparison methods that are required for in waterManager.
+
+*/
 // WaterVehicle Class with abstract methods and fields
+
+import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
+
 public abstract class WaterVehicle {
+
+   //class fields
     private double fuelCapacity;
     private boolean isNuclearPowered;
     private int manufactureYear;
@@ -7,11 +25,14 @@ public abstract class WaterVehicle {
     private int speed;
     private String location;
     private int cost;
-    private int partSwapWorth;
-    private boolean isInWater;
-
+    private int parts;
+    private int maxParts;
+    private int minParts;
+    public final int PART_SWAP_WORTH = 1;
+    private ArrayList<Repairs> repairHistory = new ArrayList<>(); 
+    
     // Constructor
-    public WaterVehicle(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost) {
+    public WaterVehicle(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts) {
         this.fuelCapacity = fuelCapacity;
         this.isNuclearPowered = isNuclearPowered;
         this.manufactureYear = manufactureYear;
@@ -19,7 +40,9 @@ public abstract class WaterVehicle {
         this.speed = speed;
         this.location = location;
         this.cost = cost;
-        this.isInWater = false;
+        this.parts = parts;
+        this.maxParts = maxParts;
+        this.minParts = minParts;
     }
 
     // Accessor (Getter) Methods
@@ -51,14 +74,6 @@ public abstract class WaterVehicle {
         return cost;
     }
 
-    public int getPartSwapWorth() {
-        return partSwapWorth;
-    }
-
-    public boolean getIsInWater() {
-        return isInWater;
-    }
-
     // Mutator (Setter) Methods
     public void setFuelCapacity(double fuelCapacity) {
         this.fuelCapacity = fuelCapacity;
@@ -84,139 +99,59 @@ public abstract class WaterVehicle {
         this.location = location;
     }
 
+    public void setParts(int parts) {
+        this.parts = parts;
+    }
+
+    public void setMaxParts(int maxParts) {
+        this.maxParts = maxParts;
+    }
+
+    public void setMinParts(int minParts) {
+        this.minParts = minParts;
+    }
+
     public void setCost(int cost) {
         this.cost = cost;
     }
 
-    public void setPartSwapWorth(int partSwapWorth) {
-        this.partSwapWorth = partSwapWorth;
+    //compare methods
+    public double comparefuelCapacity(WaterVehicle other){
+        return (this.fuelCapacity - other.fuelCapacity);
     }
 
-    public void setIsInWater(boolean isInWater) {
-        this.isInWater = isInWater;
+    public double compareSpeed(WaterVehicle other){
+        return (this.speed - other.speed);
+    }
+
+    public double compareCost(WaterVehicle other){
+        return (this.cost - other.cost);
     }
 
     //class methods
-    public boolean launch(){
-        if(isInWater){
-            return true;
-        }else{
-            return false;
-        }
+    public boolean addRepair(){
+        repairHistory.add(Repairs);
     }
-
+    
+    public boolean removeParts(int remove){
+        this.parts = parts - remove;
+    }
+    
+    public Repairs getMostRecentRepair(){
+        Repairs mostRecentRepair = repairHistory.indexOf(0);
+        for(Repairs i : repairHistory){
+            if(i.getRepairDate < mostRecentRepair.getRepairDate){
+                mostRecentRepair = i;
+            }
+        }
+        return mostRecentRepair;
+    }
+    
     //abstract methods
-    public abstract String generateSerialNum();
+    public abstract boolean isBroken();
 
-}
-
-import java.util.ArrayList;
-
-public class Ship extends WaterVehicle {
-    // Class fields
-    private int buoyancy;
-    private int numberOfGuns;
-    private String type;
-    private int maxTankStorage;
-    private int maxJetStorage;
-    private int maxSubmarineStorage;
-    private int maxRocketStorage;
-    private boolean docked;
-    private ArrayList<Tank> tankInShip; 
-    private ArrayList<Jet> jetInShip; 
-    private ArrayList<Submarine> submarineInShip; 
-    private ArrayList<Rocket> rocketInShip; 
-
-    // Constructor
-    public Ship(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost,
-                int buoyancy, int numberOfGuns, String type, int maxTankStorage, int maxJetStorage, int maxSubmarineStorage, int maxRocketStorage) {
-        super(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost);
-        this.buoyancy = buoyancy;
-        this.numberOfGuns = numberOfGuns;
-        this.type = type;
-        this.maxTankStorage = maxTankStorage;
-        this.maxJetStorage = maxTankStorage;
-        this.maxSubmarineStorage = maxTankStorage;
-        this.maxRocketStorage = maxTankStorage;
-        this.tankInShip = new ArrayList<>(); 
-        this.jetInShip = new ArrayList<>(); 
-        this.submarineInShip = new ArrayList<>(); 
-        this.rocketInShip = new ArrayList<>(); 
-        this.docked = true; 
+    //toString
+    public String toString(){
+        return "";
     }
-
-    //add vehicles into the Ship
-    public boolean addTank(Tank tank) {
-        String serialNumOfTank = tank.getSerialNum();
-        if (!LandManager.isCarried(serialNumOfTank)) {
-            if (tankInShip.size() < maxTankStorage) {
-                tankInShip.add(tank);
-                return true;
-            } else {
-                System.out.println("Cannot add Tank. Maximum tank storage reached!");
-                return false;
-            }
-        } else {
-            System.out.println("Tank with serial number " + serialNumOfTank + " is already on the ship.");
-            return false;
-        }
-    }
-    
-
-        public boolean addJet(Jet jet) {
-        String serialNumOfJet = jet.getSerialNum();
-        if (!AirManager.isCarried(serialNumOfJet)) {
-            if (jetInShip.size() < jetTankStorage) {
-                jetInShip.add(jet);
-                return true;
-            } else {
-                System.out.println("Cannot add Jet. Maximum jet storage reached!");
-                return false;
-            }
-        } else {
-            System.out.println("Jet with serial number " + serialNumOfJet + " is already on the ship.");
-            return false;
-        }
-    }
-    
-
-        public boolean addSubmarine(Submarine submarine) {
-        String serialNumOfSubmarine = submarine.getSerialNum();
-        if (!WaterManager.isCarried(serialNumOfSubmarine)) {
-            if (submarineInShip.size() < maxSubmarineStorage) {
-                submarineInShip.add(submarine);
-                return true;
-            } else {
-                System.out.println("Cannot add Submarine. Maximum submarine storage reached!");
-                return false;
-            }
-        } else {
-            System.out.println("Submarine with serial number " + serialNumOfSubmarine + " is already on the ship.");
-            return false;
-        }
-    }
-    
-
-        public boolean addTank(Rocket rocket) {
-        String serialNumOfRocket = rocket.getSerialNum();
-        if (!SpaceManager.isCarried(serialNumOfRocket)) {
-            if (rocketInShip.size() < maxRocketStorage) {
-                rocketInShip.add(rocket);
-                return true;
-            } else {
-                System.out.println("Cannot add Rocket. Maximum rocket storage reached!");
-                return false;
-            }
-        } else {
-            System.out.println("Rocket with serial number " + serialNumOfRocket + " is already on the ship.");
-            return false;
-        }
-    }
-}
-
-
-public class Submarine extends WaterVehicle{
-    private int depth;
-    private int numberIfTorpedos;
-    private int underWaterVisibility;
 }
