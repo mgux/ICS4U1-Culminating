@@ -1,3 +1,5 @@
+import java.util.*;
+
 public abstract class SpaceVehicle
 {
    private int altitude;
@@ -11,6 +13,7 @@ public abstract class SpaceVehicle
    private int maxParts;
    private int minParts;
    final static int PART_SWAP_WORTH = 2;
+   private ArrayList<Repairs> repairHistory = new ArrayList<Repairs>();
    
    public SpaceVehicle(int n1, String s1, int n2, String s2, int n3, String s3, int n4, int n5, int n6, int n7)
    {
@@ -129,16 +132,22 @@ public abstract class SpaceVehicle
       return true;
    }
    public boolean addRepair()
-   { //Come back when implement repairs
+   {
+      Repairs r = new Repairs(this);
+      repairHistory.add(r);
       return true;
    }
-   public void getMostRecentRepairs()
+   public Repairs getMostRecentRepairs()
    {
-      //Come back when implement repairs
+      Repairs r = repairHistory.get(0);
+      for (int i = 1; i < repairHistory.size(); i++)
+      {
+         r = r.compareRepairTime(repairHistory.get(i));
+      }
+      return r;
    }
    public String toString()
    {
-      //Implement
-      return "";
+      return "Altitude: "+altitude+"\nCamera: "+camera+"\nManufacture Year"+manufactureYear+"\nSerial Number: "+serialNum+"\nSpeed: "+speed+"\nLocation: "+location+"\nCost: "+cost+"\nParts: "+parts+"\nMax Parts: "+maxParts+"\nMin Parts: "+minParts+"\n";
    }
 }
