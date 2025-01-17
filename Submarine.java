@@ -22,6 +22,7 @@ public class Submarine extends WaterVehicle{
     private int underWaterVisibility;
     private int maxTorpedos;
     private boolean docked;
+    private Ship containedVehicle;
 
     public Submarine(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int minParts, int maxParts, int depth, int nomberOfTorpedos, int underWaterVisibility, int maxTorpedos, boolean docked){
         super(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts);
@@ -53,6 +54,11 @@ public class Submarine extends WaterVehicle{
        return docked;
    }
    
+   public Ship getContainedVehicle()
+   {
+      return containedVehicle;
+   }
+   
    // Mutator (Setter) Methods
    public void setDepth(int depth) {
        this.depth = depth;
@@ -74,6 +80,10 @@ public class Submarine extends WaterVehicle{
        this.docked = docked;
    }
 
+   public void setContainedVehicle(Ship a)
+   {
+      containedVehicle = a;
+   }
 
     //compare methods
    public double comparefuelCapacity(Submarine other){
@@ -109,8 +119,31 @@ public class Submarine extends WaterVehicle{
       }
    }
    
+   //Check if broken
+   public boolean isBroken()
+   {
+      if (this.getParts() < this.getMinParts())
+      {
+         return true;
+      }
+      return false;
+   }
+   
    //toString
-   public String toString(){
-      return "";
-    }
+   public String toString() {
+       return "Submarine\n" +
+              getFuelCapacity() + "\n" +          // double
+              isNuclearPowered() + "\n" +        // boolean
+              getManufactureYear() + "\n" +      // int
+              getSerialNum() + "\n" +            // String
+              getSpeed() + "\n" +                // int
+              getLocation() + "\n" +             // String
+              getCost() + "\n" +                 // int
+              getDepth() + "\n" +                // int
+              isDocked() + "\n" +                // boolean
+              getNumberOfTorpedos() + "\n" +     // int
+              getUnderWaterVisibility() + "\n" + // int
+              getMaxTorpedos();                  // int
+   }
+
 }
