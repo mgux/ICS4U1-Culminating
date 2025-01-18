@@ -5,7 +5,7 @@ public class Rocket extends SpaceVehicle
    private int enginePower;
    private int numberOfEngine;
    private int maxSatellites;
-   private ArrayList<Satellite> satelliteInRocket = new ArrayList<Satellite>();
+   private ArrayList<Satellite> satelliteInRocket;
    private Ship containedVehicle;
    public Rocket(int n1, String s1, int n2, String s2, int n3, String s3, int n4, int n5, int n6, int n7, int n8, int n9, int n10)
    {
@@ -13,6 +13,7 @@ public class Rocket extends SpaceVehicle
       enginePower = n8;
       numberOfEngine = n9;
       maxSatellites = n10;
+      satelliteInRocket = new ArrayList<Satellite>()
       containedVehicle = null;
    }
    public int getEnginePower()
