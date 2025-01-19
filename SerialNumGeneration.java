@@ -20,10 +20,14 @@ public class SerialNumGeneration
          s = generateLandVehicle("");
       }
    }
-   public static String waterVehicleGeneration()
-   {
    
-   }
+public static void waterVehicleGeneration() {
+    String s = generateWaterVehicle("");
+    while (!addWaterVehicleSerial(s)) {
+        s = generateWaterVehicle("");
+    }
+}
+
    public static String airVehicleGeneration()
    {
    
@@ -32,6 +36,34 @@ public class SerialNumGeneration
    {
    
    }
+
+   public static String generateWaterVehicle(String s) {
+    if (s.length() == DIGITS) {
+        return "W" + s; 
+    }
+    return generateWaterVehicle(s + (int) (Math.random() * DIGITS));
+   }
+   
+   public static boolean addWaterVehicleSerial(String s) {
+    boolean isFound = false;
+    int mid, l = 0, r = WATER_VEHICLE_SERIALS.size() - 1;
+    while (l <= r && !isFound) {
+        mid = (l + r) / 2;
+        if (WATER_VEHICLE_SERIALS.get(mid).equals(s)) {
+            isFound = true;
+        }
+        if (WATER_VEHICLE_SERIALS.get(mid).compareTo(s) > 0) {
+            r = mid - 1;
+        } else {
+            l = mid + 1;
+        }
+    }
+    if (!isFound) {
+        WATER_VEHICLE_SERIALS.add(l, s);
+    }
+    return (!isFound);
+   }
+
    
    public static String generateLandVehicle(String s)
    {
