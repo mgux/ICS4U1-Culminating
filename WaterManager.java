@@ -5,11 +5,9 @@ import java.io.*;
 
 public class WaterManager {
     private final int CUR_YEAR = 2025;
-    private int numWater;
-    private ArrayList<WaterVehicle> waterVehicles = new ArrayList<>();
+    private ArrayList<WaterVehicle> waterStorage = new ArrayList<>();
 
     public WaterManager() {
-        numWater = 0;
     }
 
     public boolean addShip(double fuelCapacity, boolean isNuclearPowered, int engineNum, int manufactureYear, String location,
@@ -18,8 +16,7 @@ public class WaterManager {
                            boolean docked) {
         Ship newShip = new Ship(fuelCapacity, isNuclearPowered, engineNum, manufactureYear, location, cost, speed,
                                 tankStorage, jetStorage, aircraftStorage, rocketStorage, shipType, guns, parts, minParts, maxParts, altitude, docked);
-        waterVehicles.add(newShip);
-        numWater++;
+        waterStorage.add(newShip);
         return true;
     }
 
@@ -28,8 +25,7 @@ public class WaterManager {
                                  int tankStorage, int jetStorage, int parts, int minParts, int maxParts, boolean docked) {
         Submarine newSubmarine = new Submarine(fuelCapacity, isNuclearPowered, engineNum, manufactureYear, location, cost, speed,
                                                torpedoStorage, visibility, maxDepth, tankStorage, jetStorage, parts, minParts, maxParts, docked);
-        waterVehicles.add(newSubmarine);
-        numWater++;
+        waterStorage.add(newSubmarine);
         return true;
     }
 
@@ -38,8 +34,7 @@ public class WaterManager {
         if (vehicle == null) {
             return false;
         }
-        waterVehicles.remove(vehicle);
-        numWater--;
+        waterStorage.remove(vehicle);
         return true;
     }
 
@@ -70,7 +65,7 @@ public class WaterManager {
     }
 
     public WaterVehicle searchVehicleSerial(String serial) {
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle.getSerialNum().equals(serial)) {
                 return vehicle;
             }
@@ -80,7 +75,7 @@ public class WaterManager {
 
     public ArrayList<WaterVehicle> searchVehicleWingNumber(int wingNum) {
         ArrayList<WaterVehicle> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle.getWingNum() == wingNum) {
                 result.add(vehicle);
             }
@@ -90,7 +85,7 @@ public class WaterManager {
 
     public ArrayList<WaterVehicle> searchVehicleManufactureLocation(int year, String location) {
         ArrayList<WaterVehicle> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle.getManufactureYear() == year && vehicle.getLocation().equals(location)) {
                 result.add(vehicle);
             }
@@ -99,11 +94,11 @@ public class WaterManager {
     }
 
     public void sortSerial() {
-        waterVehicles.sort((v1, v2) -> v1.getSerialNum().compareTo(v2.getSerialNum()));
+        waterStorage.sort((v1, v2) -> v1.getSerialNum().compareTo(v2.getSerialNum()));
     }
 
     public void sortManufactureLocation() {
-        waterVehicles.sort((v1, v2) -> v1.getLocation().compareTo(v2.getLocation()));
+        waterStorage.sort((v1, v2) -> v1.getLocation().compareTo(v2.getLocation()));
     }
 
     public boolean isBeingCarried(String serial) {
@@ -113,7 +108,7 @@ public class WaterManager {
 
     public boolean reloadAllPossibleSubmarine() {
         boolean reloaded = false;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
                 if (sub.reload()) {
@@ -127,7 +122,7 @@ public class WaterManager {
     public Ship findShipWithMostGuns() {
         Ship result = null;
         int maxGuns = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Ship) {
                 Ship ship = (Ship) vehicle;
                 if (ship.getGuns() > maxGuns) {
@@ -142,7 +137,7 @@ public class WaterManager {
     public Submarine findSubmarineWithMostVisibility() {
         Submarine result = null;
         int maxVisibility = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
                 if (sub.getVisibility() > maxVisibility) {
@@ -157,7 +152,7 @@ public class WaterManager {
     public Submarine findDeepestSubmarine() {
         Submarine result = null;
         int maxDepth = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
                 if (sub.getMaxDepth() > maxDepth) {
@@ -172,7 +167,7 @@ public class WaterManager {
     public Submarine findSubmarineWithMostTorpedoStorage() {
         Submarine result = null;
         int maxTorpedoStorage = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
                 if (sub.getTorpedoStorage() > maxTorpedoStorage) {
@@ -186,7 +181,7 @@ public class WaterManager {
 
     public ArrayList<WaterVehicle> findAllWaterNuclearPowered() {
         ArrayList<WaterVehicle> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle.isNuclearPowered()) {
                 result.add(vehicle);
             }
@@ -196,7 +191,7 @@ public class WaterManager {
 
     public ArrayList<Submarine> getEmptySubmarines() {
         ArrayList<Submarine> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
                 if (sub.isEmpty()) {
@@ -209,7 +204,7 @@ public class WaterManager {
 
     public ArrayList<Ship> getAllShipOfType(String type) {
         ArrayList<Ship> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Ship) {
                 Ship ship = (Ship) vehicle;
                 if (ship.getType().equals(type)) {
@@ -222,7 +217,7 @@ public class WaterManager {
 
     public ArrayList<WaterVehicle> findAtLocation(String location) {
         ArrayList<WaterVehicle> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle.getLocation().equals(location)) {
                 result.add(vehicle);
             }
@@ -232,7 +227,7 @@ public class WaterManager {
 
     public ArrayList<WaterVehicle> getAllDocked() {
         ArrayList<WaterVehicle> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle.isDocked()) {
                 result.add(vehicle);
             }
@@ -243,7 +238,7 @@ public class WaterManager {
     public Ship findFastestShip() {
         Ship result = null;
         int maxSpeed = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Ship) {
                 Ship ship = (Ship) vehicle;
                 if (ship.getSpeed() > maxSpeed) {
@@ -258,7 +253,7 @@ public class WaterManager {
     public Submarine findFastestSubmarine() {
         Submarine result = null;
         int maxSpeed = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
                 if (sub.getSpeed() > maxSpeed) {
@@ -273,7 +268,7 @@ public class WaterManager {
     public Ship findMostFuelShip() {
         Ship result = null;
         double maxFuel = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Ship) {
                 Ship ship = (Ship) vehicle;
                 if (ship.getFuelCapacity() > maxFuel) {
@@ -288,7 +283,7 @@ public class WaterManager {
     public Submarine findMostFuelSubmarine() {
         Submarine result = null;
         double maxFuel = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
                 if (sub.getFuelCapacity() > maxFuel) {
@@ -303,7 +298,7 @@ public class WaterManager {
     public Submarine findMostExpensiveSubmarine() {
         Submarine result = null;
         int maxCost = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
                 if (sub.getCost() > maxCost) {
@@ -318,7 +313,7 @@ public class WaterManager {
     public Ship findMostExpensiveShip() {
         Ship result = null;
         int maxCost = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Ship) {
                 Ship ship = (Ship) vehicle;
                 if (ship.getCost() > maxCost) {
@@ -333,7 +328,7 @@ public class WaterManager {
     public Ship findMostTankStorageShip() {
         Ship result = null;
         int maxTankStorage = 0;
-        for (WaterVehicle vehicle : waterVehicles) {
+        for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Ship) {
                 Ship ship = (Ship) vehicle;
                 if (ship.getTankStorage() > maxTankStorage) {
@@ -349,7 +344,7 @@ public class WaterManager {
        Ship maxJetStorageShip = null;
        int maxJetStorage = 0;
    
-       for (WaterVehicle vehicle : waterVehicles) {
+       for (WaterVehicle vehicle : waterStorage) {
            if (vehicle instanceof Ship) {
                Ship ship = (Ship) vehicle;
                if (ship.getJetStorageCapacity() > maxJetStorage) {
@@ -366,7 +361,7 @@ public class WaterManager {
        Ship maxAircraftStorageShip = null;
        int maxAircraftStorage = 0;
    
-       for (WaterVehicle vehicle : waterVehicles) {
+       for (WaterVehicle vehicle : waterStorage) {
            if (vehicle instanceof Ship) {
                Ship ship = (Ship) vehicle;
                if (ship.getAircraftStorageCapacity() > maxAircraftStorage) {
@@ -383,7 +378,7 @@ public class WaterManager {
        Ship maxRocketStorageShip = null;
        int maxRocketStorage = 0;
    
-       for (WaterVehicle vehicle : waterVehicles) {
+       for (WaterVehicle vehicle : waterStorage) {
            if (vehicle instanceof Ship) {
                Ship ship = (Ship) vehicle;
                if (ship.getRocketStorageCapacity() > maxRocketStorage) {
@@ -400,7 +395,7 @@ public class WaterManager {
        Ship maxSubmarineStorageShip = null;
        int maxSubmarineStorage = 0;
    
-       for (WaterVehicle vehicle : waterVehicles) {
+       for (WaterVehicle vehicle : waterStorage) {
            if (vehicle instanceof Ship) {
                Ship ship = (Ship) vehicle;
                if (ship.getSubmarineStorageCapacity() > maxSubmarineStorage) {
@@ -417,7 +412,7 @@ public class WaterManager {
        WaterVehicle submarine = searchVehicleSerial(serial);
    
        if (submarine instanceof Submarine) {
-           for (WaterVehicle vehicle : waterVehicles) {
+           for (WaterVehicle vehicle : waterStorage) {
                if (vehicle instanceof Ship) {
                    Ship ship = (Ship) vehicle;
                    if (ship.isCarryingSubmarine((Submarine) submarine)) {
