@@ -10,7 +10,7 @@ public class SerialNumGeneration
    final static int LAND_VEHICLE_SERIAL_SIZE = 6;
    final static int WATER_VEHICLE_SERIAL_SIZE = 7;
    final static int AIR_VEHICLE_SERIAL_SIZE = 0;
-   final static int SPACE_VEHICLE_SERIAL_SIZE = 0;
+   final static int SPACE_VEHICLE_SERIAL_SIZE = 8;
    
    public static String landVehicleGeneration()
    {
@@ -22,7 +22,7 @@ public class SerialNumGeneration
       return s;
    }
    
-public static String waterVehicleGeneration() {
+   public static String waterVehicleGeneration() {
     String s = generateWaterVehicle("");
     while (!addWaterVehicleSerial(s)) {
         s = generateWaterVehicle("");
@@ -36,7 +36,12 @@ public static String waterVehicleGeneration() {
    }
    public static String spaceVehicleGeneration()
    {
-   
+      String s = generateSpaceVehicle("");
+      while (!addSpaceVehicleSerial(s))
+      {
+         s = generateSpaceVehicle("");
+      }
+      return s;
    }
 
    public static String generateWaterVehicle(String s) {
@@ -71,7 +76,7 @@ public static String waterVehicleGeneration() {
    {
       if (s.length() == LAND_VEHICLE_SERIAL_SIZE)
       {
-         return s;
+         return "L"+s;
       }
       return generateLandVehicle(s+(int)(Math.random()*DIGITS));
    }
@@ -99,6 +104,41 @@ public static String waterVehicleGeneration() {
       if (!isFound)
       {
          LAND_VEHICLE_SERIALS.add(l, s);
+      }
+      return (!isFound);
+   }
+
+public static String generateSpaceVehicle(String s)
+{
+   if (s.length() == SPACE_VEHICLE_SERIAL_SIZE)
+   {
+      return "S"+s;
+   }
+   return generateLandVehicle(s+(int)(Math.random()*DIGITS));
+}
+   public static boolean addSpaceVehicleSerial(String s)
+   {
+      boolean isFound = false;
+      int mid, l = 0, r = SPACE_VEHICLE_SERIALS.size();
+      while (l <= r && !isFound)
+      {
+         mid = (l+r)/2;
+         if (SPACE_VEHICLE_SERIALS.get(mid).equals(s))
+         {
+            isFound = true;
+         }
+         if (SPACE_VEHICLE_SERIALS.get(mid).compareTo(s) > 0)
+         {
+            r = mid-1;
+         }
+         else
+         {
+            l = mid+1;
+         }
+      }
+      if (!isFound)
+      {
+         SPACE_VEHICLE_SERIALS.add(l, s);
       }
       return (!isFound);
    }
