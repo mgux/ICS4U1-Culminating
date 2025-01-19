@@ -93,6 +93,7 @@ public class LandManager
             }
             out.write((landStorage.get(i)).toString());
          }
+         out.close();
       }
       catch (IOException io)
       {
