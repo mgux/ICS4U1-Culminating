@@ -1,3 +1,14 @@
+/*
+ICS4U1-12
+Luke
+00/00/0000
+A.Y Jackson SS
+
+A manager class which allows for direct comparison and manipulation of waterVehicles within it
+
+*/
+// Water Manager with methods and fields
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.*;
@@ -29,6 +40,96 @@ public class WaterManager {
         waterStorage.add(newSubmarine);
         return true;
     }
+public boolean readShip(String fileName) {
+    boolean isRead = true;
+    BufferedReader in;
+    try {
+        in = new BufferedReader(new FileReader(fileName));
+        try {
+            addShip(
+                Double.parseDouble(in.readLine()),  // fuelCapacity
+                Boolean.parseBoolean(in.readLine()), // isNuclearPowered
+                Integer.parseInt(in.readLine()),   // manufactureYear
+                in.readLine(),                     // serialNum
+                Integer.parseInt(in.readLine()),   // speed
+                in.readLine(),                     // location
+                Integer.parseInt(in.readLine()),   // cost
+                Integer.parseInt(in.readLine()),   // parts
+                Integer.parseInt(in.readLine()),   // maxParts
+                Integer.parseInt(in.readLine()),   // minParts
+                Integer.parseInt(in.readLine()),   // buoyancy
+                Integer.parseInt(in.readLine()),   // numberOfGuns
+                in.readLine(),                     // type
+                Integer.parseInt(in.readLine()),   // maxTankStorage
+                Integer.parseInt(in.readLine()),   // maxAircraftStorage
+                Integer.parseInt(in.readLine()),   // maxSubmarineStorage
+                Integer.parseInt(in.readLine()),   // maxRocketStorage
+                Integer.parseInt(in.readLine()),   // maxJetStorage
+                Boolean.parseBoolean(in.readLine()) // docked
+            );
+        } catch (NumberFormatException | NullPointerException ex) {
+            isRead = false;
+        }
+        in.close();
+    } catch (IOException io) {
+        isRead = false;
+    }
+    return isRead;
+}
+
+public boolean readSubmarine(String fileName) {
+    boolean isRead = true;
+    BufferedReader in;
+    try {
+        in = new BufferedReader(new FileReader(fileName));
+        try {
+            addSubmarine(
+                Double.parseDouble(in.readLine()),  // fuelCapacity
+                Boolean.parseBoolean(in.readLine()), // isNuclearPowered
+                Integer.parseInt(in.readLine()),   // manufactureYear
+                in.readLine(),                     // serialNum
+                Integer.parseInt(in.readLine()),   // speed
+                in.readLine(),                     // location
+                Integer.parseInt(in.readLine()),   // cost
+                Integer.parseInt(in.readLine()),   // parts
+                Integer.parseInt(in.readLine()),   // maxParts
+                Integer.parseInt(in.readLine()),   // minParts
+                Integer.parseInt(in.readLine()),   // depth
+                Integer.parseInt(in.readLine()),   // numberOfTorpedos
+                Integer.parseInt(in.readLine()),   // underWaterVisibility
+                Integer.parseInt(in.readLine()),   // maxTorpedos
+                Boolean.parseBoolean(in.readLine()) // docked
+            );
+        } catch (NumberFormatException | NullPointerException ex) {
+            isRead = false;
+        }
+        in.close();
+    } catch (IOException io) {
+        isRead = false;
+    }
+    return isRead;
+}
+
+public boolean outWaterVehicles(String fileName) {
+    boolean isOut = true;
+    BufferedWriter out;
+    try {
+        out = new BufferedWriter(new FileWriter(fileName, true));
+        for (int i = 0; i < waterStorage.size(); i++) {
+            if (waterStorage.get(i) instanceof Submarine) {
+                out.write("Submarine\n");
+            } else {
+                out.write("Ship\n");
+            }
+            out.write(waterStorage.get(i).toString());
+            out.newLine(); 
+        }
+        out.close();
+    } catch (IOException io) {
+        isOut = false;
+    }
+    return isOut;
+}
 
     public boolean removeWaterVehicle(String serial) {
         WaterVehicle vehicle = searchVehicleSerial(serial);
