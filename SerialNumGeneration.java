@@ -8,7 +8,7 @@ public class SerialNumGeneration
    final static ArrayList<String> SPACE_VEHICLE_SERIALS = new ArrayList<String>();
    final static int DIGITS = 10;
    final static int LAND_VEHICLE_SERIAL_SIZE = 6;
-   final static int WATER_VEHICLE_SERIAL_SIZE = 0;
+   final static int WATER_VEHICLE_SERIAL_SIZE = 7;
    final static int AIR_VEHICLE_SERIAL_SIZE = 0;
    final static int SPACE_VEHICLE_SERIAL_SIZE = 0;
    
@@ -38,7 +38,7 @@ public static void waterVehicleGeneration() {
    }
 
    public static String generateWaterVehicle(String s) {
-    if (s.length() == DIGITS) {
+    if (s.length() == WATER_VEHICLE_SERIAL_SIZE) {
         return "W" + s; 
     }
     return generateWaterVehicle(s + (int) (Math.random() * DIGITS));
