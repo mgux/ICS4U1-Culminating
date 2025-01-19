@@ -130,20 +130,14 @@ public class Submarine extends WaterVehicle{
    }
    
    //toString
-   public String toString() {
-       return "Submarine\n" +
-              getFuelCapacity() + "\n" +          // double
-              isNuclearPowered() + "\n" +        // boolean
-              getManufactureYear() + "\n" +      // int
-              getSerialNum() + "\n" +            // String
-              getSpeed() + "\n" +                // int
-              getLocation() + "\n" +             // String
-              getCost() + "\n" +                 // int
-              getDepth() + "\n" +                // int
-              isDocked() + "\n" +                // boolean
-              getNumberOfTorpedos() + "\n" +     // int
-              getUnderWaterVisibility() + "\n" + // int
-              getMaxTorpedos();                  // int
-   }
+public String toString() {
+    return super.toString() +
+           "Depth: " + depth + "\n" +
+           "Number of Torpedos: " + numberOfTorpedos + "\n" +
+           "Underwater Visibility: " + underWaterVisibilty + "\n" +
+           "Max Torpedos: " + maxTorpedos + "\n" +
+           "Docked: " + docked + "\n";
+}
+
 
 }
