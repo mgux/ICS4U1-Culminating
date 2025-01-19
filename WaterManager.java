@@ -130,6 +130,134 @@ public boolean outWaterVehicles(String fileName) {
     return isOut;
 }
 
+    
+public void addShipFromConsole() {
+    Scanner scanner = new Scanner(System.in);
+
+    try {
+        System.out.print("Enter Fuel Capacity: ");
+        double fuelCapacity = Double.parseDouble(scanner.nextLine());
+
+        System.out.print("Is Nuclear Powered (true/false): ");
+        boolean isNuclearPowered = Boolean.parseBoolean(scanner.nextLine());
+
+        System.out.print("Enter Manufacture Year: ");
+        int manufactureYear = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Serial Number: ");
+        String serialNum = scanner.nextLine();
+
+        System.out.print("Enter Speed: ");
+        int speed = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Location: ");
+        String location = scanner.nextLine();
+
+        System.out.print("Enter Cost: ");
+        int cost = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Parts: ");
+        int parts = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Max Parts: ");
+        int maxParts = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Min Parts: ");
+        int minParts = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Buoyancy: ");
+        int buoyancy = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Number of Guns: ");
+        int numberOfGuns = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Type: ");
+        String type = scanner.nextLine();
+
+        System.out.print("Enter Max Tank Storage: ");
+        int maxTankStorage = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Max Aircraft Storage: ");
+        int maxAircraftStorage = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Max Submarine Storage: ");
+        int maxSubmarineStorage = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Max Rocket Storage: ");
+        int maxRocketStorage = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Max Jet Storage: ");
+        int maxJetStorage = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Is Docked (true/false): ");
+        boolean docked = Boolean.parseBoolean(scanner.nextLine());
+
+        Ship ship = new Ship(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts, buoyancy, numberOfGuns, type, maxTankStorage, maxAircraftStorage, maxSubmarineStorage, maxRocketStorage, maxJetStorage, docked);
+        waterStorage.add(ship);
+        System.out.println("Ship added successfully.");
+    } catch (NumberFormatException e) {
+        System.out.println("Invalid input. Please enter numeric values where applicable.");
+    }
+}
+
+public void addSubmarineFromConsole() {
+    Scanner scanner = new Scanner(System.in);
+
+    try {
+        System.out.print("Enter Fuel Capacity: ");
+        double fuelCapacity = Double.parseDouble(scanner.nextLine());
+
+        System.out.print("Is Nuclear Powered (true/false): ");
+        boolean isNuclearPowered = Boolean.parseBoolean(scanner.nextLine());
+
+        System.out.print("Enter Manufacture Year: ");
+        int manufactureYear = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Serial Number: ");
+        String serialNum = scanner.nextLine();
+
+        System.out.print("Enter Speed: ");
+        int speed = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Location: ");
+        String location = scanner.nextLine();
+
+        System.out.print("Enter Cost: ");
+        int cost = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Parts: ");
+        int parts = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Max Parts: ");
+        int maxParts = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Min Parts: ");
+        int minParts = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Depth: ");
+        int depth = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Number of Torpedos: ");
+        int numberOfTorpedos = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Underwater Visibility: ");
+        int underWaterVisibility = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Enter Max Torpedos: ");
+        int maxTorpedos = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Is Docked (true/false): ");
+        boolean docked = Boolean.parseBoolean(scanner.nextLine());
+
+        Submarine submarine = new Submarine(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts, depth, numberOfTorpedos, underWaterVisibility, maxTorpedos, docked);
+        waterStorage.add(submarine);
+        System.out.println("Submarine added successfully.");
+    } catch (NumberFormatException e) {
+        System.out.println("Invalid input. Please enter numeric values where applicable.");
+    }
+}
+
+    
     public boolean removeWaterVehicle(String serial) {
         WaterVehicle vehicle = searchVehicleSerial(serial);
         if (vehicle == null) {
