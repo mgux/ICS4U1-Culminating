@@ -167,17 +167,18 @@ public abstract class WaterVehicle {
    public abstract boolean isBroken();
 
    //toString
-  public String toString() {
-      return fuelCapacity + "\n" +
-             isNuclearPowered + "\n" +
-             manufactureYear + "\n" +
-             serialNum + "\n" +
-             speed + "\n" +
-             location + "\n" +
-             cost + "\n" +
-             parts + "\n" +
-             maxParts + "\n" +
-             minParts + "\n";
-  }
+public String toString() {
+    return "Fuel Capacity: " + fuelCapacity + "\n" +
+           "Nuclear Powered: " + isNuclearPowered + "\n" +
+           "Manufacture Year: " + manufactureYear + "\n" +
+           "Serial Number: " + serialNum + "\n" +
+           "Speed: " + speed + "\n" +
+           "Location: " + location + "\n" +
+           "Cost: " + cost + "\n" +
+           "Parts: " + parts + "\n" +
+           "Max Parts: " + maxParts + "\n" +
+           "Min Parts: " + minParts + "\n";
+}
+
 
 }
