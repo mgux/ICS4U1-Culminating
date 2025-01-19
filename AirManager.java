@@ -1,23 +1,40 @@
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AirManager {
     private final int CUR_YEAR = 2025;
-    private int numAir;
     private int currentNum = 0;
     private ArrayList<AirVehicle> airVehicles = new ArrayList<>();
 
-    public boolean repairAirVehicle(String serial) {
-        AirVehicle air;
-        air = searchVehicleSerial(serial);
-        if (air == null) {
-            return false;
+    public void sortManufactureLocation() {
+        int n = airVehicles.size();
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                AirVehicle current = airVehicles.get(j);
+                AirVehicle min = airVehicles.get(minIndex);
+                if (current.getManufactureYear() < min.getManufactureYear() ||
+                        (current.getManufactureYear() == min.getManufactureYear() &&
+                                current.getLocation().compareTo(min.getLocation()) < 0)) {
+                    minIndex = j;
+                }
+            }
+            if (minIndex != i) {
+                AirVehicle temp = airVehicles.get(i);
+                airVehicles.set(i, airVehicles.get(minIndex));
+                airVehicles.set(minIndex, temp);
+            }
         }
-        if (air.getParts() == air.getMaxParts()) {
-            return false;
+    }
+
+    public ArrayList<AirVehicle> searchManufactureLocation(int manufactureYear, String location) {
+        ArrayList<AirVehicle> result = new ArrayList<>();
+        for (int i = 0; i < airVehicles.size(); i++) {
+            if (airVehicles.get(i).getManufactureYear() == manufactureYear && airVehicles.get(i).getLocation().equals(location)) {
+                result.add(airVehicles.get(i));
+            }
         }
-        // ZAZA ADD MORE
-        return true;
+
+        return result;
     }
 
     public ArrayList<AirVehicle> searchVehicleWingNum(int wingNum) {
@@ -42,19 +59,22 @@ public class AirManager {
     public void sortSerial() {
         int n = airVehicles.size();
         boolean swapped = true;
+        AirVehicle temp;
 
         for (int i = 0; i < n - 1 && swapped; i++) {
             swapped = false;
 
             for (int j = 0; j < n - 1 - i; j++) {
                 if (airVehicles.get(j).getSerialNum().compareTo(airVehicles.get(j + 1).getSerialNum()) > 0) {
-                    String temp = airVehicles.get(j).getSerialNum();
-                    airVehicles.get(j).setSerialNum(airVehicles.get(j + 1).getSerialNum());
-                    airVehicles.get(j + 1).setSerialNum(temp);
+                    temp = airVehicles.get(j);
+                    airVehicles.set(j,airVehicles.get(j + 1));
+                    airVehicles.set((j+1), temp);
+                    swapped = true;
                 }
             }
         }
     }
+
 
     public AirVehicle findHighestVehicle() {
         AirVehicle highest = airVehicles.getFirst();
@@ -223,14 +243,12 @@ public class AirManager {
     public boolean addAircraft(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int partSwapWorth, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int maxJetStorage, int parts, int minParts, int maxParts) {
         Aircraft newAircraft = new Aircraft(engineNum,  wingNum,  manufactureYear,  speed,  location,  cost,  altitude,  partSwapWorth,  cargoWeight,  storage,  maxCargoWeight,  maxJeepStorage,  parts,  minParts,  maxParts);
         airVehicles.add(newAircraft);
-        numAir++;
         return true;
     }
 
     public boolean addJet(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int partSwapWorth, String missileType, int agility, int storageTaken, int parts, int minParts, int maxParts) {
         Jet newJet = new Jet(engineNum,  wingNum,  manufactureYear,  speed,  location,  cost,  altitude,  partSwapWorth,  missileType,  agility,  storageTaken, parts, minParts, maxParts);
         airVehicles.add(newJet);
-        numAir++;
         return true;
     }
 
@@ -240,7 +258,6 @@ public class AirManager {
         }
         else {
             airVehicles.remove(searchVehicleSerial(serial));
-            numAir--;
         }
         return true;
     }
@@ -255,6 +272,6 @@ public class AirManager {
 
 
     public AirManager() {
-        numAir = 0;
+
     }
 }
