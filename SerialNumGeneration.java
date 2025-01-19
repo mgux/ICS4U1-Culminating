@@ -12,20 +12,22 @@ public class SerialNumGeneration
    final static int AIR_VEHICLE_SERIAL_SIZE = 0;
    final static int SPACE_VEHICLE_SERIAL_SIZE = 0;
    
-   public static void landVehicleGeneration()
+   public static String landVehicleGeneration()
    {
       String s = generateLandVehicle("");
       while (!addLandVehicleSerial(s))
       {
          s = generateLandVehicle("");
       }
+      return s;
    }
    
-public static void waterVehicleGeneration() {
+public static String waterVehicleGeneration() {
     String s = generateWaterVehicle("");
     while (!addWaterVehicleSerial(s)) {
         s = generateWaterVehicle("");
     }
+    return s;
 }
 
    public static String airVehicleGeneration()
