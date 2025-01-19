@@ -5,9 +5,10 @@ import java.io.*;
 
 public class WaterManager {
     private final int CUR_YEAR = 2025;
-    private ArrayList<WaterVehicle> waterStorage = new ArrayList<>();
+    private ArrayList<WaterVehicle> waterStorage;
 
     public WaterManager() {
+         waterStorage = new ArrayList<WaterVehicle>();
     }
 
     public boolean addShip(double fuelCapacity, boolean isNuclearPowered, int engineNum, int manufactureYear, String location,
