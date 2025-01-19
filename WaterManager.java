@@ -122,7 +122,6 @@ public boolean outWaterVehicles(String fileName) {
                 out.write("Ship\n");
             }
             out.write(waterStorage.get(i).toString());
-            out.newLine(); 
         }
         out.close();
     } catch (IOException io) {
