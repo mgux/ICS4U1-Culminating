@@ -344,24 +344,18 @@ public class Ship extends WaterVehicle {
    }
    
    //toString
-   public String toString() {
-       return "Ship\n" +
-              getSpeed() + "\n" +              // double
-              isDocked() + "\n" +             // boolean
-              getFuelCapacity() + "\n" +      // int
-              getLocation() + "\n" +          // String
-              getCost() + "\n" +              // int
-              getType() + "\n" +              // String
-              getManufactureYear() + "\n" +   // int
-              getBuoyancy() + "\n" +          // int
-              isDocked() + "\n" +             // boolean
-              getMaxTankStorage() + "\n" +    // int
-              getMaxAircraftStorage() + "\n" +// int
-              getType() + "\n" +              // String
-              getMaxJetStorage() + "\n" +     // int
-              getMaxSubmarineStorage() + "\n" +// int
-              getMaxRocketStorage() + "\n" +  // int
-              getNumberOfGuns();              // int
-   }
+public String toString() {
+    return super.toString() +
+           "Buoyancy: " + buoyancy + "\n" +
+           "Number of Guns: " + numberOfGuns + "\n" +
+           "Type: " + type + "\n" +
+           "Max Tank Storage: " + maxTankStorage + "\n" +
+           "Max Aircraft Storage: " + maxAircraftStorage + "\n" +
+           "Max Submarine Storage: " + maxSubmarineStorage + "\n" +
+           "Max Rocket Storage: " + maxRocketStorage + "\n" +
+           "Max Jet Storage: " + maxJetStorage + "\n" +
+           "Docked: " + docked + "\n";
+}
+
 
 }
