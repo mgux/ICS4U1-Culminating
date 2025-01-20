@@ -28,6 +28,7 @@ public class AirManager {
                         Integer.parseInt(in.readLine()),
                         Integer.parseInt(in.readLine()),
                         Integer.parseInt(in.readLine()),
+                        in.readLine(),
                         Integer.parseInt(in.readLine()),
                         in.readLine(),
                         Integer.parseInt(in.readLine()),
@@ -71,6 +72,7 @@ public class AirManager {
                         Integer.parseInt(in.readLine()),
                         Integer.parseInt(in.readLine()),
                         Integer.parseInt(in.readLine()),
+                        in.readLine(),
                         Integer.parseInt(in.readLine()),
                         in.readLine(),
                         Integer.parseInt(in.readLine()),
@@ -83,6 +85,7 @@ public class AirManager {
                         Integer.parseInt(in.readLine())
                 );
 
+
             }
             catch (NumberFormatException nfx)
             {
@@ -90,7 +93,6 @@ public class AirManager {
             }
 
             in.close();
-            System.out.println("true");
         }
         catch (IOException io)
         {
@@ -418,14 +420,14 @@ public class AirManager {
         return airWingNum;
     }
 
-    public boolean addAircraft(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int parts, int minParts, int maxParts) {
-        Aircraft newAircraft = new Aircraft(engineNum,  wingNum,  manufactureYear,  speed,  location,  cost,  altitude,  cargoWeight,  storage,  maxCargoWeight,  maxJeepStorage,  parts,  minParts,  maxParts);
+    public boolean addAircraft(int engineNum, int wingNum, int manufactureYear, String serialNum, int speed, String location, int cost, int altitude, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int parts, int minParts, int maxParts) {
+        Aircraft newAircraft = new Aircraft(engineNum,  wingNum,  manufactureYear, serialNum, speed,  location,  cost,  altitude,  cargoWeight,  storage,  maxCargoWeight,  maxJeepStorage,  parts,  minParts,  maxParts);
         airVehicles.add(newAircraft);
         return true;
     }
 
-    public boolean addJet(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, String missileType, int agility, int storageTaken, int parts, int minParts, int maxParts) {
-        Jet newJet = new Jet(engineNum,  wingNum,  manufactureYear,  speed,  location,  cost,  altitude,  missileType,  agility,  storageTaken, parts, minParts, maxParts);
+    public boolean addJet(int engineNum, int wingNum, int manufactureYear, String serialNum, int speed, String location, int cost, int altitude, String missileType, int agility, int storageTaken, int parts, int minParts, int maxParts) {
+        Jet newJet = new Jet(engineNum,  wingNum,  manufactureYear,  serialNum, speed,  location,  cost,  altitude,  missileType,  agility,  storageTaken, parts, minParts, maxParts);
         airVehicles.add(newJet);
         return true;
     }
