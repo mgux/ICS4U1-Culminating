@@ -103,31 +103,47 @@ public class Database {
         return success;
     }
 
-    public boolean exchangeParts(String serial1, String serial2) {
-        Object vehicle1 = null, vehicle2 = null;
+ public boolean exchangeParts(String sourceSerial, String targetSerial) {
+        Scanner scanner = new Scanner(System.in);
 
-        if (vehicle1 == null) vehicle1 = waterManager.searchSerial(serial1);
-        if (vehicle1 == null) vehicle1 = landManager.searchSerial(serial1);
-        if (vehicle1 == null) vehicle1 = airManager.searchVehicleSerial(serial1);
-        if (vehicle1 == null) vehicle1 = spaceManager.searchSerial(serial1);
+        object sourceVehicle = searchVehicleBySerial(sourceSerial);
+        object targetVehicle = searchVehicleBySerial(targetSerial);
 
-        if (vehicle2 == null) vehicle2 = waterManager.searchSerial(serial2);
-        if (vehicle2 == null) vehicle2 = landManager.searchSerial(serial2);
-        if (vehicle2 == null) vehicle2 = airManager.searchVehicleSerial(serial2);
-        if (vehicle2 == null) vehicle2 = spaceManager.searchSerial(serial2);
-
-        if (vehicle1 == null || vehicle2 == null) {
-            System.out.println("One or both vehicles not found.");
+        if (sourceVehicle == null || targetVehicle == null) {
+            System.out.println("One or both vehicles could not be found.");
             return false;
         }
 
-        if (vehicle1.getParts() > 0 && vehicle2.getParts() < vehicle2.getMaxParts()) {
-            int transferableParts = Math.min(vehicle1.getParts(), vehicle2.getMaxParts() - vehicle2.getParts());
-            vehicle1.setParts(vehicle1.getParts() - transferableParts);
-            vehicle2.setParts(vehicle2.getParts() + transferableParts);
-            return true;
+        System.out.print("Enter the number of parts to exchange: ");
+        int partsToExchange = scanner.nextInt();
+        int sourcePartsRequired = partsToExchange * sourceVehicle.PART_SWAP_WORTH;
+
+        if (sourceVehicle.getParts() < sourcePartsRequired) {
+            System.out.println("Source vehicle does not have enough parts for this exchange.");
+            return false;
         }
 
-        return false;
+        sourceVehicle.setParts(sourceVehicle.getParts() - sourcePartsRequired);
+        int targetPartsAdded = partsToExchange * targetVehicle.PART_SWAP_WORTH;
+        targetVehicle.setParts(targetVehicle.getParts() + targetPartsAdded);
+
+        System.out.println("Exchange completed successfully!");
+        return true;
+    }
+
+    private Object searchVehicleBySerial(String serial) {
+        Object foundVehicle = null;
+
+        if (waterManager.searchVehicleSerial(serial) != null) {
+            foundVehicle = waterManager.searchVehicleSerial(serial);
+        } else if (landManager.searchSerial(serial) != null) {
+            foundVehicle = landManager.searchSerial(serial);
+        } else if (airManager.searchVehicleSerial(serial) != null) {
+            foundVehicle = airManager.searchVehicleSerial(serial);
+        } else if (spaceManager.searchSerial(serial) != null) {
+            foundVehicle = spaceManager.searchSerial(serial);
+        }
+
+        return foundVehicle;
     }
 }
