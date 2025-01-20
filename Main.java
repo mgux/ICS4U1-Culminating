@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 // Main class
@@ -53,6 +54,7 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         int selection;
+        String fileName;
 
         System.out.println("[0] - Find Fastest Vehicle");
         System.out.println("[1] - Find Vehicles Over Certain Age");
@@ -62,16 +64,31 @@ public class Main {
         System.out.println("[3] - Find Certain Space Vehicle");
         System.out.println("[4] - IMPORT EXISTING VEHICLE DATA");
         System.out.println("[5] - EXPORT CURRENT VEHICLE DATA");
+        System.out.println("[6] - read sumbarine");
+        System.out.println("[8] - PROGRAM INFO");
+        System.out.println("[9] - NEXT PAGE");
         System.out.println();
         System.out.print("Enter Selection: ");
         selection = sc.nextInt();
 
+
         switch(selection) {
             case 0:
-               // database.findFastestVehicle();
+               database.findFastestVehicle();
+               break;
 
             case 1:
                 landManager.readJeepVehicle("Data.txt");
+                break;
+            case 6:
+
+                System.out.println("Enter the file name of the info");
+                sc.nextLine();
+                fileName = sc.nextLine();
+                boolean test = waterManager.readSubmarine(fileName);
+                System.out.println(test);
+                printMenu();
+
 
         }
 
