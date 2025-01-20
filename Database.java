@@ -50,4 +50,84 @@ public class Database {
         }
 
     }
+    
+ public void findFastestVehicle() {
+        Object fastest = null;
+        int highestSpeed = Integer.MIN_VALUE;
+
+        Object fastestWater = waterManager.findFastestWater();
+        if (fastestWater instanceof WaterVehicle && ((WaterVehicle) fastestWater).getSpeed() > highestSpeed) {
+            highestSpeed = ((WaterVehicle) fastestWater).getSpeed();
+            fastest = fastestWater;
+        }
+
+        Object fastestLand = landManager.findFastestLand();
+        if (fastestLand instanceof LandVehicle && ((LandVehicle) fastestLand).getSpeed() > highestSpeed) {
+            highestSpeed = ((LandVehicle) fastestLand).getSpeed();
+            fastest = fastestLand;
+        }
+
+        Object fastestAir = airManager.findFastestAircraft();
+        if (fastestAir instanceof AirVehicle && ((AirVehicle) fastestAir).getSpeed() > highestSpeed) {
+            highestSpeed = ((AirVehicle) fastestAir).getSpeed();
+            fastest = fastestAir;
+        }
+
+        Object fastestSpace = spaceManager.findFastestSpace();
+        if (fastestSpace instanceof SpaceVehicle && ((SpaceVehicle) fastestSpace).getSpeed() > highestSpeed) {
+            highestSpeed = ((SpaceVehicle) fastestSpace).getSpeed();
+            fastest = fastestSpace;
+        }
+                System.out.println("Fastest vehicle: " + fastest.getSerialNum());
+    }
+
+    public boolean exportToFile(String filePath) {
+        boolean success = true;
+
+        success &= waterManager.outWaterVehicle(filePath);
+        success &= landManager.outLandVehicles(filePath);
+        success &= airManager.outAirVehicle(filePath);
+        success &= spaceManager.outSpaceVehicle(filePath);
+
+        return success;
+    }
+
+    public boolean importFromFile(String filePath) {
+        boolean success = true;
+
+        success &= waterManager.readWaterVehicle(filePath);
+        success &= landManager.readLandVehicles(filePath);
+        success &= airManager.readAirVehicle(filePath);
+        success &= spaceManager.readSpaceVehicle(filePath);
+
+        return success;
+    }
+
+    public boolean exchangeParts(String serial1, String serial2) {
+        Object vehicle1 = null, vehicle2 = null;
+
+        if (vehicle1 == null) vehicle1 = waterManager.searchSerial(serial1);
+        if (vehicle1 == null) vehicle1 = landManager.searchSerial(serial1);
+        if (vehicle1 == null) vehicle1 = airManager.searchVehicleSerial(serial1);
+        if (vehicle1 == null) vehicle1 = spaceManager.searchSerial(serial1);
+
+        if (vehicle2 == null) vehicle2 = waterManager.searchSerial(serial2);
+        if (vehicle2 == null) vehicle2 = landManager.searchSerial(serial2);
+        if (vehicle2 == null) vehicle2 = airManager.searchVehicleSerial(serial2);
+        if (vehicle2 == null) vehicle2 = spaceManager.searchSerial(serial2);
+
+        if (vehicle1 == null || vehicle2 == null) {
+            System.out.println("One or both vehicles not found.");
+            return false;
+        }
+
+        if (vehicle1.getParts() > 0 && vehicle2.getParts() < vehicle2.getMaxParts()) {
+            int transferableParts = Math.min(vehicle1.getParts(), vehicle2.getMaxParts() - vehicle2.getParts());
+            vehicle1.setParts(vehicle1.getParts() - transferableParts);
+            vehicle2.setParts(vehicle2.getParts() + transferableParts);
+            return true;
+        }
+
+        return false;
+    }
 }
