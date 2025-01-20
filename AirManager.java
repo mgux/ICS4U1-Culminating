@@ -288,6 +288,23 @@ public class AirManager {
         return airOverAge;
     }
 
+    public AirVehicle findFastestAirVehicle()
+    {
+        AirVehicle temp = null;
+        for (int i = 0; i < airVehicles.size(); i++)
+        {
+            if (temp == null)
+            {
+                temp = airVehicles.get(i);
+            }
+            else
+            {
+                temp = temp.compareSpeed(airVehicles.get(i));
+            }
+        }
+        return temp;
+    }
+
     public Jet findFastestJet() {
         int speed = 0;
         int index = 0;
