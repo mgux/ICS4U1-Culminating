@@ -1,167 +1,331 @@
+/*
+ICS4U1-12
+Luke
+00/00/0000
+A.Y Jackson SS
+
+The ship can carry rockets, tanks and aircrafts. 
+The ship has a buoyancy and a separate storage for all vehicles it can carry. 
+The Ship cannot be carried by anything.
+
+*/
+// Ship Class with methods and fields
+
 import java.util.ArrayList;
+import java.io.*;
 import java.util.*;
-public class Database {
-    private LandManager landManager = new LandManager();
-    private WaterManager waterManager = new WaterManager();
-    private AirManager airManager = new AirManager();
-    private SpaceManager spaceManager = new SpaceManager();
-    public void findMostExpensiveVehicle() {
-        ArrayList<Integer> mostExpensives = new ArrayList<>();
-        AirVehicle mostExpensiveAir;
-        WaterVehicle mostExpensiveWater;
-        LandVehicle mostExpensiveLand;
-        SpaceVehicle mostExpensiveSpace;
-        int mostExpensiveVehicle;
-        int num = 0;
 
+public class Ship extends WaterVehicle {
+    
+    // Class fields
+    private int buoyancy;
+    private int numberOfGuns;
+    private String type;
+    private int maxTankStorage;
+    private int maxJetStorage;
+    private int maxSubmarineStorage;
+    private int maxRocketStorage;
+    private int maxAircraftStorage;
+    private boolean docked;
+    private ArrayList<Tank> tankInShip; 
+    private ArrayList<Jet> jetInShip; 
+    private ArrayList<Submarine> submarineInShip; 
+    private ArrayList<Rocket> rocketInShip; 
+    private ArrayList<Aircraft> aircraftInShip; 
 
-        mostExpensiveAir = airManager.findMostExpensiveAirVehicle();
-        mostExpensiveWater = waterManager.findMostExpensiveWaterVehicle();
-        mostExpensiveLand = landManager.findMostExpensiveLand();
-        mostExpensiveSpace = spaceManager.findMostExpensiveSpace();
-        int mostExpensiveAirValue = mostExpensiveAir.getCost();
-        int mostExpensiveWaterValue = mostExpensiveWater.getCost();
-        int mostExpensiveSpaceValue = mostExpensiveSpace.getCost();
-        int mostExpensiveLandValue = mostExpensiveLand.getCost();
+    // Constructor
+       public Ship(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts, int buoyancy, int numberOfGuns, String type, int maxTankStorage, int maxJetStorage, int maxSubmarineStorage, int maxRocketStorage, int maxAircraftStorage, boolean docked) {
+        super(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts);
+        this.buoyancy = buoyancy;
+        this.numberOfGuns = numberOfGuns;
+        this.type = type;
+        this.maxTankStorage = maxTankStorage;
+        this.maxJetStorage = maxTankStorage;
+        this.maxAircraftStorage = maxAircraftStorage;
+        this.maxSubmarineStorage = maxTankStorage;
+        this.maxRocketStorage = maxTankStorage;
+        this.tankInShip = new ArrayList<>(); 
+        this.jetInShip = new ArrayList<>(); 
+        this.submarineInShip = new ArrayList<>(); 
+        this.rocketInShip = new ArrayList<>(); 
+        this.aircraftInShip = new ArrayList<>(); 
+        this.docked = true; 
+    }
+   // Getters and Setters for Ship class
+   public int getBuoyancy() {
+       return buoyancy;
+   }
+   
+   public void setBuoyancy(int buoyancy) {
+       this.buoyancy = buoyancy;
+   }
+   
+   public int getNumberOfGuns() {
+       return numberOfGuns;
+   }
+   
+   public void setNumberOfGuns(int numberOfGuns) {
+       this.numberOfGuns = numberOfGuns;
+   }
+   
+   public String getType() {
+       return type;
+   }
+   
+   public void setType(String type) {
+       this.type = type;
+   }
+   
+   public int getMaxTankStorage() {
+       return maxTankStorage;
+   }
+   
+   public void setMaxTankStorage(int maxTankStorage) {
+       this.maxTankStorage = maxTankStorage;
+   }
+   
+   public int getMaxJetStorage() {
+       return maxJetStorage;
+   }
+   
+   public void setMaxJetStorage(int maxJetStorage) {
+       this.maxJetStorage = maxJetStorage;
+   }
+   
+   public int getMaxSubmarineStorage() {
+       return maxSubmarineStorage;
+   }
+   
+   public void setMaxSubmarineStorage(int maxSubmarineStorage) {
+       this.maxSubmarineStorage = maxSubmarineStorage;
+   }
+   
+   public int getMaxRocketStorage() {
+       return maxRocketStorage;
+   }
+   
+   public void setMaxRocketStorage(int maxRocketStorage) {
+       this.maxRocketStorage = maxRocketStorage;
+   }
+   
+   public int getMaxAircraftStorage() {
+       return maxAircraftStorage;
+   }
+   
+   public void setMaxAircraftStorage(int maxAircraftStorage) {
+       this.maxAircraftStorage = maxAircraftStorage;
+   }
+   
+   public boolean isDocked() {
+       return docked;
+   }
+   
+   public void setDocked(boolean docked) {
+       this.docked = docked;
+   }
 
-        mostExpensives.add(mostExpensiveAirValue);
-        mostExpensives.add(mostExpensiveWaterValue);
-        mostExpensives.add(mostExpensiveSpaceValue);
-        mostExpensives.add(mostExpensiveLandValue);
+    //add methods
+    public boolean addTank(Tank tank) {
+        String serialNumOfTank = tank.getSerialNum();
+            if (tankInShip.size() < maxTankStorage) {
+                tankInShip.add(tank);
+                tank.setContainedVehicle(this);
+                return true;
+            } else {
+                System.out.println("Cannot add Tank. Maximum tank storage reached!");
+                return false;
+            }
+    }
+    
+    
+    public boolean addAricraft(Aircraft aircraft) {
+        String serialNumOfAircraft = aircraft.getSerialNum();
+            if (aircraftInShip.size() < maxAircraftStorage) {
+                aircraftInShip.add(aircraft);
+                aircraft.setContainedVehicle(this);
+                return true;
+            } else {
+                System.out.println("Cannot add Aircraft. Maximum Aircraft storage reached!");
+                return false;
+            }
+    }
+    
+    
+    public boolean addJet(Jet jet) {
+        String serialNumOfJet = jet.getSerialNum();
+            if (jetInShip.size() < maxJetStorage) {
+                jetInShip.add(jet);
+                jet.setContainedObject(this);
+                return true;
+            } else {
+                System.out.println("Cannot add Jet. Maximum jet storage reached!");
+                return false;
+            }
+    }
+    
 
-        mostExpensiveVehicle = mostExpensives.getFirst();
-        for (int i = 1; i < mostExpensives.size(); i++) {
-            if (mostExpensives.get(i) > mostExpensiveVehicle) {
-                mostExpensiveVehicle = mostExpensives.get(i);
-                num = i;
+    public boolean addSubmarine(Submarine submarine) {
+        String serialNumOfSubmarine = submarine.getSerialNum();
+                  if (submarineInShip.size() < maxSubmarineStorage) {
+                submarineInShip.add(submarine);
+                submarine.setContainedVehicle(this);
+                return true;
+            } else {
+                System.out.println("Cannot add Submarine. Maximum submarine storage reached!");
+                return false;
+            }
+    }
+    
+
+    public boolean addRocket(Rocket rocket) {
+        String serialNumOfRocket = rocket.getSerialNum();
+                   if (rocketInShip.size() < maxRocketStorage) {
+                rocketInShip.add(rocket);
+                rocket.setContainedVehicle(this);
+                return true;
+            } else {
+                System.out.println("Cannot add Rocket. Maximum rocket storage reached!");
+                return false;
+            }
+    }
+    
+    
+    //remove methods
+    public boolean removeTank(String serial) {
+         for(Tank i : tankInShip){
+            if(i.getSerialNum() == serial){
+               tankInShip.remove(i);
+               i.setContainedVehicle(null);
+               return true;
             }
         }
-
-        System.out.print("The most expensive vehicle costs $" + mostExpensiveVehicle + " and is a ");
-        switch (num) {
-            case 0:
-                System.out.println(" air vehicle with serial " + mostExpensiveAir.getSerialNum());
-            case 1:
-                System.out.println(" water vehicle with serial " + mostExpensiveWater.getSerialNum());
-            case 2:
-                System.out.println(" space vehicle with serial " + mostExpensiveSpace.getSerialNum());
-            case 3:
-                System.out.println(" land vehicle with serial " + mostExpensiveLand.getSerialNum());
+      return false;
+    }
+    
+    public boolean removeJet(String serial) {
+         for(Jet i : jetInShip){
+            if(i.getSerialNum() == serial){
+               jetInShip.remove(i);
+               i.setContainedObject(null);
+               return true;
+            }
         }
-
+      return false;
+    }
+    
+    public boolean removeAircraft(String serial) {
+         for(Aircraft i : aircraftInShip){
+            if(i.getSerialNum() == serial){
+               aircraftInShip.remove(i);
+               i.setContainedVehicle(null);
+               return true;
+            }
+        }
+      return false;
+    }
+    
+    public boolean removeRocket(String serial) {
+         for(Rocket i : rocketInShip){
+            if(i.getSerialNum() == serial){
+               rocketInShip.remove(i);
+               i.setContainedVehicle(null);
+               return true;
+            }
+        }
+      return false;
+    }
+    
+   public boolean removeSubmarine(String serial) {
+         for(Submarine i : submarineInShip){
+            if(i.getSerialNum() == serial){
+               submarineInShip.remove(i);
+               i.setContainedVehicle(null);
+               return true;
+            }
+        }
+      return false;
+    }
+    
+    //compare methods
+    public double comparefuelCapacity(Ship other){
+        return (this.getFuelCapacity() - other.getFuelCapacity());
     }
 
-    public void findFastestVehicle() {
-        Object fastest = null;
-        int highestSpeed = Integer.MIN_VALUE;
-        int choice;
-        Object fastestWater = waterManager.findFastestWater();
-        if (fastestWater instanceof WaterVehicle && ((WaterVehicle) fastestWater).getSpeed() > highestSpeed) {
-            highestSpeed = ((WaterVehicle) fastestWater).getSpeed();
-            fastest = fastestWater;
-            choice = 0;
-        }
-
-        Object fastestLand = landManager.findFastestLand();
-        if (fastestLand instanceof LandVehicle && ((LandVehicle) fastestLand).getSpeed() > highestSpeed) {
-            highestSpeed = ((LandVehicle) fastestLand).getSpeed();
-            fastest = fastestLand;
-            choice = 1;
-        }
-
-        Object fastestAir = airManager.findFastestAircraft();
-        if (fastestAir instanceof AirVehicle && ((AirVehicle) fastestAir).getSpeed() > highestSpeed) {
-            highestSpeed = ((AirVehicle) fastestAir).getSpeed();
-            fastest = fastestAir;
-            choice = 2;
-        }
-
-        Object fastestSpace = spaceManager.findFastestSpace();
-        if (fastestSpace instanceof SpaceVehicle && ((SpaceVehicle) fastestSpace).getSpeed() > highestSpeed) {
-            highestSpeed = ((SpaceVehicle) fastestSpace).getSpeed();
-            fastest = fastestSpace;
-            choice = 3;
-        }
-        switch(choice){
-            case 1:
-                System.out.println("Fastest vehicle: " + ((WaterVehicle)fastest).getSerialNum());
-                break;
-            case 2:
-                System.out.println("Fastest vehicle: " + ((LandVehicle)fastest).getSerialNum());
-                break;
-
-            case 3:
-                System.out.println("Fastest vehicle: " + ((AirVehicle)fastest).getSerialNum());
-                break;
-            case 4:
-                System.out.println("Fastest vehicle: " + ((SpaceVehicle)fastest).getSerialNum());
-                break;
-        }
+    public double compareSpeed(Ship other){
+        return (this.getSpeed() - other.getSpeed());
     }
 
-    public boolean exportToFile(String filePath) {
-        boolean success = true;
-
-        success &= waterManager.outWaterVehicles(filePath);
-        success &= landManager.outLandVehicles(filePath);
-        success &= airManager.outAirVehicles(filePath);
-        success &= spaceManager.outSpaceVehicles(filePath);
-
-        return success;
+    public double compareCost(Ship other){
+        return (this.getCost() - other.getCost());
+    }
+    
+   public double compareBuoyancy(Ship other){
+        return (this.getBuoyancy() - other.getBuoyancy());
     }
 
-    public boolean importFromFile(String filePath) {
-        boolean success = true;
-
-        success &= waterManager.readWaterVehicle(filePath);
-        success &= landManager.readLandVehicles(filePath);
-        success &= airManager.readAirVehicle(filePath);
-        success &= spaceManager.readSpaceVehicle(filePath);
-
-        return success;
+    public double compareNumberOfGuns(Ship other){
+        return (this.getNumberOfGuns() - other.getNumberOfGuns());
     }
 
-    public boolean exchangeParts(String sourceSerial, String targetSerial) {
-        Scanner scanner = new Scanner(System.in);
-
-        Object sourceVehicle = searchVehicleBySerial(sourceSerial);
-        Object targetVehicle = searchVehicleBySerial(targetSerial);
-
-        if (sourceVehicle == null || targetVehicle == null) {
-            System.out.println("One or both vehicles could not be found.");
-            return false;
-        }
-
-        System.out.print("Enter the number of parts to exchange: ");
-        int partsToExchange = scanner.nextInt();
-        int sourcePartsRequired = partsToExchange * sourceVehicle.PART_SWAP_WORTH;
-
-        if (sourceVehicle.getParts() < sourcePartsRequired) {
-            System.out.println("Source vehicle does not have enough parts for this exchange.");
-            return false;
-        }
-
-        sourceVehicle.setParts(sourceVehicle.getParts() - sourcePartsRequired);
-        int targetPartsAdded = partsToExchange * targetVehicle.PART_SWAP_WORTH;
-        targetVehicle.setParts(targetVehicle.getParts() + targetPartsAdded);
-
-        System.out.println("Exchange completed successfully!");
-        return true;
+    public double TankCapacity(Ship other){
+        return (this.getMaxTankStorage() - other.getMaxTankStorage());
+    }
+    
+   public double AircraftCapacity(Ship other){
+        return (this.getMaxAircraftStorage() - other.getMaxAircraftStorage());
     }
 
-    private Object searchVehicleBySerial(String serial) {
-        Object foundVehicle = null;
-
-        if (waterManager.searchVehicleSerial(serial) != null) {
-            foundVehicle = waterManager.searchVehicleSerial(serial);
-        } else if (landManager.searchSerial(serial) != null) {
-            foundVehicle = landManager.searchSerial(serial);
-        } else if (airManager.searchVehicleSerial(serial) != null) {
-            foundVehicle = airManager.searchVehicleSerial(serial);
-        } else if (spaceManager.searchSerial(serial) != null) {
-            foundVehicle = spaceManager.searchSerial(serial);
-        }
-
-        return foundVehicle;
+    public double SubmarineCapacity(Ship other){
+        return (this.getMaxSubmarineStorage() - other.getMaxSubmarineStorage());
     }
+
+    public double JetCapacity(Ship other){
+        return (this.getMaxJetStorage() - other.getMaxJetStorage());
+    }
+    
+    public double RocketCapacity(Ship other){
+        return (this.getMaxRocketStorage() - other.getMaxRocketStorage());
+    }
+    
+    public ArrayList<Tank> getAllTanks() {
+        return tankInShip;
+    }
+
+    public ArrayList<Aircraft> getAllAircraft() {
+        return aircraftInShip;
+    }
+
+    public ArrayList<Rocket> getAllRockets() {
+        return rocketInShip;
+    }
+
+    public ArrayList<Jet> getAllJets() {
+        return jetInShip;
+    }
+        
+   //Check if broken
+   public boolean isBroken()
+   {
+      if (this.getParts() < this.getMinParts())
+      {
+         return true;
+      }
+      return false;
+   }
+   
+   //toString
+public String toString() {
+    return super.toString() +
+           "Buoyancy: " + buoyancy + "\n" +
+           "Number of Guns: " + numberOfGuns + "\n" +
+           "Type: " + type + "\n" +
+           "Max Tank Storage: " + maxTankStorage + "\n" +
+           "Max Aircraft Storage: " + maxAircraftStorage + "\n" +
+           "Max Submarine Storage: " + maxSubmarineStorage + "\n" +
+           "Max Rocket Storage: " + maxRocketStorage + "\n" +
+           "Max Jet Storage: " + maxJetStorage + "\n" +
+           "Docked: " + docked + "\n";
+}
+
+
 }
