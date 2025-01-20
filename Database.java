@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Database {
     private LandManager landManager = new LandManager();
@@ -50,11 +51,11 @@ public class Database {
         }
 
     }
-    
- public void findFastestVehicle() {
+
+    public void findFastestVehicle() {
         Object fastest = null;
         int highestSpeed = Integer.MIN_VALUE;
-        int choice;
+        int choice = -1;
         Object fastestWater = waterManager.findFastestWater();
         if (fastestWater instanceof WaterVehicle && ((WaterVehicle) fastestWater).getSpeed() > highestSpeed) {
             highestSpeed = ((WaterVehicle) fastestWater).getSpeed();
@@ -96,16 +97,16 @@ public class Database {
             case 4:
                 System.out.println("Fastest vehicle: " + ((SpaceVehicle)fastest).getSerialNum());
                 break;
-                }
+        }
     }
 
     public boolean exportToFile(String filePath) {
         boolean success = true;
 
-        success &= waterManager.outWaterVehicle(filePath);
+        success &= waterManager.outWaterVehicles(filePath);
         success &= landManager.outLandVehicles(filePath);
-        success &= airManager.outAirVehicle(filePath);
-        success &= spaceManager.outSpaceVehicle(filePath);
+        success &= airManager.outAirVehicles(filePath);
+        success &= spaceManager.outSpaceVehicles(filePath);
 
         return success;
     }
@@ -121,7 +122,7 @@ public class Database {
         return success;
     }
 
- public boolean exchangeParts(String sourceSerial, String targetSerial) {
+    public boolean exchangeParts(String sourceSerial, String targetSerial) {
         Scanner scanner = new Scanner(System.in);
 
         Object sourceVehicle = searchVehicleBySerial(sourceSerial);
