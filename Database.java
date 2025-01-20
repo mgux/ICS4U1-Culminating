@@ -1,10 +1,19 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Database {
     private LandManager landManager = new LandManager();
     private WaterManager waterManager = new WaterManager();
     private AirManager airManager = new AirManager();
     private SpaceManager spaceManager = new SpaceManager();
+
+    public Database(LandManager landManager, WaterManager waterManager, AirManager airManager, SpaceManager spaceManager) {
+        this.landManager = landManager;
+        this.waterManager = waterManager;
+        this.airManager = airManager;
+        this.spaceManager = spaceManager;
+    }
+
     public void findMostExpensiveVehicle() {
         ArrayList<Integer> mostExpensives = new ArrayList<>();
         AirVehicle mostExpensiveAir;
@@ -50,8 +59,8 @@ public class Database {
         }
 
     }
-    
- public void findFastestVehicle() {
+
+    public void findFastestVehicle() {
         Object fastest = null;
         int highestSpeed = Integer.MIN_VALUE;
 
@@ -78,16 +87,16 @@ public class Database {
             highestSpeed = ((SpaceVehicle) fastestSpace).getSpeed();
             fastest = fastestSpace;
         }
-                System.out.println("Fastest vehicle: " + fastest.getSerialNum());
+        System.out.println("Fastest vehicle: " + fastest.getSerialNum());
     }
 
     public boolean exportToFile(String filePath) {
         boolean success = true;
 
-        success &= waterManager.outWaterVehicle(filePath);
+        success &= waterManager.outWaterVehicles(filePath);
         success &= landManager.outLandVehicles(filePath);
-        success &= airManager.outAirVehicle(filePath);
-        success &= spaceManager.outSpaceVehicle(filePath);
+        success &= airManager.outAirVehicles(filePath);
+        success &= spaceManager.outSpaceVehicles(filePath);
 
         return success;
     }
@@ -103,11 +112,11 @@ public class Database {
         return success;
     }
 
- public boolean exchangeParts(String sourceSerial, String targetSerial) {
+    public boolean exchangeParts(String sourceSerial, String targetSerial) {
         Scanner scanner = new Scanner(System.in);
 
-        object sourceVehicle = searchVehicleBySerial(sourceSerial);
-        object targetVehicle = searchVehicleBySerial(targetSerial);
+        Object sourceVehicle = searchVehicleBySerial(sourceSerial);
+        Object targetVehicle = searchVehicleBySerial(targetSerial);
 
         if (sourceVehicle == null || targetVehicle == null) {
             System.out.println("One or both vehicles could not be found.");
