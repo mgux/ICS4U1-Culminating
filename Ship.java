@@ -317,7 +317,7 @@ public class Ship extends WaterVehicle {
       return tankInShip;
     }
     
-   public Aricraft[] getAllAricraft(){
+   public Aircraft[] getAllAricraft(){
       return aircraftInShip;
     }
     
