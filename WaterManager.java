@@ -22,21 +22,14 @@ public class WaterManager {
          waterStorage = new ArrayList<WaterVehicle>();
     }
 
-    public boolean addShip(double fuelCapacity, boolean isNuclearPowered, int engineNum, int manufactureYear, String location,
-                           int cost, int speed, int tankStorage, int jetStorage, int aircraftStorage,
-                           int rocketStorage, String shipType, int guns, int parts, int minParts, int maxParts, int altitude,
-                           boolean docked) {
-        Ship newShip = new Ship(fuelCapacity, isNuclearPowered, engineNum, manufactureYear, location, cost, speed,
-                                tankStorage, jetStorage, aircraftStorage, rocketStorage, shipType, guns, parts, minParts, maxParts, altitude, docked);
+    public boolean addShip(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts, int buoyancy, int numberOfGuns, String type, int maxTankStorage, int maxJetStorage, int maxSubmarineStorage, int maxRocketStorage, int maxAircraftStorage, boolean docked) {
+        Ship newShip = new Ship(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts, buoyancy, numberOfGuns, type, maxTankStorage, maxJetStorage, maxSubmarineStorage, maxRocketStorage, maxAircraftStorage, docked);
         waterStorage.add(newShip);
         return true;
     }
 
-    public boolean addSubmarine(double fuelCapacity, boolean isNuclearPowered, int engineNum, int manufactureYear, String location,
-                                 int cost, int speed, int torpedoStorage, int visibility, int maxDepth,
-                                 int tankStorage, int jetStorage, int parts, int minParts, int maxParts, boolean docked) {
-        Submarine newSubmarine = new Submarine(fuelCapacity, isNuclearPowered, engineNum, manufactureYear, location, cost, speed,
-                                               torpedoStorage, visibility, maxDepth, tankStorage, jetStorage, parts, minParts, maxParts, docked);
+    public boolean addSubmarine(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int minParts, int maxParts, int depth, int nomberOfTorpedos, int underWaterVisibility, int maxTorpedos, boolean docked){
+        Submarine newSubmarine = new Submarine(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, minParts, maxParts, depth, nomberOfTorpedos, underWaterVisibility, maxTorpedos, docked);
         waterStorage.add(newSubmarine);
         return true;
     }
@@ -285,12 +278,12 @@ public void addSubmarineFromConsole() {
         return true;
     }
 
-    public Repair getLastRepair(String serial) {
+    public Repairs getLastRepair(String serial) {
         WaterVehicle vehicle = searchVehicleSerial(serial);
         if (vehicle == null) {
             return null;
         }
-        return vehicle.getLastRepair();
+        return vehicle.getMostRecentRepair();
     }
 
     public WaterVehicle searchVehicleSerial(String serial) {
@@ -302,15 +295,6 @@ public void addSubmarineFromConsole() {
         return null;
     }
 
-    public ArrayList<WaterVehicle> searchVehicleWingNumber(int wingNum) {
-        ArrayList<WaterVehicle> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterStorage) {
-            if (vehicle.getWingNum() == wingNum) {
-                result.add(vehicle);
-            }
-        }
-        return result;
-    }
 
     public ArrayList<WaterVehicle> searchVehicleManufactureLocation(int year, String location) {
         ArrayList<WaterVehicle> result = new ArrayList<>();
@@ -332,7 +316,7 @@ public void addSubmarineFromConsole() {
 
     public boolean isBeingCarried(String serial) {
         Submarine sub = (Submarine) searchVehicleSerial(serial);
-        return sub != null && sub.isBeingCarried();
+        return sub != null && sub.getContainedVehicle() != null;
     }
 
     public boolean reloadAllPossibleSubmarine() {
@@ -340,7 +324,8 @@ public void addSubmarineFromConsole() {
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
-                if (sub.reload()) {
+                if (isBeingCarried(sub.getSerialNum()) == false) {
+                  sub.setNumberOfTorpedos(sub.getMaxTorpedos());
                     reloaded = true;
                 }
             }
@@ -354,8 +339,8 @@ public void addSubmarineFromConsole() {
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Ship) {
                 Ship ship = (Ship) vehicle;
-                if (ship.getGuns() > maxGuns) {
-                    maxGuns = ship.getGuns();
+                if (ship.getNumberOfGuns() > maxGuns) {
+                    maxGuns = ship.getNumberOfGuns();
                     result = ship;
                 }
             }
@@ -369,8 +354,8 @@ public void addSubmarineFromConsole() {
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
-                if (sub.getVisibility() > maxVisibility) {
-                    maxVisibility = sub.getVisibility();
+                if (sub.getUnderWaterVisibility() > maxVisibility) {
+                    maxVisibility = sub.getUnderWaterVisibility();
                     result = sub;
                 }
             }
@@ -384,8 +369,8 @@ public void addSubmarineFromConsole() {
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
-                if (sub.getMaxDepth() > maxDepth) {
-                    maxDepth = sub.getMaxDepth();
+                if (sub.getDepth() > maxDepth) {
+                    maxDepth = sub.getDepth();
                     result = sub;
                 }
             }
@@ -399,8 +384,8 @@ public void addSubmarineFromConsole() {
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
-                if (sub.getTorpedoStorage() > maxTorpedoStorage) {
-                    maxTorpedoStorage = sub.getTorpedoStorage();
+                if (sub.getMaxTorpedos() > maxTorpedoStorage) {
+                    maxTorpedoStorage = sub.getMaxTorpedos();
                     result = sub;
                 }
             }
@@ -411,7 +396,7 @@ public void addSubmarineFromConsole() {
     public ArrayList<WaterVehicle> findAllWaterNuclearPowered() {
         ArrayList<WaterVehicle> result = new ArrayList<>();
         for (WaterVehicle vehicle : waterStorage) {
-            if (vehicle.isNuclearPowered()) {
+            if (vehicle.getIsNuclearPowered() == true) {
                 result.add(vehicle);
             }
         }
@@ -423,7 +408,7 @@ public void addSubmarineFromConsole() {
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
-                if (sub.isEmpty()) {
+                if (sub.getNumberOfTorpedos() == 0) {
                     result.add(sub);
                 }
             }
@@ -448,16 +433,6 @@ public void addSubmarineFromConsole() {
         ArrayList<WaterVehicle> result = new ArrayList<>();
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle.getLocation().equals(location)) {
-                result.add(vehicle);
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<WaterVehicle> getAllDocked() {
-        ArrayList<WaterVehicle> result = new ArrayList<>();
-        for (WaterVehicle vehicle : waterStorage) {
-            if (vehicle.isDocked()) {
                 result.add(vehicle);
             }
         }
@@ -560,8 +535,8 @@ public void addSubmarineFromConsole() {
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Ship) {
                 Ship ship = (Ship) vehicle;
-                if (ship.getTankStorage() > maxTankStorage) {
-                    maxTankStorage = ship.getTankStorage();
+                if (ship.getMaxTankStorage() > maxTankStorage) {
+                    maxTankStorage = ship.getMaxTankStorage();
                     result = ship;
                 }
             }
@@ -576,8 +551,8 @@ public void addSubmarineFromConsole() {
        for (WaterVehicle vehicle : waterStorage) {
            if (vehicle instanceof Ship) {
                Ship ship = (Ship) vehicle;
-               if (ship.getJetStorageCapacity() > maxJetStorage) {
-                   maxJetStorage = ship.getJetStorageCapacity();
+               if (ship.getMaxJetStorage() > maxJetStorage) {
+                   maxJetStorage = ship.getMaxJetStorage();
                    maxJetStorageShip = ship;
                }
            }
@@ -593,8 +568,8 @@ public void addSubmarineFromConsole() {
        for (WaterVehicle vehicle : waterStorage) {
            if (vehicle instanceof Ship) {
                Ship ship = (Ship) vehicle;
-               if (ship.getAircraftStorageCapacity() > maxAircraftStorage) {
-                   maxAircraftStorage = ship.getAircraftStorageCapacity();
+               if (ship.getMaxAircraftStorage() > maxAircraftStorage) {
+                   maxAircraftStorage = ship.getMaxAircraftStorage();
                    maxAircraftStorageShip = ship;
                }
            }
@@ -610,8 +585,8 @@ public void addSubmarineFromConsole() {
        for (WaterVehicle vehicle : waterStorage) {
            if (vehicle instanceof Ship) {
                Ship ship = (Ship) vehicle;
-               if (ship.getRocketStorageCapacity() > maxRocketStorage) {
-                   maxRocketStorage = ship.getRocketStorageCapacity();
+               if (ship.getMaxRocketStorage() > maxRocketStorage) {
+                   maxRocketStorage = ship.getMaxRocketStorage();
                    maxRocketStorageShip = ship;
                }
            }
@@ -627,8 +602,8 @@ public void addSubmarineFromConsole() {
        for (WaterVehicle vehicle : waterStorage) {
            if (vehicle instanceof Ship) {
                Ship ship = (Ship) vehicle;
-               if (ship.getSubmarineStorageCapacity() > maxSubmarineStorage) {
-                   maxSubmarineStorage = ship.getSubmarineStorageCapacity();
+               if (ship.getMaxSubmarineStorage() > maxSubmarineStorage) {
+                   maxSubmarineStorage = ship.getMaxSubmarineStorage();
                    maxSubmarineStorageShip = ship;
                }
            }
@@ -644,7 +619,7 @@ public void addSubmarineFromConsole() {
            for (WaterVehicle vehicle : waterStorage) {
                if (vehicle instanceof Ship) {
                    Ship ship = (Ship) vehicle;
-                   if (ship.isCarryingSubmarine((Submarine) submarine)) {
+                   if (submarine.getContainedVehicle()==ship) {
                        return ship;
                    }
                }
