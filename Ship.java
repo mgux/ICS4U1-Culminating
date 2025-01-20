@@ -220,7 +220,7 @@ public class Ship extends WaterVehicle {
          for(Tank i : tankInShip){
             if(i.getSerialNum() == serial){
                tankInShip.remove(i);
-               tank.setContainedVehicle(null);
+               i.setContainedVehicle(null);
                return true;
             }
         }
@@ -231,7 +231,7 @@ public class Ship extends WaterVehicle {
          for(Jet i : jetInShip){
             if(i.getSerialNum() == serial){
                jetInShip.remove(i);
-               jet.setContainedVehicle(null);
+               i.setContainedVehicle(null);
                return true;
             }
         }
@@ -242,7 +242,7 @@ public class Ship extends WaterVehicle {
          for(Aircraft i : aircraftInShip){
             if(i.getSerialNum() == serial){
                aircraftInShip.remove(i);
-               aircraft.setContainedVehicle(null);
+               i.setContainedVehicle(null);
                return true;
             }
         }
@@ -253,7 +253,7 @@ public class Ship extends WaterVehicle {
          for(Rocket i : rocketInShip){
             if(i.getSerialNum() == serial){
                rocketInShip.remove(i);
-               rocket.setContainedVehicle(null);
+               i.setContainedVehicle(null);
                return true;
             }
         }
@@ -264,7 +264,7 @@ public class Ship extends WaterVehicle {
          for(Submarine i : submarineInShip){
             if(i.getSerialNum() == serial){
                submarineInShip.remove(i);
-               submarine.setContainedVehicle(null);
+               i.setContainedVehicle(null);
                return true;
             }
         }
