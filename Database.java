@@ -1,19 +1,10 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Database {
     private LandManager landManager = new LandManager();
     private WaterManager waterManager = new WaterManager();
     private AirManager airManager = new AirManager();
     private SpaceManager spaceManager = new SpaceManager();
-
-    public Database(LandManager landManager, WaterManager waterManager, AirManager airManager, SpaceManager spaceManager) {
-        this.landManager = landManager;
-        this.waterManager = waterManager;
-        this.airManager = airManager;
-        this.spaceManager = spaceManager;
-    }
-
     public void findMostExpensiveVehicle() {
         ArrayList<Integer> mostExpensives = new ArrayList<>();
         AirVehicle mostExpensiveAir;
@@ -59,44 +50,62 @@ public class Database {
         }
 
     }
-
-    public void findFastestVehicle() {
+    
+ public void findFastestVehicle() {
         Object fastest = null;
         int highestSpeed = Integer.MIN_VALUE;
-
+        int choice;
         Object fastestWater = waterManager.findFastestWater();
         if (fastestWater instanceof WaterVehicle && ((WaterVehicle) fastestWater).getSpeed() > highestSpeed) {
             highestSpeed = ((WaterVehicle) fastestWater).getSpeed();
             fastest = fastestWater;
+            choice = 0;
         }
 
         Object fastestLand = landManager.findFastestLand();
         if (fastestLand instanceof LandVehicle && ((LandVehicle) fastestLand).getSpeed() > highestSpeed) {
             highestSpeed = ((LandVehicle) fastestLand).getSpeed();
             fastest = fastestLand;
+            choice = 1;
         }
 
         Object fastestAir = airManager.findFastestAircraft();
         if (fastestAir instanceof AirVehicle && ((AirVehicle) fastestAir).getSpeed() > highestSpeed) {
             highestSpeed = ((AirVehicle) fastestAir).getSpeed();
             fastest = fastestAir;
+            choice = 2;
         }
 
         Object fastestSpace = spaceManager.findFastestSpace();
         if (fastestSpace instanceof SpaceVehicle && ((SpaceVehicle) fastestSpace).getSpeed() > highestSpeed) {
             highestSpeed = ((SpaceVehicle) fastestSpace).getSpeed();
             fastest = fastestSpace;
+            choice = 3;
         }
-        System.out.println("Fastest vehicle: " + fastest.getSerialNum());
+        switch(choice){
+            case 1:
+                System.out.println("Fastest vehicle: " + ((WaterVehicle)fastest).getSerialNum());
+                break;
+            case 2:
+                System.out.println("Fastest vehicle: " + ((LandVehicle)fastest).getSerialNum());
+                break;
+
+            case 3:
+                System.out.println("Fastest vehicle: " + ((AirVehicle)fastest).getSerialNum());
+                break;
+            case 4:
+                System.out.println("Fastest vehicle: " + ((SpaceVehicle)fastest).getSerialNum());
+                break;
+                }
     }
 
     public boolean exportToFile(String filePath) {
         boolean success = true;
 
-        success &= waterManager.outWaterVehicles(filePath);
+        success &= waterManager.outWaterVehicle(filePath);
         success &= landManager.outLandVehicles(filePath);
-        success &= airManager.outAirVehicles(filePath);
-        success &= spaceManager.outSpaceVehicles(filePath);
+        success &= airManager.outAirVehicle(filePath);
+        success &= spaceManager.outSpaceVehicle(filePath);
 
         return success;
     }
@@ -112,11 +121,11 @@ public class Database {
         return success;
     }
 
-    public boolean exchangeParts(String sourceSerial, String targetSerial) {
+ public boolean exchangeParts(String sourceSerial, String targetSerial) {
         Scanner scanner = new Scanner(System.in);
 
-        Object sourceVehicle = searchVehicleBySerial(sourceSerial);
-        Object targetVehicle = searchVehicleBySerial(targetSerial);
+        object sourceVehicle = searchVehicleBySerial(sourceSerial);
+        object targetVehicle = searchVehicleBySerial(targetSerial);
 
         if (sourceVehicle == null || targetVehicle == null) {
             System.out.println("One or both vehicles could not be found.");
