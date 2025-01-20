@@ -312,27 +312,22 @@ public class Ship extends WaterVehicle {
         return (this.getMaxRocketStorage() - other.getMaxRocketStorage());
     }
     
-    //get contained vehicles
-    public Tank[] getAllTank(){
-      return tankInShip;
+    public ArrayList<Tank> getAllTanks() {
+        return tanksInShip;
     }
-    
-   public Aircraft[] getAllAricraft(){
-      return aircraftInShip;
+
+    public ArrayList<Aircraft> getAllAircraft() {
+        return aircraftInShip;
     }
-    
-   public Rocket[] getAllRocket(){
-      return rocketInShip;
+
+    public ArrayList<Rocket> getAllRockets() {
+        return rocketsInShip;
     }
-    
-   public Jet[] getAllJet(){
-      return jetInShip;
+
+    public ArrayList<Jet> getAllJets() {
+        return jetsInShip;
     }
-    
-   public ArrayList<Submarine> getAllSubmarine(){
-      return submarineInShip;
-    }
-    
+        
    //Check if broken
    public boolean isBroken()
    {
