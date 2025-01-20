@@ -111,11 +111,13 @@ public class Submarine extends WaterVehicle{
     }
     
     //class methods
-   public double shootTorpedo(int amount){
+   public boolean shootTorpedo(int amount){
       if(amount > numberOfTorpedos){
          System.out.println("Not enough torpedos to shoot");
+         return false;
       }else{
       this.numberOfTorpedos = numberOfTorpedos - amount;
+      return true;
       }
    }
    
@@ -134,7 +136,7 @@ public String toString() {
     return super.toString() +
            "Depth: " + depth + "\n" +
            "Number of Torpedos: " + numberOfTorpedos + "\n" +
-           "Underwater Visibility: " + underWaterVisibilty + "\n" +
+           "Underwater Visibility: " + underWaterVisibility + "\n" +
            "Max Torpedos: " + maxTorpedos + "\n" +
            "Docked: " + docked + "\n";
 }
