@@ -17,168 +17,141 @@ import java.util.*;
 
 public abstract class WaterVehicle {
 
-  //class fields
-   private double fuelCapacity;
-   private boolean isNuclearPowered;
-   private int manufactureYear;
-   private String serialNum;
-   private int speed;
-   private String location;
-   private int cost;
-   private int parts;
-   private int maxParts;
-   private int minParts;
-   public final int PART_SWAP_WORTH = 1;
-   private ArrayList<Repairs> repairHistory = new ArrayList<>(); 
-   
-   // Constructor
-   public WaterVehicle(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts) {
-      this.fuelCapacity = fuelCapacity;
-      this.isNuclearPowered = isNuclearPowered;
-      this.manufactureYear = manufactureYear;
-      this.serialNum = serialNum;
-      this.speed = speed;
-      this.location = location;
-      this.cost = cost;
-      this.parts = parts;
-      this.maxParts = maxParts;
-      this.minParts = minParts;
-   }
+   //class fields
+    private double fuelCapacity;
+    private boolean isNuclearPowered;
+    private int manufactureYear;
+    private String serialNum;
+    private int speed;
+    private String location;
+    private int cost;
+    private int parts;
+    private int maxParts;
+    private int minParts;
+    final static int PART_SWAP_WORTH = 1;
+    private ArrayList<Repairs> repairHistory = new ArrayList<>(); 
+    
+    // Constructor
+    public WaterVehicle(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts) {
+        this.fuelCapacity = fuelCapacity;
+        this.isNuclearPowered = isNuclearPowered;
+        this.manufactureYear = manufactureYear;
+        this.serialNum = serialNum;
+        this.speed = speed;
+        this.location = location;
+        this.cost = cost;
+        this.parts = parts;
+        this.maxParts = maxParts;
+        this.minParts = minParts;
+    }
 
-   // Accessor (Getter) Methods
-   public double getFuelCapacity() {
-      return fuelCapacity;
-   }
+    // Accessor (Getter) Methods
+    public double getFuelCapacity() {
+        return fuelCapacity;
+    }
 
-   public boolean getIsNuclearPowered() {
-      return isNuclearPowered;
-   }
+    public boolean getIsNuclearPowered() {
+        return isNuclearPowered;
+    }
 
-   public int getManufactureYear() {
-      return manufactureYear;
-   }
+    public int getManufactureYear() {
+        return manufactureYear;
+    }
 
-   public String getSerialNum() {
-      return serialNum;
-   }
+    public String getSerialNum() {
+        return serialNum;
+    }
 
-   public int getSpeed() {
-      return speed;
-   }
+    public int getSpeed() {
+        return speed;
+    }
 
-   public String getLocation() {
-      return location;
-   }
+    public String getLocation() {
+        return location;
+    }
 
-   public int getCost() {
-      return cost;
-   }
-   
-   
-   public int getParts()
-   {
-      return parts;
-   }
-   
-   public int getMaxParts()
-   {
-      return maxParts;
-   }
-   
-   public int getMinParts()
-   {
-      return minParts;
-   }
-   // Mutator (Setter) Methods
-   public void setFuelCapacity(double fuelCapacity) {
-      this.fuelCapacity = fuelCapacity;
-   }
+    public int getCost() {
+        return cost;
+    }
 
-   public void setIsNuclearPowered(boolean isNuclearPowered) {
-      this.isNuclearPowered = isNuclearPowered;
-   }
+    // Mutator (Setter) Methods
+    public void setFuelCapacity(double fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
+    }
 
-   public void setManufactureYear(int manufactureYear) {
-      this.manufactureYear = manufactureYear;
-   }
+    public void setIsNuclearPowered(boolean isNuclearPowered) {
+        this.isNuclearPowered = isNuclearPowered;
+    }
 
-   public void setSerialNum(String serialNum) {
-      this.serialNum = serialNum;
-   }
+    public void setManufactureYear(int manufactureYear) {
+        this.manufactureYear = manufactureYear;
+    }
 
-   public void setSpeed(int speed) {
-      this.speed = speed;
-   }
+    public void setSerialNum(String serialNum) {
+        this.serialNum = serialNum;
+    }
 
-   public void setLocation(String location) {
-      this.location = location;
-   }
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 
-   public void setParts(int parts) {
-      this.parts = parts;
-   }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-   public void setMaxParts(int maxParts) {
-      this.maxParts = maxParts;
-   }
+    public void setParts(int parts) {
+        this.parts = parts;
+    }
 
-   public void setMinParts(int minParts) {
-      this.minParts = minParts;
-   }
+    public void setMaxParts(int maxParts) {
+        this.maxParts = maxParts;
+    }
 
-   public void setCost(int cost) {
-      this.cost = cost;
-   }
+    public void setMinParts(int minParts) {
+        this.minParts = minParts;
+    }
 
-   //compare methods
-   public double comparefuelCapacity(WaterVehicle other){
-      return (this.fuelCapacity - other.fuelCapacity);
-   }
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
 
-   public double compareSpeed(WaterVehicle other){
-      return (this.speed - other.speed);
-   }
+    //compare methods
+    public double comparefuelCapacity(WaterVehicle other){
+        return (this.fuelCapacity - other.fuelCapacity);
+    }
 
-   public double compareCost(WaterVehicle other){
-      return (this.cost - other.cost);
-   }
+    public double compareSpeed(WaterVehicle other){
+        return (this.speed - other.speed);
+    }
 
-   //class methods
-   public boolean addRepair(){
-      Repairs r = new Repairs(this);
-      repairHistory.add(r);
-      return true;
-   }
-   
-   public boolean removeParts(int remove){
-      this.parts = parts - remove;
-      return true;
-   }
-   
-   public Repairs getMostRecentRepair(){
-      Repairs mostRecentRepair = repairHistory.get(0);
-      for (int i = 1; i < repairHistory.size(); i++){
-         mostRecentRepair = mostRecentRepair.compareRepairTime(repairHistory.get(0));
-      }
-      return mostRecentRepair;
-   }
-   
-   //abstract methods
-   public abstract boolean isBroken();
+    public double compareCost(WaterVehicle other){
+        return (this.cost - other.cost);
+    }
 
-   //toString
-public String toString() {
-    return "Fuel Capacity: " + fuelCapacity + "\n" +
-           "Nuclear Powered: " + isNuclearPowered + "\n" +
-           "Manufacture Year: " + manufactureYear + "\n" +
-           "Serial Number: " + serialNum + "\n" +
-           "Speed: " + speed + "\n" +
-           "Location: " + location + "\n" +
-           "Cost: " + cost + "\n" +
-           "Parts: " + parts + "\n" +
-           "Max Parts: " + maxParts + "\n" +
-           "Min Parts: " + minParts + "\n";
-}
+    //class methods
+    public boolean addRepair(){
+        repairHistory.add(Repairs);
+    }
+    
+    public boolean removeParts(int remove){
+        this.parts = parts - remove;
+    }
+    
+    public Repairs getMostRecentRepair(){
+        Repairs mostRecentRepair = repairHistory.indexOf(0);
+        for(Repairs i : repairHistory){
+            if(i.getRepairDate < mostRecentRepair.getRepairDate){
+                mostRecentRepair = i;
+            }
+        }
+        return mostRecentRepair;
+    }
+    
+    //abstract methods
+    public abstract boolean isBroken();
 
-
+    //toString
+    public String toString(){
+        return "";
+    }
 }
