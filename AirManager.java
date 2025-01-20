@@ -1,9 +1,50 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+
+/*
+* Programmer: Michael Gu
+* Last Updated: 2025-01-20
+* This program manages the air vehicles (jet and aircraft) with different methods
+* */
 
 public class AirManager {
     private final int CUR_YEAR = 2025;
-    private int currentNum = 0;
-    private ArrayList<AirVehicle> airVehicles = new ArrayList<>();
+    private ArrayList<AirVehicle> airVehicles;
+
+    public AirManager() {
+        airVehicles = new ArrayList<AirVehicle>();
+    }
+
+    public boolean outAirVehicles(String s)
+    {
+        boolean isOut = true;
+        BufferedWriter out;
+        try
+        {
+            out = new BufferedWriter(new FileWriter(s, true));
+            for (int i = 0; i < airVehicles.size(); i++)
+            {
+                if (airVehicles.get(i) instanceof Aircraft)
+                {
+                    out.write("Aircraft\n");
+                }
+                else
+                {
+                    out.write("Jet\n");
+                }
+                out.write((airVehicles.get(i)).toString());
+            }
+            out.close();
+        }
+        catch (IOException io)
+        {
+            isOut = false;
+        }
+        return isOut;
+    }
+
 
     public void sortManufactureLocation() {
         int n = airVehicles.size();
@@ -197,6 +238,44 @@ public class AirManager {
         return (Aircraft) airVehicles.get(index);
     }
 
+    public AirVehicle findMostExpensiveAirVehicle() {
+        AirVehicle air = null;
+        for (int i = 0; i < airVehicles.size(); i++)
+        {
+            if (air == null)
+            {
+                air = airVehicles.get(i);
+            }
+            else
+            {
+                if (air.compareCost(airVehicles.get(i)) < 0) {
+                    air = airVehicles.get(i);
+                }
+            }
+        }
+        return air;
+    }
+
+    public boolean repairAirVehicle(String s)
+    {
+        AirVehicle temp = searchVehicleSerial(s);
+        if (temp == null)
+        {
+            return false;
+        }
+        return temp.addRepair();
+    }
+
+    public boolean updateParts(String s, int n)
+    {
+        AirVehicle temp = searchVehicleSerial(s);
+        if (temp == null)
+        {
+            return false;
+        }
+        return temp.removeParts(n);
+    }
+
     public Aircraft mostExpensiveAircraft() {
         int price = 0;
         int index = 0;
@@ -240,14 +319,14 @@ public class AirManager {
         return airWingNum;
     }
 
-    public boolean addAircraft(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int partSwapWorth, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int maxJetStorage, int parts, int minParts, int maxParts) {
-        Aircraft newAircraft = new Aircraft(engineNum,  wingNum,  manufactureYear,  speed,  location,  cost,  altitude,  partSwapWorth,  cargoWeight,  storage,  maxCargoWeight,  maxJeepStorage,  parts,  minParts,  maxParts);
+    public boolean addAircraft(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int maxJetStorage, int parts, int minParts, int maxParts) {
+        Aircraft newAircraft = new Aircraft(engineNum,  wingNum,  manufactureYear,  speed,  location,  cost,  altitude,  cargoWeight,  storage,  maxCargoWeight,  maxJeepStorage,  parts,  minParts,  maxParts);
         airVehicles.add(newAircraft);
         return true;
     }
 
     public boolean addJet(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int partSwapWorth, String missileType, int agility, int storageTaken, int parts, int minParts, int maxParts) {
-        Jet newJet = new Jet(engineNum,  wingNum,  manufactureYear,  speed,  location,  cost,  altitude,  partSwapWorth,  missileType,  agility,  storageTaken, parts, minParts, maxParts);
+        Jet newJet = new Jet(engineNum,  wingNum,  manufactureYear,  speed,  location,  cost,  altitude,  missileType,  agility,  storageTaken, parts, minParts, maxParts);
         airVehicles.add(newJet);
         return true;
     }
@@ -270,8 +349,4 @@ public class AirManager {
         return findJet.getContainedObject();
     }
 
-
-    public AirManager() {
-
-    }
 }
