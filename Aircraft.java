@@ -7,13 +7,14 @@ public class Aircraft extends AirVehicle{
     private int maxJeepStorage;
     private int maxJetStorage;
     private int currentJeeps = 0;
+    private Ship containedObject = null;
 
     private ArrayList<Jeep> jeepInAircraft = new ArrayList<>();
-    private ArrayList<Repairs> repairHistory = new ArrayList<Repairs>();
+    private ArrayList<Repairs> repairHistory = new ArrayList<>();
 
 
-    public Aircraft(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int partSwapWorth, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int parts, int minParts, int maxParts) {
-        super(engineNum, wingNum, manufactureYear, speed, location, cost, altitude, partSwapWorth,parts,minParts,maxParts);
+    public Aircraft(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int parts, int minParts, int maxParts) {
+        super(engineNum, wingNum, manufactureYear, speed, location, cost, altitude,parts,minParts,maxParts);
         this.cargoWeight = cargoWeight;
         this.storage = storage;
         this.maxCargoWeight = maxCargoWeight;
@@ -69,6 +70,14 @@ public class Aircraft extends AirVehicle{
 
     public int compareSpeed(Aircraft aircraft) {
         return this.getSpeed() - aircraft.getSpeed();
+    }
+
+    public Ship getContainedObject() {
+        return containedObject;
+    }
+
+    public void setContainedObject(Ship containedObject) {
+        this.containedObject = containedObject;
     }
 
     public int getCargoWeight() {
