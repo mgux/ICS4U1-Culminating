@@ -8,13 +8,14 @@ public class Jet extends AirVehicle{
     private String missileType;
     private int agility;
     private int storageTaken;
-    private Ship containedObject = null;
+    private Ship containedObject;
 
-    public Jet(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, String missileType, int agility, int storageTaken, int parts, int minParts, int maxParts) {
-        super(engineNum, wingNum, manufactureYear, speed, location, cost, altitude,parts,minParts,maxParts);
+    public Jet(int engineNum, int wingNum, int manufactureYear, String serialNum, int speed, String location, int cost, int altitude, String missileType, int agility, int storageTaken, int parts, int minParts, int maxParts) {
+        super(engineNum, wingNum, manufactureYear, serialNum, speed, location, cost, altitude,parts,minParts,maxParts);
         this.agility = agility;
         this.missileType = missileType;
         this.storageTaken = storageTaken;
+        containedObject = null;
     }
 
     public int compareAgility(Jet jet) {
