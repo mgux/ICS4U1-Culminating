@@ -1,15 +1,14 @@
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Database {
-    private LandManager LandManager = new LandManager();
+    private LandManager landManager = new LandManager();
     private WaterManager WaterManager = new WaterManager();
     private AirManager AirManager = new AirManager();
     private SpaceManager SpaceManager = new SpaceManager();
 
     public Database(LandManager landManager, WaterManager waterManager, AirManager airManager, SpaceManager spaceManager) {
-        this.LandManager = landManager;
+        this.landManager = landManager;
         this.WaterManager = waterManager;
         this.AirManager = airManager;
         this.SpaceManager = spaceManager;
@@ -27,7 +26,7 @@ public class Database {
 
         mostExpensiveAir = AirManager.findMostExpensiveAirVehicle();
         mostExpensiveWater = WaterManager.findMostExpensiveWaterVehicle();
-        mostExpensiveLand = LandManager.findMostExpensiveLand();
+        mostExpensiveLand = landManager.findMostExpensiveLand();
         mostExpensiveSpace = SpaceManager.findMostExpensiveSpace();
         int mostExpensiveAirValue = mostExpensiveAir.getCost();
         int mostExpensiveWaterValue = mostExpensiveWater.getCost();
@@ -61,53 +60,55 @@ public class Database {
 
     }
 
-//    public void findFastestVehicle() {
-//        Object fastest = null;
-//        int highestSpeed = Integer.MIN_VALUE;
-//        int choice = -1;
-//        Object fastestWater = WaterManager.findFastestWater();
-//        if (fastestWater instanceof WaterVehicle && ((WaterVehicle) fastestWater).getSpeed() > highestSpeed) {
-//            highestSpeed = ((WaterVehicle) fastestWater).getSpeed();
-//            fastest = fastestWater;
-//            choice = 0;
-//        }
-//
-//        Object fastestLand = LandManager.findFastestLand();
-//        if (fastestLand instanceof LandVehicle && ((LandVehicle) fastestLand).getSpeed() > highestSpeed) {
-//            highestSpeed = ((LandVehicle) fastestLand).getSpeed();
-//            fastest = fastestLand;
-//            choice = 1;
-//        }
-//
-//        Object fastestAir = AirManager.findFastestAircraft();
-//        if (fastestAir instanceof AirVehicle && ((AirVehicle) fastestAir).getSpeed() > highestSpeed) {
-//            highestSpeed = ((AirVehicle) fastestAir).getSpeed();
-//            fastest = fastestAir;
-//            choice = 2;
-//        }
-//
-//        Object fastestSpace = SpaceManager.findFastestSpace();
-//        if (fastestSpace instanceof SpaceVehicle && ((SpaceVehicle) fastestSpace).getSpeed() > highestSpeed) {
-//            highestSpeed = ((SpaceVehicle) fastestSpace).getSpeed();
-//            fastest = fastestSpace;
-//            choice = 3;
-//        }
-//        switch(choice){
-//            case 1:
-//                System.out.println("Fastest vehicle: " + ((WaterVehicle)fastest).getSerialNum());
-//                break;
-//            case 2:
-//                System.out.println("Fastest vehicle: " + ((LandVehicle)fastest).getSerialNum());
-//                break;
-//
-//            case 3:
-//                System.out.println("Fastest vehicle: " + ((AirVehicle)fastest).getSerialNum());
-//                break;
-//            case 4:
-//                System.out.println("Fastest vehicle: " + ((SpaceVehicle)fastest).getSerialNum());
-//                break;
-//        }
-//    }
+    public void findFastestVehicle() {
+        Object fastest = null;
+        int highestSpeed = 0;
+        int choice = -1;
+        Object fastestWater = WaterManager.findFastestWater();
+        if (fastestWater != null && ((WaterVehicle) fastestWater).getSpeed() > highestSpeed) {
+            highestSpeed = ((WaterVehicle) fastestWater).getSpeed();
+            fastest = fastestWater;
+            choice = 0;
+        }
+
+        Object fastestLand = landManager.findFastestLand();
+        if (fastestLand != null && ((LandVehicle) fastestLand).getSpeed() > highestSpeed) {
+            highestSpeed = ((LandVehicle) fastestLand).getSpeed();
+            fastest = fastestLand;
+            choice = 1;
+        }
+
+        Object fastestAir = AirManager.findFastestAirVehicle();
+        if (fastestAir != null && ((AirVehicle) fastestAir).getSpeed() > highestSpeed) {
+            highestSpeed = ((AirVehicle) fastestAir).getSpeed();
+            fastest = fastestAir;
+            choice = 2;
+        }
+
+        Object fastestSpace = SpaceManager.findFastestSpace();
+        if (fastestSpace != null && ((SpaceVehicle) fastestSpace).getSpeed() > highestSpeed) {
+            highestSpeed = ((SpaceVehicle) fastestSpace).getSpeed();
+            fastest = fastestSpace;
+            choice = 3;
+        }
+        switch(choice){
+            case 0:
+                System.out.println("Fastest vehicle: " + ((WaterVehicle)fastest).getSerialNum());
+                break;
+            case 1:
+                System.out.println("Fastest vehicle: " + ((LandVehicle)fastest).getSerialNum());
+                break;
+
+            case 2:
+                System.out.println("Fastest vehicle: " + ((AirVehicle)fastest).getSerialNum());
+                break;
+            case 3:
+                System.out.println("Fastest vehicle: " + ((SpaceVehicle)fastest).getSerialNum());
+                break;
+        }
+
+        System.out.println(choice);
+    }
 
     public boolean exchangeParts(String sourceSerial, String targetSerial) {
         Scanner scanner = new Scanner(System.in);
@@ -118,7 +119,7 @@ public class Database {
         // Determine the type of the source vehicle
         if ((sourceVehicle = WaterManager.searchVehicleSerial(sourceSerial)) != null) {
             System.out.println("Source vehicle is a WaterVehicle.");
-        } else if ((sourceVehicle = LandManager.searchSerial(sourceSerial)) != null) {
+        } else if ((sourceVehicle = landManager.searchSerial(sourceSerial)) != null) {
             System.out.println("Source vehicle is a LandVehicle.");
         } else if ((sourceVehicle = AirManager.searchVehicleSerial(sourceSerial)) != null) {
             System.out.println("Source vehicle is an AirVehicle.");
@@ -132,7 +133,7 @@ public class Database {
         // Determine the type of the target vehicle
         if ((targetVehicle = WaterManager.searchVehicleSerial(targetSerial)) != null) {
             System.out.println("Target vehicle is a WaterVehicle.");
-        } else if ((targetVehicle = LandManager.searchSerial(targetSerial)) != null) {
+        } else if ((targetVehicle = landManager.searchSerial(targetSerial)) != null) {
             System.out.println("Target vehicle is a LandVehicle.");
         } else if ((targetVehicle = AirManager.searchVehicleSerial(targetSerial)) != null) {
             System.out.println("Target vehicle is an AirVehicle.");
