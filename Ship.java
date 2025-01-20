@@ -34,7 +34,7 @@ public class Ship extends WaterVehicle {
     private ArrayList<Aircraft> aircraftInShip; 
 
     // Constructor
-    public Ship(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts, int buoyancy, int numberOfGuns, String type, int maxTankStorage, int maxJetStorage, int maxSubmarineStorage, int maxRocketStorage, int maxAircraftStorage, boolean docked) {
+       public Ship(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts, int buoyancy, int numberOfGuns, String type, int maxTankStorage, int maxJetStorage, int maxSubmarineStorage, int maxRocketStorage, int maxAircraftStorage, boolean docked) {
         super(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts);
         this.buoyancy = buoyancy;
         this.numberOfGuns = numberOfGuns;
@@ -127,7 +127,6 @@ public class Ship extends WaterVehicle {
     //add methods
     public boolean addTank(Tank tank) {
         String serialNumOfTank = tank.getSerialNum();
-        if (!LandManager.isCarriedTank(serialNumOfTank)) {
             if (tankInShip.size() < maxTankStorage) {
                 tankInShip.add(tank);
                 tank.setContainedVehicle(this);
@@ -136,16 +135,11 @@ public class Ship extends WaterVehicle {
                 System.out.println("Cannot add Tank. Maximum tank storage reached!");
                 return false;
             }
-        } else {
-            System.out.println("Tank with serial number " + serialNumOfTank + " is already on the ship.");
-            return false;
-        }
     }
     
     
     public boolean addAricraft(Aircraft aircraft) {
         String serialNumOfAircraft = aircraft.getSerialNum();
-        if (!AirManager.isCarriedAircraft(serialNumOfAircraft)) {
             if (aircraftInShip.size() < maxAircraftStorage) {
                 aircraftInShip.add(aircraft);
                 aircraft.setContainedVehicle(this);
@@ -154,35 +148,25 @@ public class Ship extends WaterVehicle {
                 System.out.println("Cannot add Aircraft. Maximum Aircraft storage reached!");
                 return false;
             }
-        } else {
-            System.out.println("Aircraft with serial number " + serialNumOfAircraft + " is already on the ship.");
-            return false;
-        }
     }
     
     
     public boolean addJet(Jet jet) {
         String serialNumOfJet = jet.getSerialNum();
-        if (!AirManager.isCarriedJet(serialNumOfJet)) {
             if (jetInShip.size() < maxJetStorage) {
                 jetInShip.add(jet);
-                jet.setContainedVehicle(this);
+                jet.setContainedObject(this);
                 return true;
             } else {
                 System.out.println("Cannot add Jet. Maximum jet storage reached!");
                 return false;
             }
-        } else {
-            System.out.println("Jet with serial number " + serialNumOfJet + " is already on the ship.");
-            return false;
-        }
     }
     
 
     public boolean addSubmarine(Submarine submarine) {
         String serialNumOfSubmarine = submarine.getSerialNum();
-        if (!WaterManager.isCarriedSubmarine(serialNumOfSubmarine)) {
-            if (submarineInShip.size() < maxSubmarineStorage) {
+                  if (submarineInShip.size() < maxSubmarineStorage) {
                 submarineInShip.add(submarine);
                 submarine.setContainedVehicle(this);
                 return true;
@@ -190,28 +174,19 @@ public class Ship extends WaterVehicle {
                 System.out.println("Cannot add Submarine. Maximum submarine storage reached!");
                 return false;
             }
-        } else {
-            System.out.println("Submarine with serial number " + serialNumOfSubmarine + " is already on the ship.");
-            return false;
-        }
     }
     
 
     public boolean addRocket(Rocket rocket) {
         String serialNumOfRocket = rocket.getSerialNum();
-        if (!SpaceManager.isCarriedRocket(serialNumOfRocket)) {
-            if (rocketInShip.size() < maxRocketStorage) {
+                   if (rocketInShip.size() < maxRocketStorage) {
                 rocketInShip.add(rocket);
-                submarine.setContainedVehicle(this);
+                rocket.setContainedVehicle(this);
                 return true;
             } else {
                 System.out.println("Cannot add Rocket. Maximum rocket storage reached!");
                 return false;
             }
-        } else {
-            System.out.println("Rocket with serial number " + serialNumOfRocket + " is already on the ship.");
-            return false;
-        }
     }
     
     
@@ -231,7 +206,7 @@ public class Ship extends WaterVehicle {
          for(Jet i : jetInShip){
             if(i.getSerialNum() == serial){
                jetInShip.remove(i);
-               i.setContainedVehicle(null);
+               i.setContainedObject(null);
                return true;
             }
         }
@@ -313,7 +288,7 @@ public class Ship extends WaterVehicle {
     }
     
     public ArrayList<Tank> getAllTanks() {
-        return tanksInShip;
+        return tankInShip;
     }
 
     public ArrayList<Aircraft> getAllAircraft() {
@@ -321,11 +296,11 @@ public class Ship extends WaterVehicle {
     }
 
     public ArrayList<Rocket> getAllRockets() {
-        return rocketsInShip;
+        return rocketInShip;
     }
 
     public ArrayList<Jet> getAllJets() {
-        return jetsInShip;
+        return jetInShip;
     }
         
    //Check if broken
