@@ -7,7 +7,7 @@ public class Aircraft extends AirVehicle{
     private int maxJeepStorage;
     private int maxJetStorage;
     private int currentJeeps = 0;
-    private Ship containedObject = null;
+    private Ship containedVehicle = null;
 
     private ArrayList<Jeep> jeepInAircraft = new ArrayList<>();
     private ArrayList<Repairs> repairHistory = new ArrayList<>();
@@ -49,9 +49,6 @@ public class Aircraft extends AirVehicle{
         return null;
     }
 
-
-
-
     public int compareEngineNum(Aircraft aircraft) {
         return this.getEngineNum() - aircraft.getEngineNum();
     }
@@ -72,12 +69,12 @@ public class Aircraft extends AirVehicle{
         return this.getSpeed() - aircraft.getSpeed();
     }
 
-    public Ship getContainedObject() {
-        return containedObject;
+    public Ship getContainedVehicle() {
+        return containedVehicle;
     }
 
-    public void setContainedObject(Ship containedObject) {
-        this.containedObject = containedObject;
+    public void setContainedVehicle(Ship containedVehicle) {
+        this.containedVehicle = containedVehicle;
     }
 
     public int getCargoWeight() {
