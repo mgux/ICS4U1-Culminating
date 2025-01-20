@@ -1,7 +1,3 @@
-// Java Program to Print Colored Text in Console
-
-// Importing input output classes
-import java.io.*;
 import java.util.Scanner;
 
 // Main class
@@ -36,6 +32,13 @@ public class Main {
     }
 
     public static void printMenu() {
+
+         LandManager landManager = new LandManager();
+         WaterManager waterManager = new WaterManager();
+         AirManager airManager = new AirManager();
+         SpaceManager spaceManager = new SpaceManager();
+        Database database = new Database(landManager, waterManager, airManager, spaceManager);
+
         System.out.print(ANSI_YELLOW);
         System.out.println("\n" +
                 "▗▖  ▗▖▗▄▄▄▖▗▖ ▗▖▗▄▄▄▖ ▗▄▄▖▗▖   ▗▄▄▄▖    ▗▖  ▗▖ ▗▄▖ ▗▖  ▗▖ ▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▄▖ \n" +
@@ -57,8 +60,20 @@ public class Main {
         System.out.println("[3] - Find Certain Air Vehicle");
         System.out.println("[2] - Find Certain Water Vehicle");
         System.out.println("[3] - Find Certain Space Vehicle");
+        System.out.println("[4] - IMPORT EXISTING VEHICLE DATA");
+        System.out.println("[5] - EXPORT CURRENT VEHICLE DATA");
         System.out.println();
         System.out.print("Enter Selection: ");
         selection = sc.nextInt();
+
+        switch(selection) {
+            case 0:
+               // database.findFastestVehicle();
+
+            case 1:
+                landManager.readJeepVehicle("Data.txt");
+
+        }
+
     }
 }
