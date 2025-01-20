@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public abstract class AirVehicle {
     final static int PART_SWAP_WORTH = 3;
+    private int engineNum;
     private int wingNum;
     private int manufactureYear;
     private String serialNum;
@@ -18,10 +19,11 @@ public abstract class AirVehicle {
 
     private ArrayList<Repairs> repairHistory = new ArrayList<>();
 
-    public AirVehicle(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int parts, int maxParts,int minParts) {
+    public AirVehicle(int engineNum, int wingNum, int manufactureYear, String serialNum, int speed, String location, int cost, int altitude, int parts, int maxParts,int minParts) {
         this.engineNum = engineNum;
         this.wingNum = wingNum;
         this.manufactureYear = manufactureYear;
+        this.serialNum = serialNum;
         this.speed = speed;
         this.location = location;
         this.cost = cost;
@@ -31,7 +33,7 @@ public abstract class AirVehicle {
         this.maxParts = maxParts;
     }
 
-    private int engineNum;
+
 
     public int getEngineNum() {
         return engineNum;
@@ -138,8 +140,11 @@ public abstract class AirVehicle {
         return this.wingNum - air.wingNum;
     }
 
-    public int compareSpeed(AirVehicle air) {
-        return this.speed - air.speed;
+    public AirVehicle compareSpeed(AirVehicle air) {
+        if (this.speed > air.speed) {
+            return this;
+        }
+        return air;
     }
 
     public int compareCost(AirVehicle air) {
@@ -167,7 +172,6 @@ public abstract class AirVehicle {
         if (parts < minParts) {
             return true;
         }
-
         return false;
     }
 
