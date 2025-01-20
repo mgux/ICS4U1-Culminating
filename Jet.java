@@ -1,11 +1,17 @@
+/*
+* Programmer: Michael Gu
+* Last Updated: 2025-01-20
+* This is the jet class
+* */
+
 public class Jet extends AirVehicle{
     private String missileType;
     private int agility;
     private int storageTaken;
     private Ship containedObject = null;
 
-    public Jet(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int partSwapWorth, String missileType, int agility, int storageTaken, int parts, int minParts, int maxParts) {
-        super(engineNum, wingNum, manufactureYear, speed, location, cost, altitude, partSwapWorth,parts,minParts,maxParts);
+    public Jet(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, String missileType, int agility, int storageTaken, int parts, int minParts, int maxParts) {
+        super(engineNum, wingNum, manufactureYear, speed, location, cost, altitude,parts,minParts,maxParts);
         this.agility = agility;
         this.missileType = missileType;
         this.storageTaken = storageTaken;
@@ -45,6 +51,10 @@ public class Jet extends AirVehicle{
 
     public void setMissileType(String missileType) {
         this.missileType = missileType;
+    }
+
+    public void setContainedObject(Ship ship) {
+        containedObject = ship;
     }
 
 
