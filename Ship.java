@@ -304,11 +304,11 @@ public class Ship extends WaterVehicle {
         return (this.getMaxSubmarineStorage() - other.getMaxSubmarineStorage());
     }
 
-    public double JetCapacity(Jet other){
+    public double JetCapacity(Ship other){
         return (this.getMaxJetStorage() - other.getMaxJetStorage());
     }
     
-    public double RocketCapacity(Rocket other){
+    public double RocketCapacity(Ship other){
         return (this.getMaxRocketStorage() - other.getMaxRocketStorage());
     }
     
