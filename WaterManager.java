@@ -18,10 +18,12 @@ public class WaterManager {
     private final int CUR_YEAR = 2025;
     private ArrayList<WaterVehicle> waterStorage;
 
+   //constructor
     public WaterManager() {
         waterStorage = new ArrayList<WaterVehicle>();
     }
 
+   //adds ship or submarine
     public boolean addShip(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts, int buoyancy, int numberOfGuns, String type, int maxTankStorage, int maxJetStorage, int maxSubmarineStorage, int maxRocketStorage, int maxAircraftStorage, boolean docked) {
         Ship newShip = new Ship(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts, buoyancy, numberOfGuns, type, maxTankStorage, maxJetStorage, maxSubmarineStorage, maxRocketStorage, maxAircraftStorage, docked);
         waterStorage.add(newShip);
@@ -33,6 +35,8 @@ public class WaterManager {
         waterStorage.add(newSubmarine);
         return true;
     }
+    
+    //readsShip from file
     public boolean readShip(String fileName) {
         boolean isRead = true;
         BufferedReader in;
@@ -71,6 +75,7 @@ public class WaterManager {
         return isRead;
     }
 
+   //reads Submarine from file
     public boolean readSubmarine(String fileName) {
         boolean isRead = true;
         BufferedReader in;
@@ -108,6 +113,7 @@ public class WaterManager {
         return isRead;
     }
 
+   //Outputs all water Vehicles
     public boolean outWaterVehicles(String fileName) {
         boolean isOut = true;
         BufferedWriter out;
@@ -129,6 +135,7 @@ public class WaterManager {
         return isOut;
     }
 
+   //Finds all water vehicles over age
     public ArrayList<WaterVehicle> findOverAge(int age) {
         ArrayList<WaterVehicle> waterOverAge = new ArrayList<>();
 
@@ -141,6 +148,7 @@ public class WaterManager {
     }
 
 
+   //Adds ship from console
     public void addShipFromConsole() {
         Scanner scanner = new Scanner(System.in);
 
@@ -210,6 +218,7 @@ public class WaterManager {
         }
     }
 
+   //Adds submarine from console
     public void addSubmarineFromConsole() {
         Scanner scanner = new Scanner(System.in);
 
@@ -268,6 +277,7 @@ public class WaterManager {
     }
 
 
+   //Removes water vehicle with a serial number
     public boolean removeWaterVehicle(String serial) {
         WaterVehicle vehicle = searchVehicleSerial(serial);
         if (vehicle == null) {
@@ -286,6 +296,7 @@ public class WaterManager {
         return true;
     }
 
+   //Repairs water vehicle given serial
     public boolean repairWaterVehicle(String serial) {
         WaterVehicle vehicle = searchVehicleSerial(serial);
         if (vehicle == null || vehicle.getParts() == vehicle.getMaxParts()) {
@@ -295,6 +306,7 @@ public class WaterManager {
         return true;
     }
 
+   //Gets last repair given serial
     public Repairs getLastRepair(String serial) {
         WaterVehicle vehicle = searchVehicleSerial(serial);
         if (vehicle == null) {
@@ -303,6 +315,7 @@ public class WaterManager {
         return vehicle.getMostRecentRepair();
     }
 
+   //Searches for a specific vehicle given serial
     public WaterVehicle searchVehicleSerial(String serial) {
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle.getSerialNum().equals(serial)) {
@@ -312,7 +325,7 @@ public class WaterManager {
         return null;
     }
 
-
+   //Gets vehcile given manufacture Date and location
     public ArrayList<WaterVehicle> searchVehicleManufactureLocation(int year, String location) {
         ArrayList<WaterVehicle> result = new ArrayList<>();
         for (WaterVehicle vehicle : waterStorage) {
@@ -323,25 +336,29 @@ public class WaterManager {
         return result;
     }
 
+   //Sorts with serial lethographically
     public void sortSerial() {
         waterStorage.sort((v1, v2) -> v1.getSerialNum().compareTo(v2.getSerialNum()));
     }
 
+   //Sorts with manufacturer location lethographically
     public void sortManufactureLocation() {
         waterStorage.sort((v1, v2) -> v1.getLocation().compareTo(v2.getLocation()));
     }
 
+   //Indicates the vehicle if it is being carried or not
     public boolean isBeingCarried(String serial) {
         Submarine sub = (Submarine) searchVehicleSerial(serial);
         return sub != null && sub.getContainedVehicle() != null;
     }
 
+   //Sets all Submarines torpedo back to max as long as its carried
     public boolean reloadAllPossibleSubmarine() {
         boolean reloaded = false;
         for (WaterVehicle vehicle : waterStorage) {
             if (vehicle instanceof Submarine) {
                 Submarine sub = (Submarine) vehicle;
-                if (isBeingCarried(sub.getSerialNum()) == false) {
+                if (isBeingCarried(sub.getSerialNum()) == true) {
                     sub.setNumberOfTorpedos(sub.getMaxTorpedos());
                     reloaded = true;
                 }
@@ -349,7 +366,9 @@ public class WaterManager {
         }
         return reloaded;
     }
-
+    
+    
+   // finds ship with most guns
     public Ship findShipWithMostGuns() {
         Ship result = null;
         int maxGuns = 0;
@@ -365,6 +384,7 @@ public class WaterManager {
         return result;
     }
 
+   //finds submarine with most visibility
     public Submarine findSubmarineWithMostVisibility() {
         Submarine result = null;
         int maxVisibility = 0;
@@ -380,6 +400,7 @@ public class WaterManager {
         return result;
     }
 
+   //Finds deepest submarine
     public Submarine findDeepestSubmarine() {
         Submarine result = null;
         int maxDepth = 0;
@@ -395,6 +416,7 @@ public class WaterManager {
         return result;
     }
 
+   //Finds submarine with most torpedo storage
     public Submarine findSubmarineWithMostTorpedoStorage() {
         Submarine result = null;
         int maxTorpedoStorage = 0;
@@ -410,6 +432,7 @@ public class WaterManager {
         return result;
     }
 
+   //Arraylist return of all water Nuclear pwoer
     public ArrayList<WaterVehicle> findAllWaterNuclearPowered() {
         ArrayList<WaterVehicle> result = new ArrayList<>();
         for (WaterVehicle vehicle : waterStorage) {
@@ -420,6 +443,7 @@ public class WaterManager {
         return result;
     }
 
+   //Gets all empty submarines
     public ArrayList<Submarine> getEmptySubmarines() {
         ArrayList<Submarine> result = new ArrayList<>();
         for (WaterVehicle vehicle : waterStorage) {
@@ -433,6 +457,7 @@ public class WaterManager {
         return result;
     }
 
+   //Gets all ship of a certain type
     public ArrayList<Ship> getAllShipOfType(String type) {
         ArrayList<Ship> result = new ArrayList<>();
         for (WaterVehicle vehicle : waterStorage) {
@@ -446,6 +471,7 @@ public class WaterManager {
         return result;
     }
 
+   //Finds all watervehicles at a specific location
     public ArrayList<WaterVehicle> findAtLocation(String location) {
         ArrayList<WaterVehicle> result = new ArrayList<>();
         for (WaterVehicle vehicle : waterStorage) {
@@ -456,6 +482,7 @@ public class WaterManager {
         return result;
     }
 
+   //Finds the fastest water vehicle
     public WaterVehicle findFastestWater()
     {
         WaterVehicle temp = null;
@@ -473,6 +500,7 @@ public class WaterManager {
         return temp;
     }
 
+   //Finds the fastest ship
     public Ship findFastestShip() {
         Ship result = null;
         int maxSpeed = 0;
@@ -488,6 +516,7 @@ public class WaterManager {
         return result;
     }
 
+   //Finds the fastest submarine
     public Submarine findFastestSubmarine() {
         Submarine result = null;
         int maxSpeed = 0;
@@ -503,6 +532,7 @@ public class WaterManager {
         return result;
     }
 
+   //Finds the ship with the most fuel
     public Ship findMostFuelShip() {
         Ship result = null;
         double maxFuel = 0;
@@ -518,6 +548,7 @@ public class WaterManager {
         return result;
     }
 
+   //Finds the submarine with the most fuel
     public Submarine findMostFuelSubmarine() {
         Submarine result = null;
         double maxFuel = 0;
@@ -533,6 +564,7 @@ public class WaterManager {
         return result;
     }
 
+   //Finds the most expensive submarine
     public Submarine findMostExpensiveSubmarine() {
         Submarine result = null;
         int maxCost = 0;
@@ -548,6 +580,7 @@ public class WaterManager {
         return result;
     }
 
+     //finst the most expensive ship
     public Ship findMostExpensiveShip() {
         Ship result = null;
         int maxCost = 0;
@@ -563,6 +596,7 @@ public class WaterManager {
         return result;
     }
 
+   //finds the most expensive water vehicle
     public WaterVehicle findMostExpensiveWaterVehicle() {
         WaterVehicle waterVehicle = null;
         for (int i = 0; i < waterStorage.size(); i++)
@@ -580,6 +614,8 @@ public class WaterManager {
         }
         return waterVehicle;
     }
+      
+      //gets the most tank Storage ship
 
     public Ship findMostTankStorageShip() {
         Ship result = null;
@@ -595,6 +631,8 @@ public class WaterManager {
         }
         return result;
     }
+
+      //gets the most jet Storage ship
 
     public Ship findMostJetStorageShip() {
         Ship maxJetStorageShip = null;
@@ -613,6 +651,8 @@ public class WaterManager {
         return maxJetStorageShip;
     }
 
+      //gets the most Aircraft Storage ship
+
     public Ship findMostAircraftStorageShip() {
         Ship maxAircraftStorageShip = null;
         int maxAircraftStorage = 0;
@@ -629,6 +669,8 @@ public class WaterManager {
 
         return maxAircraftStorageShip;
     }
+
+      //gets the most rocket Storage ship
 
     public Ship findMostRocketStorageShip() {
         Ship maxRocketStorageShip = null;
@@ -647,6 +689,8 @@ public class WaterManager {
         return maxRocketStorageShip;
     }
 
+      //gets the most tank Submarine ship
+
     public Ship findMostSubmarineStorageShip() {
         Ship maxSubmarineStorageShip = null;
         int maxSubmarineStorage = 0;
@@ -663,6 +707,8 @@ public class WaterManager {
 
         return maxSubmarineStorageShip;
     }
+    
+      //Indicates what ship a specified submarine is carried in 
 
     public Ship isCarriedSubmarine(String serial) {
         Submarine submarine = (Submarine)searchVehicleSerial(serial);
