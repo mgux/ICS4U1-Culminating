@@ -27,11 +27,20 @@ public class Database {
         return spaceManager;
     }
 
+
     public Database(LandManager l, WaterManager w, AirManager a, SpaceManager s) {
         this.landManager = l;
         this.waterManager = w;
         this.airManager = a;
         this.spaceManager = s;
+    }
+
+    public void sortManufactureLocation() {
+        landManager.sortmanufactureLocation();
+        waterManager.sortManufactureLocation();
+        spaceManager.sortmanufactureLocation();
+        airManager.sortManufactureLocation();
+        System.out.println("Sorting was successful.");
     }
 
     public void searchSerial(String serial) {
