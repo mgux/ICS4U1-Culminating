@@ -760,6 +760,10 @@ public class Database {
                 System.out.println("Fastest vehicle: " + ((SpaceVehicle)fastest).getSerialNum());
                 break;
         }
+
+        if (choice == -1) {
+            System.out.println("No vehicles in database!");
+        }
     }
 
     public boolean exchangeParts(String sourceSerial, String targetSerial) {
