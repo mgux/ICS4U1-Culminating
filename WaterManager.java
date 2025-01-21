@@ -24,12 +24,14 @@ public class WaterManager {
     }
 
    //adds ship or submarine
+    //add ship
     public boolean addShip(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts, int buoyancy, int numberOfGuns, String type, int maxTankStorage, int maxJetStorage, int maxSubmarineStorage, int maxRocketStorage, int maxAircraftStorage, boolean docked) {
         Ship newShip = new Ship(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts, buoyancy, numberOfGuns, type, maxTankStorage, maxJetStorage, maxSubmarineStorage, maxRocketStorage, maxAircraftStorage, docked);
         waterStorage.add(newShip);
         return true;
     }
 
+    //add submarine
     public boolean addSubmarine(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int minParts, int maxParts, int depth, int nomberOfTorpedos, int underWaterVisibility, int maxTorpedos, boolean docked){
         Submarine newSubmarine = new Submarine(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, minParts, maxParts, depth, nomberOfTorpedos, underWaterVisibility, maxTorpedos, docked);
         waterStorage.add(newSubmarine);
@@ -113,7 +115,7 @@ public class WaterManager {
         return isRead;
     }
 
-   //Outputs all water Vehicles
+   //Outputs all water Vehicles to a file
     public boolean outWaterVehicles(String fileName) {
         boolean isOut = true;
         BufferedWriter out;
@@ -135,7 +137,7 @@ public class WaterManager {
         return isOut;
     }
 
-   //Finds all water vehicles over age
+   //Finds all water vehicles over a certain age
     public ArrayList<WaterVehicle> findOverAge(int age) {
         ArrayList<WaterVehicle> waterOverAge = new ArrayList<>();
 
@@ -148,7 +150,7 @@ public class WaterManager {
     }
 
 
-   //Adds ship from console
+   //Adds ship from console 
     public void addShipFromConsole() {
         Scanner scanner = new Scanner(System.in);
 
@@ -709,7 +711,7 @@ public class WaterManager {
     }
     
       //Indicates what ship a specified submarine is carried in 
-
+    
     public Ship isCarriedSubmarine(String serial) {
         Submarine submarine = (Submarine)searchVehicleSerial(serial);
 
