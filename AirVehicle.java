@@ -17,6 +17,7 @@ public abstract class AirVehicle {
     private int maxParts;
     private int minParts;
 
+
     private ArrayList<Repairs> repairHistory = new ArrayList<>();
 
     public AirVehicle(int engineNum, int wingNum, int manufactureYear, String serialNum, int speed, String location, int cost, int altitude, int parts, int maxParts,int minParts) {
@@ -176,7 +177,8 @@ public abstract class AirVehicle {
     }
 
     public String toString() {
-        return "Engine Number: " + engineNum + "\nWing Number: " + wingNum + "\nManufacture Year: " + manufactureYear + "\nSerial Number: " + serialNum + "\nSpeed: " + speed + "\nLocation: " + location + "\nCost: " + cost + "\nAltitude" + altitude + "\nParts: " + parts +"\nMinparts: " + minParts  + "\nMaxparts: " + maxParts + "\nPart Swap Worth: " + PART_SWAP_WORTH;
+        return engineNum + "\n" + wingNum + "\n" + manufactureYear + "\n" + serialNum + "\n" + speed + "\n" + location + "\n" + cost + "\n" + altitude + "\n" + parts +"\n" + maxParts  + "\n" + minParts + "\n";
     }
+
 
 }
