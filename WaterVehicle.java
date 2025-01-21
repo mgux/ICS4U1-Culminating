@@ -131,10 +131,12 @@ public abstract class WaterVehicle {
     }
 
     //compare methods
+    //compares fuel capacity
     public double comparefuelCapacity(WaterVehicle other){
         return (this.fuelCapacity - other.fuelCapacity);
     }
 
+    //compares speed
     public WaterVehicle compareSpeed(WaterVehicle other){
         if (this.speed > other.speed) {
             return this;
@@ -142,6 +144,7 @@ public abstract class WaterVehicle {
         return other;
     }
 
+    //compares cost
     public double compareCost(WaterVehicle other){
         return (this.cost - other.cost);
     }
@@ -150,20 +153,20 @@ public abstract class WaterVehicle {
 
     //class methods
     
-    //adds a repair
+    //adds a repair to the vehicles repairhistory
     public boolean addRepair(){
         Repairs r = new Repairs(this);
         repairHistory.add(r);
         return true;
     }
 
-   //method to remove parts
+   //method to remove parts 
     public boolean removeParts(int remove){
         this.parts = parts - remove;
         return true;
     }
 
-   //method to get most recent exist repair (dosnt have to be completed repair)
+   //method to get most recent exist repair (dosnt have to be completed repair) returns the most recent repair
     public Repairs getMostRecentRepair(){
         Repairs mostRecentRepair = repairHistory.get(0);
         for (int i = 1; i < repairHistory.size(); i++){
@@ -172,9 +175,10 @@ public abstract class WaterVehicle {
         return mostRecentRepair;
     }
 
-    //abstract methods
+    //abstract methods 
     public abstract boolean isBroken();
 
+    //toString method
     public String toString() {
         return fuelCapacity +
                 "\n" + isNuclearPowered +
