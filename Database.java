@@ -246,6 +246,291 @@ public class Database {
         }
     }
 
+    public boolean addVehicle()
+   {
+      Scanner sc = new Scanner(System.in);
+      String s = " ";
+      boolean b = false;
+      while (!s.equals("Jeep") && !s.equals("Tank") && !s.equals("Aircraft") && !s.equals("Jet") && !s.equals("Ship") && !s.equals("Submarine") && !s.equals("Satellite") && !s.equals("Rocket"))
+      {
+         System.out.print("Enter a type of vehicle: ");
+         s = sc.nextLine();
+         if (!s.equals("Jeep") && !s.equals("Tank") && !s.equals("Aircraft") && !s.equals("Jet") && !s.equals("Ship") && !s.equals("Submarine") && !s.equals("Satellite") && !s.equals("Rocket"))
+         {
+            System.out.println("Please make sure your input is formatted correctly!");
+         }
+      }
+      while (!b)
+      {
+         try
+         {
+            if (s.equals("Jeep"))
+            {
+               int n1, n2, n3, n4, n5, n6, n7, n8, n9;
+               double d;
+               String s1, s2;
+               System.out.print("Enter all qualities of the added Jeep");
+               n1 = sc.nextInt();
+               n2 = sc.nextInt();
+               n3 = sc.nextInt();
+               s1 = SerialNumGeneration.landVehicleGeneration();
+               n4 = sc.nextInt();
+               sc.nextLine();
+               s2 = sc.nextLine();
+               n5 = sc.nextInt();
+               n6 = sc.nextInt();
+               n7 = sc.nextInt();
+               n8 = sc.nextInt();
+               n9 = sc.nextInt();
+               d = sc.nextDouble();
+               landManager.addJeep(n1, n2, n3, s1, n4, s2, n5, n6, n7, n8, n9, d);
+            }
+            else if (s.equals("Tank"))
+            {
+               int n1, n2, n3, n4, n5, n6, n7, n8, n9;
+               double d;
+               String s1, s2;
+               System.out.print("Enter all qualities of the added Tank");
+               n1 = sc.nextInt();
+               n2 = sc.nextInt();
+               n3 = sc.nextInt();
+               s1 = SerialNumGeneration.landVehicleGeneration();
+               n4 = sc.nextInt();
+               sc.nextLine();
+               s2 = sc.nextLine();
+               n5 = sc.nextInt();
+               n6 = sc.nextInt();
+               n7 = sc.nextInt();
+               n8 = sc.nextInt();
+               n9 = sc.nextInt();
+               d = sc.nextDouble();
+               landManager.addJeep(n1, n2, n3, s1, n4, s2, n5, n6, n7, n8, n9, d);
+            }
+            else if (s.equals("Ship"))
+            {
+               double fuelCapacity;
+               boolean isNuclearPowered;
+               int manufactureYear;
+               String serialNum;
+               int speed;
+               String location;
+               int cost;
+               int parts;
+               int maxParts;
+               int minParts;
+               int buoyancy;
+               int numberOfGuns;
+               String type;
+               int maxTankStorage;
+               int maxJetStorage;
+               int maxSubmarineStorage;
+               int maxRocketStorage;
+               int maxAircraftStorage;
+               boolean docked;
+               System.out.println("Enter all qualities of the added Ship:");
+               fuelCapacity = sc.nextDouble();
+               isNuclearPowered = sc.nextBoolean();
+               manufactureYear = sc.nextInt();
+               serialNum = SerialNumGeneration.waterVehicleGeneration();
+               speed = sc.nextInt();
+               sc.nextLine();
+               location = sc.nextLine();
+               cost = sc.nextInt();
+               parts = sc.nextInt();
+               maxParts = sc.nextInt();
+               minParts = sc.nextInt();
+               buoyancy = sc.nextInt();
+               numberOfGuns = sc.nextInt();
+               sc.nextLine();
+               type = sc.nextLine();
+               maxTankStorage = sc.nextInt();
+               maxJetStorage = sc.nextInt();
+               maxSubmarineStorage = sc.nextInt();
+               maxRocketStorage = sc.nextInt();
+               maxAircraftStorage = sc.nextInt();
+               docked = sc.nextBoolean();
+               waterManager.addShip(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts, buoyancy, numberOfGuns, type, maxTankStorage, maxJetStorage, maxSubmarineStorage, maxRocketStorage, maxAircraftStorage, docked);
+            }
+            else if (s.equals("Submarine"))
+            {
+               double fuelCapacity;
+               boolean isNuclearPowered;
+               int manufactureYear;
+               String serialNum;
+               int speed;
+               String location;
+               int cost;
+               int parts;
+               int minParts;
+               int maxParts;
+               int depth;
+               int numberOfTorpedos;
+               int underWaterVisibility;
+               int maxTorpedos;
+               boolean docked;
+               System.out.println("Enter all qualities of the added Submarine: ");
+               fuelCapacity = sc.nextInt();
+               isNuclearPowered = sc.nextBoolean();
+               manufactureYear = sc.nextInt();
+               serialNum = SerialNumGeneration.waterVehicleGeneration();
+               speed = sc.nextInt();
+               sc.nextLine();
+               location = sc.nextLine();
+               cost = sc.nextInt();
+               parts = sc.nextInt();
+               maxParts = sc.nextInt();
+               minParts = sc.nextInt();
+               depth = sc.nextInt();
+               numberOfTorpedos = sc.nextInt();
+               underWaterVisibility = sc.nextInt();
+               maxTorpedos = sc.nextInt();
+               docked = sc.nextBoolean();
+               waterManager.addSubmarine(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, minParts, maxParts, depth, numberOfTorpedos, underWaterVisibility, maxTorpedos, docked);
+            }
+            else if (s.equals("Aircraft"))
+            {
+               int engineNum;
+               int wingNum;
+               int manufactureYear;
+               String serialNum;
+               int speed;
+               String location;
+               int cost;
+               int altitude;
+               int cargoWeight;
+               double storage;
+               double maxCargoWeight;
+               int maxJeepStorage;
+               int parts;
+               int minParts;
+               int maxParts;
+               System.out.println("Enter all qualities of the Aircraft: ");
+               engineNum = sc.nextInt();
+               wingNum = sc.nextInt();
+               manufactureYear = sc.nextInt();
+               serialNum = SerialNumGeneration.airVehicleGeneration();
+               speed = sc.nextInt();
+               sc.nextLine();
+               location = sc.nextLine();
+               cost = sc.nextInt();
+               altitude = sc.nextInt();
+               cargoWeight = sc.nextInt();
+               storage = sc.nextDouble();
+               maxCargoWeight = sc.nextDouble();
+               maxJeepStorage = sc.nextInt();
+               parts = sc.nextInt();
+               minParts = sc.nextInt();
+               maxParts = sc.nextInt();
+               airManager.addAircraft(engineNum, wingNum, manufactureYear, serialNum, speed, location, cost, altitude, cargoWeight, storage, maxCargoWeight, maxJeepStorage, parts, minParts, maxParts);
+            }
+            else if (s.equals("Jet"))
+            {
+               int engineNum;
+               int wingNum;
+               int manufactureYear;
+               String serialNum;
+               int speed; 
+               String location; 
+               int cost;
+               int altitude; 
+               String missileType; 
+               int agility; 
+               int storageTaken; 
+               int parts; 
+               int minParts; 
+               int maxParts;
+               System.out.println("Enter all qualities of the Jet: ");
+               engineNum = sc.nextInt();
+               wingNum = sc.nextInt();
+               manufactureYear = sc.nextInt();
+               serialNum = SerialNumGeneration.airVehicleGeneration();
+               speed = sc.nextInt();
+               sc.nextLine();
+               location = sc.nextLine();
+               cost = sc.nextInt();
+               altitude = sc.nextInt();
+               sc.nextLine();
+               missileType = sc.nextLine();
+               agility = sc.nextInt();
+               storageTaken = sc.nextInt();
+               parts = sc.nextInt();
+               minParts = sc.nextInt();
+               maxParts = sc.nextInt();
+               airManager.addJet(engineNum,  wingNum,  manufactureYear,  serialNum, speed,  location,  cost,  altitude,  missileType,  agility,  storageTaken, parts, minParts, maxParts);
+            }
+            else if (s.equals("Satellite"))
+            {
+               int n1;
+               String s1;
+               int n2;
+               String s2;
+               int n3;
+               String s3;
+               int n4;
+               int n5;
+               int n6;
+               int n7;
+               double d1;
+               double d2;
+               System.out.println("Enter all qualities of the Satellite: ");
+               n1 = sc.nextInt();
+               sc.nextLine();
+               s1 = sc.nextLine();
+               n2 = sc.nextInt();
+               s2 = SerialNumGeneration.spaceVehicleGeneration();
+               n3 = sc.nextInt();
+               sc.nextLine();
+               s3 = sc.nextLine();
+               n4 = sc.nextInt();
+               n5 = sc.nextInt();
+               n6 = sc.nextInt();
+               n7 = sc.nextInt();
+               d1 = sc.nextDouble();
+               d2 = sc.nextDouble();
+               spaceManager.addSatellite(n1, s1, n2, s2, n3, s3, n4, n5, n6, n7, d1, d2);
+            }
+            else
+            {
+               int n1;
+               String s1;
+               int n2;
+               String s2;
+               int n3;
+               String s3;
+               int n4;
+               int n5;
+               int n6;
+               int n7;
+               int n8;
+               int n9;
+               int n10;
+               n1 = sc.nextInt();
+               sc.nextLine();
+               s1 = sc.nextLine();
+               n2 = sc.nextInt();
+               s2 = SerialNumGeneration.spaceVehicleGeneration();
+               n3 = sc.nextInt();
+               sc.nextLine();
+               s3 = sc.nextLine();
+               n4 = sc.nextInt();
+               n5 = sc.nextInt();
+               n6 = sc.nextInt();
+               n7 = sc.nextInt();
+               n8 = sc.nextInt();
+               n9 = sc.nextInt();
+               n10 = sc.nextInt();
+               spaceManager.addRocket(n1, s1, n2, s2, n3, s3, n4, n5, n6, n7, n8, n9, n10);
+            }
+         }
+         catch (InputMismatchException ime)
+         {
+            System.out.println("Please make sure your input is in the correct format!");
+            sc.nextLine();
+         }
+      }
+      return b;
+   }
+
     public void findMostExpensiveVehicle() {
         ArrayList<Integer> mostExpensives = new ArrayList<>();
         AirVehicle mostExpensiveAir;
