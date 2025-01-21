@@ -1,3 +1,11 @@
+/*
+Jeep.java
+Tianyue Zhao
+ICS4U1
+Jan 20th, 2025
+Description: Jeep class, with all methods needed to compare different Jeeps
+*/
+
 public class Jeep extends LandVehicle
 {
     private int storageSpace;
