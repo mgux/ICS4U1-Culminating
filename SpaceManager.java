@@ -1,3 +1,11 @@
+/*
+SpaceManager.java
+Tianyue Zhao
+ICS4U1
+Jan 20th, 2025
+Description: SpaceManager class, which has a variety of methods about searching and sorting all SpaceVehicles within it
+*/
+
 import java.util.*;
 import java.io.*;
 
@@ -6,69 +14,16 @@ public class SpaceManager
     final static int CUR_YEAR = 2025;
     private ArrayList<SpaceVehicle> spaceStorage;
 
-    public SpaceManager()
+    public SpaceManager() //Constructor
     {
         spaceStorage = new ArrayList<SpaceVehicle>();
     }
+    //Accessors and Mutators
     public int getCurSize()
     {
         return spaceStorage.size();
     }
-    public boolean readSatelliteVehicle(String s)
-    {
-        boolean isRead = true;
-        BufferedReader in;
-        try
-        {
-            in = new BufferedReader(new FileReader(s));
-            try
-            {
-                addSatellite(Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()), Double.parseDouble(in.readLine()));
-            }
-            catch (NumberFormatException nfx)
-            {
-                isRead = false;
-            }
-            catch (NullPointerException npx)
-            {
-                isRead = false;
-            }
-            in.close();
-        }
-        catch (IOException io)
-        {
-            isRead = false;
-        }
-        return isRead;
-    }
-    public boolean readRocketVehicle(String s)
-    {
-        boolean isRead = true;
-        BufferedReader in;
-        try
-        {
-            in = new BufferedReader(new FileReader(s));
-            try
-            {
-                addRocket(Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
-            }
-            catch (NumberFormatException nfx)
-            {
-                isRead = false;
-            }
-            catch (NullPointerException npx)
-            {
-                isRead = false;
-            }
-            in.close();
-        }
-        catch (IOException io)
-        {
-            isRead = false;
-        }
-        return isRead;
-    }
-    public boolean outSpaceVehicles(String s)
+    public boolean outSpaceVehicles(String s) //Outputs all SpaceVehicles in the Manager to a file
     {
         boolean isOut = true;
         BufferedWriter out;
@@ -96,17 +51,17 @@ public class SpaceManager
         }
         return isOut;
     }
-    public boolean addSatellite(int n1, String s1, int n2, String s2, int n3, String s3, int n4, int n5, int n6, int n7, double d1, double d2)
+    public boolean addSatellite(int n1, String s1, int n2, String s2, int n3, String s3, int n4, int n5, int n6, int n7, double d1, double d2) //Adds a Satellite to the ArrayList
     {
         spaceStorage.add(new Satellite(n1, s1, n2, s2, n3, s3, n4, n5, n6, n7, d1, d2));
         return true;
     }
-    public boolean addRocket(int n1, String s1, int n2, String s2, int n3, String s3, int n4, int n5, int n6, int n7, int n8, int n9, int n10)
+    public boolean addRocket(int n1, String s1, int n2, String s2, int n3, String s3, int n4, int n5, int n6, int n7, int n8, int n9, int n10) //Adds a Rocket to the ArrayList
     {
         spaceStorage.add(new Rocket(n1, s1, n2, s2, n3, s3, n4, n5, n6, n7, n8, n9, n10));
         return true;
     }
-    public SpaceVehicle searchSerial(String s)
+    public SpaceVehicle searchSerial(String s) //Searches for a serial and returns the SpaceVehicle, or null otherwise
     {
         SpaceVehicle sv = null;
         for (int i = 0; i < spaceStorage.size() && sv == null; i++)
@@ -118,7 +73,7 @@ public class SpaceManager
         }
         return sv;
     }
-    public boolean removeSpaceVehicle(String s)
+    public boolean removeSpaceVehicle(String s) //Removes a SpaceVehicle by the serial, or null if it does not exist
     {
         SpaceVehicle temp = searchSerial(s);
         if (temp != null)
@@ -128,7 +83,7 @@ public class SpaceManager
         }
         return false;
     }
-    public boolean updateParts(String s, int n)
+    public boolean updateParts(String s, int n //Updates parts of the SpaceVehicle
     {
         SpaceVehicle temp = searchSerial(s);
         if (temp == null)
@@ -137,7 +92,7 @@ public class SpaceManager
         }
         return temp.removeParts(n);
     }
-    public boolean repair(String s)
+    public boolean repair(String s) //Adds a repair to the SpaceVehile given serialNum
     {
         SpaceVehicle temp = searchSerial(s);
         if (temp == null)
@@ -146,7 +101,7 @@ public class SpaceManager
         }
         return temp.addRepair();
     }
-    public Repairs getLastRepair(String s)
+    public Repairs getLastRepair(String s) //Returns the last Repair of a SpaceVehile
     {
         SpaceVehicle sv = searchSerial(s);
         if (sv == null)
@@ -155,7 +110,7 @@ public class SpaceManager
         }
         return sv.getMostRecentRepairs();
     }
-    public SpaceVehicle[] searchManufactureLocation(int n, String s)
+    public SpaceVehicle[] searchManufactureLocation(int n, String s) //Returns an array of SpaceVehicles that have the same age and are at the same location
     {
         SpaceVehicle temp;
         int num = 0;
@@ -178,7 +133,7 @@ public class SpaceManager
         }
         return arr;
     }
-    public boolean sortSerial()
+    public boolean sortSerial() //Sorts the SerialNumbers using Selection Sort
     {
         SpaceVehicle temp;
         int index;
@@ -199,7 +154,7 @@ public class SpaceManager
         }
         return true;
     }
-    public boolean sortmanufactureLocation ()
+    public boolean sortmanufactureLocation () //Sorts by descending orde of Manufacturing year, with ties broken by lexicographical order of loation using bubble sort
     {
         SpaceVehicle temp;
         int index;
@@ -223,7 +178,7 @@ public class SpaceManager
         }
         return true;
     }
-    public SpaceVehicle findFastestSpace()
+    public SpaceVehicle findFastestSpace() //Returns the SpaceVehicle with the highest speed
     {
         SpaceVehicle temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -239,7 +194,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public SpaceVehicle findMostExpensiveSpace()
+    public SpaceVehicle findMostExpensiveSpace() //Returns the SpaceVehicle with the highest cost
     {
         SpaceVehicle temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -255,7 +210,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public SpaceVehicle findHighestSpace()
+    public SpaceVehicle findHighestSpace() //Returns the SpaceVehicle with the highest altitude
     {
         SpaceVehicle temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -271,7 +226,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Satellite findHighestSatellite()
+    public Satellite findHighestSatellite() //Returns the Satellite with the highest altitude, or null otherwise
     {
         Satellite temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -288,7 +243,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Satellite findMostExpensiveSatellite()
+    public Satellite findMostExpensiveSatellite() //Returns the Satellite with the highest cost, or null otherwise
     {
         Satellite temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -304,7 +259,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Satellite findFastestSatellite()
+    public Satellite findFastestSatellite() //Returns the Satellite with the highest speed, or null otherwise
     {
         Satellite temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -320,7 +275,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Satellite findMostPowerCostSatellite()
+    public Satellite findMostPowerCostSatellite() //Returns the Satellite with the highest powerCost, 
     {
         Satellite temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -336,7 +291,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Satellite findMaxSolarPanelSizeSatellite()
+    public Satellite findMaxSolarPanelSizeSatellite() //Returns the Satellite with the highest solarPanelSize, or null otherwise
     {
         Satellite temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -352,7 +307,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Rocket findMostExpensiveRocket()
+    public Rocket findMostExpensiveRocket() //Returns the Rocket with the highest cost, or null otherwise
     {
         Rocket temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -368,7 +323,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Rocket findFastestRocket()
+    public Rocket findFastestRocket() //Returns the Rocket with the highest speed, or null otherwise
     {
         Rocket temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -384,7 +339,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Rocket findHighestAltitudeRocket()
+    public Rocket findHighestAltitudeRocket() //Returns the Rocket with the highest altitude, or null otherwise
     {
         Rocket temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -401,7 +356,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Rocket findMostEngineRocket()
+    public Rocket findMostEngineRocket() //Returns the Rocket with most engines
     {
         Rocket temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -417,7 +372,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public Rocket findMaxEnginePowerRocket()
+    public Rocket findMaxEnginePowerRocket() //Returns the Rocket with the highest EnginePower
     {
         Rocket temp = null;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -433,7 +388,7 @@ public class SpaceManager
         }
         return temp;
     }
-    public SpaceVehicle[] findOverAge(int n)
+    public SpaceVehicle[] findOverAge(int n) //Returns an array of SpaceVehicles with age over a certain number
     {
         int num = 0;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -454,7 +409,7 @@ public class SpaceManager
         }
         return s;
     }
-    public SpaceVehicle[] findAllAtLocation(String s)
+    public SpaceVehicle[] findAllAtLocation(String s) //Returns all SpaceVehicles at a certain location
     {
         int num = 0;
         for (int i = 0; i < spaceStorage.size(); i++)
@@ -475,7 +430,7 @@ public class SpaceManager
         }
         return sv;
     }
-    public Rocket isCarriedSatellite(String s)
+    public Rocket isCarriedSatellite(String s) //Returns the Rocket that is carrying the Satellite, or null otherwise
     {
         SpaceVehicle sv = searchSerial(s);
         Satellite st;
@@ -486,7 +441,7 @@ public class SpaceManager
         }
         return null;
     }
-    public Ship isCarriedRocket(String s)
+    public Ship isCarriedRocket(String s) //Returns the Ship that is carrying the Rocket, or null otherwise
     {
         SpaceVehicle sv = searchSerial(s);
         Rocket r;
@@ -497,7 +452,7 @@ public class SpaceManager
         }
         return null;
     }
-    public ArrayList<Satellite> carryingSatellites(String s)
+    public ArrayList<Satellite> carryingSatellites(String s) //Returns the Satellites that the Rocket is carrying
     {
         SpaceVehicle sv = searchSerial(s);
         Rocket r;
