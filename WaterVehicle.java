@@ -4,8 +4,8 @@ Luke
 00/00/0000
 A.Y Jackson SS
 
-An abstract class that is also the parent class of Ship and Submarine. 
-It contains fields and abstract methods that all the waterVehicles should have, such as the fuel capacity and whether it is nuclear powered. 
+An abstract class that is also the parent class of Ship and Submarine.
+It contains fields and abstract methods that all the waterVehicles should have, such as the fuel capacity and whether it is nuclear powered.
 It also contains the parts' worth and all the comparison methods that are required for in waterManager.
 
 */
@@ -17,7 +17,7 @@ import java.util.*;
 
 public abstract class WaterVehicle {
 
-   //class fields
+    //class fields
     private double fuelCapacity;
     private boolean isNuclearPowered;
     private int manufactureYear;
@@ -28,9 +28,9 @@ public abstract class WaterVehicle {
     private int parts;
     private int maxParts;
     private int minParts;
-    final static int PART_SWAP_WORTH = 1;
-    private ArrayList<Repairs> repairHistory = new ArrayList<>(); 
-    
+    public final int PART_SWAP_WORTH = 1;
+    private ArrayList<Repairs> repairHistory = new ArrayList<>();
+
     // Constructor
     public WaterVehicle(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int maxParts, int minParts) {
         this.fuelCapacity = fuelCapacity;
@@ -74,6 +74,21 @@ public abstract class WaterVehicle {
         return cost;
     }
 
+
+    public int getParts()
+    {
+        return parts;
+    }
+
+    public int getMaxParts()
+    {
+        return maxParts;
+    }
+
+    public int getMinParts()
+    {
+        return minParts;
+    }
     // Mutator (Setter) Methods
     public void setFuelCapacity(double fuelCapacity) {
         this.fuelCapacity = fuelCapacity;
@@ -120,38 +135,54 @@ public abstract class WaterVehicle {
         return (this.fuelCapacity - other.fuelCapacity);
     }
 
-    public double compareSpeed(WaterVehicle other){
-        return (this.speed - other.speed);
+    public WaterVehicle compareSpeed(WaterVehicle other){
+        if (this.speed > other.speed) {
+            return this;
+        }
+        return other;
     }
 
     public double compareCost(WaterVehicle other){
         return (this.cost - other.cost);
     }
 
+
+
     //class methods
     public boolean addRepair(){
-        repairHistory.add(Repairs);
+        Repairs r = new Repairs(this);
+        repairHistory.add(r);
+        return true;
     }
-    
+
     public boolean removeParts(int remove){
         this.parts = parts - remove;
+        return true;
     }
-    
+
     public Repairs getMostRecentRepair(){
-        Repairs mostRecentRepair = repairHistory.indexOf(0);
-        for(Repairs i : repairHistory){
-            if(i.getRepairDate < mostRecentRepair.getRepairDate){
-                mostRecentRepair = i;
-            }
+        Repairs mostRecentRepair = repairHistory.get(0);
+        for (int i = 1; i < repairHistory.size(); i++){
+            mostRecentRepair = mostRecentRepair.compareRepairTime(repairHistory.get(0));
         }
         return mostRecentRepair;
     }
-    
+
     //abstract methods
     public abstract boolean isBroken();
 
-    //toString
-    public String toString(){
-        return "";
+    public String toString() {
+        return fuelCapacity +
+                "\n" + isNuclearPowered +
+                "\n" + manufactureYear +
+                "\n" + serialNum +
+                "\n" + speed +
+                "\n" + location +
+                "\n" + cost +
+                "\n" + parts +
+                "\n" + maxParts +
+                "\n" + minParts +
+                 "\n";
     }
+
 }
