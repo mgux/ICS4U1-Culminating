@@ -92,6 +92,7 @@ public class Main {
 
         //Switchcase to see what option the user has picked.
         switch(selection) {
+                //find fastest vehicle in all vehicle
             case 0:
                 database.findFastestVehicle();
                 System.out.println("\n Press [Enter] to continue.");
@@ -100,6 +101,7 @@ public class Main {
                 break;
 
             case 1:
+                //finds the most expensive vehicle in all vehicles
                 database.findMostExpensiveVehicle();
                 System.out.println("\n Press [Enter] to continue.");
                 sc.nextLine();
@@ -107,6 +109,7 @@ public class Main {
                 break;
 
             case 2:
+                //finds all the vehicles over specified age
                 while (!validInputAge) {
                     System.out.println("Enter age: ");
                     try {
@@ -145,7 +148,7 @@ public class Main {
                 printMenu();
                 break;
             case 5:
-                // save file
+                // saves file
                 System.out.println("Enter save file name: ");
                 sc.nextLine();
                 String save = sc.nextLine();
@@ -156,7 +159,7 @@ public class Main {
                 break;
             case 6:
                 sc.nextLine();
-                // search vehicle by serial
+                // search vehicle by serial 
                 System.out.println("Enter the serial to search for: ");
                 serial = sc.nextLine();
                 database.searchSerial(serial);
@@ -170,6 +173,7 @@ public class Main {
                 break;
 
             case 8:
+                //sorts by manufacture and location
                 sc.nextLine();
                 database.sortManufactureLocation();
                 System.out.println("\n Press [Enter] to continue.");
@@ -178,7 +182,7 @@ public class Main {
                 break;
             case 9:
                 sc.nextLine();
-                // add repair
+                // add repairs repairs to a vehicle
                 System.out.println("Enter the serial to add repairs to: ");
                 serial = sc.nextLine();
                 database.addRepairVehicleSerial(serial);
@@ -188,7 +192,7 @@ public class Main {
                 break;
             case 10:
                 sc.nextLine();
-                // see repair
+                // sees all repairs of a certain vehicle.
                 System.out.println("Enter the serial to see repairs: ");
                 serial = sc.nextLine();
                 database.searchSerialRepairs(serial);
@@ -197,7 +201,7 @@ public class Main {
                 printMenu();
                 break;
             case 11:
-                // add vehicle
+                // adds vehicles
                 database.addVehicle();
                 sc.nextLine();
                 System.out.println("\n Press [Enter] to continue.");
@@ -205,6 +209,7 @@ public class Main {
                 printMenu();
                 break;
             case 12:
+                //Uses serial to remove a certain vehicle from the database
                 sc.nextLine();
                 System.out.println("Enter the serial of the vehicle being removed: ");
                 serial = sc.nextLine();
@@ -216,7 +221,7 @@ public class Main {
 
             case 13:
                 sc.nextLine();
-                // sort serial
+                // sorts all vehicles in all managers using serial
                 database.sortSerial();
                 System.out.println("\n Press [Enter] to continue.");
                 sc.nextLine();
