@@ -4,7 +4,7 @@ Luke
 00/00/0000
 A.Y Jackson SS
 
-The submarine has a depth variable for the depth it is currently at. 
+The submarine has a depth variable for the depth it is currently at.
 It has a visibility underwater a torpedo storage and max amount.
 
 */
@@ -16,7 +16,7 @@ import java.util.*;
 
 public class Submarine extends WaterVehicle{
 
-   //class fields
+    //class fields
     private int depth;
     private int numberOfTorpedos;
     private int underWaterVisibility;
@@ -32,61 +32,61 @@ public class Submarine extends WaterVehicle{
         this.maxTorpedos = maxTorpedos;
         this.docked = true;
     }
- 
-   // Accessor (Getter) Methods
-   public int getDepth() {
-       return depth;
-   }
-   
-   public int getNumberOfTorpedos() {
-       return numberOfTorpedos;
-   }
-   
-   public int getUnderWaterVisibility() {
-       return underWaterVisibility;
-   }
-   
-   public int getMaxTorpedos() {
-       return maxTorpedos;
-   }
-   
-   public boolean isDocked() {
-       return docked;
-   }
-   
-   public Ship getContainedVehicle()
-   {
-      return containedVehicle;
-   }
-   
-   // Mutator (Setter) Methods
-   public void setDepth(int depth) {
-       this.depth = depth;
-   }
-   
-   public void setNumberOfTorpedos(int numberOfTorpedos) {
-       this.numberOfTorpedos = numberOfTorpedos;
-   }
-   
-   public void setUnderWaterVisibility(int underWaterVisibility) {
-       this.underWaterVisibility = underWaterVisibility;
-   }
-   
-   public void setMaxTorpedos(int maxTorpedos) {
-       this.maxTorpedos = maxTorpedos;
-   }
-   
-   public void setDocked(boolean docked) {
-       this.docked = docked;
-   }
 
-   public void setContainedVehicle(Ship a)
-   {
-      containedVehicle = a;
-   }
+    // Accessor (Getter) Methods
+    public int getDepth() {
+        return depth;
+    }
+
+    public int getNumberOfTorpedos() {
+        return numberOfTorpedos;
+    }
+
+    public int getUnderWaterVisibility() {
+        return underWaterVisibility;
+    }
+
+    public int getMaxTorpedos() {
+        return maxTorpedos;
+    }
+
+    public boolean isDocked() {
+        return docked;
+    }
+
+    public Ship getContainedVehicle()
+    {
+        return containedVehicle;
+    }
+
+    // Mutator (Setter) Methods
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
+    public void setNumberOfTorpedos(int numberOfTorpedos) {
+        this.numberOfTorpedos = numberOfTorpedos;
+    }
+
+    public void setUnderWaterVisibility(int underWaterVisibility) {
+        this.underWaterVisibility = underWaterVisibility;
+    }
+
+    public void setMaxTorpedos(int maxTorpedos) {
+        this.maxTorpedos = maxTorpedos;
+    }
+
+    public void setDocked(boolean docked) {
+        this.docked = docked;
+    }
+
+    public void setContainedVehicle(Ship a)
+    {
+        containedVehicle = a;
+    }
 
     //compare methods
-   public double comparefuelCapacity(Submarine other){
+    public double comparefuelCapacity(Submarine other){
         return (this.getFuelCapacity() - other.getFuelCapacity());
     }
 
@@ -97,49 +97,48 @@ public class Submarine extends WaterVehicle{
     public double compareCost(Submarine other){
         return (this.getCost() - other.getCost());
     }
-    
-   public double compareDepth(Submarine other){
+
+    public double compareDepth(Submarine other){
         return (this.getDepth() - other.getDepth());
     }
-    
-   public double compareUnderWaterVisibilty(Submarine other){
+
+    public double compareUnderWaterVisibilty(Submarine other){
         return (this.getUnderWaterVisibility() - other.getUnderWaterVisibility());
     }
-    
-   public double compareMaxTorpedos(Submarine other){
+
+    public double compareMaxTorpedos(Submarine other){
         return (this.getNumberOfTorpedos() - other.getNumberOfTorpedos());
     }
-    
+
     //class methods
-   public boolean shootTorpedo(int amount){
-      if(amount > numberOfTorpedos){
-         System.out.println("Not enough torpedos to shoot");
-         return false;
-      }else{
-      this.numberOfTorpedos = numberOfTorpedos - amount;
-      return true;
-      }
-   }
-   
-   //Check if broken
-   public boolean isBroken()
-   {
-      if (this.getParts() < this.getMinParts())
-      {
-         return true;
-      }
-      return false;
-   }
-   
-   //toString
-public String toString() {
-    return super.toString() +
-           "Depth: " + depth + "\n" +
-           "Number of Torpedos: " + numberOfTorpedos + "\n" +
-           "Underwater Visibility: " + underWaterVisibility + "\n" +
-           "Max Torpedos: " + maxTorpedos + "\n" +
-           "Docked: " + docked + "\n";
-}
+    public boolean shootTorpedo(int amount){
+        if(amount > numberOfTorpedos){
+            System.out.println("Not enough torpedos to shoot");
+            return false;
+        }else{
+            this.numberOfTorpedos = numberOfTorpedos - amount;
+            return true;
+        }
+    }
+
+    //Check if broken
+    public boolean isBroken()
+    {
+        if (this.getParts() < this.getMinParts())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //toString
+    public String toString() {
+        return super.toString() + depth + "\n" +
+               numberOfTorpedos + "\n" +
+              underWaterVisibility + "\n" +
+             maxTorpedos + "\n" +
+           docked + "\n";
+    }
 
 
 }
