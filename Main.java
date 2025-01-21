@@ -57,8 +57,9 @@ public class Main {
         System.out.println("[8] - SORT VEHICLES BY MANUFACTURE YEAR AND LOCATION");
         System.out.println("[9] - ADD REPAIR TO A VEHICLE");
         System.out.println("[10] - GET RECENT REPAIR FOR A VEHICLE");
-        System.out.println("[11] - REMOVE VEHICLE FROM DATABASE");
-        System.out.println("[12] - SORT SERIALS LEXICOGRAPHICALLY");
+        System.out.println("[11] - ADD VEHICLE TO DATABASE");
+        System.out.println("[12] - REMOVE VEHICLE FROM DATABASE");
+        System.out.println("[13] - SORT SERIALS LEXICOGRAPHICALLY");
         System.out.println("[0000] - QUIT");
         System.out.println();
 
@@ -133,6 +134,9 @@ public class Main {
                 sc.nextLine();
                 String save = sc.nextLine();
                 database.exportToFile(save);
+                System.out.println("\n Press [Enter] to continue.");
+                sc.nextLine();
+                printMenu();
                 break;
             case 6:
                 sc.nextLine();
@@ -177,19 +181,26 @@ public class Main {
                 printMenu();
                 break;
             case 11:
-                // remove vehicle
+                // add vehicle
+                database.addVehicle();
                 sc.nextLine();
-                // see repair
-                System.out.println("Enter the serial to the vehicle being removed: ");
-                serial = sc.nextLine();
-                database.removeVehicle(serial);
                 System.out.println("\n Press [Enter] to continue.");
                 sc.nextLine();
                 printMenu();
                 break;
             case 12:
                 sc.nextLine();
-                // see repair
+                System.out.println("Enter the serial of the vehicle being removed: ");
+                serial = sc.nextLine();
+                database.removeVehicle(serial);
+                System.out.println("\n Press [Enter] to continue.");
+                sc.nextLine();
+                printMenu();
+                break;
+
+            case 13:
+                sc.nextLine();
+                // sort serial
                 database.sortSerial();
                 System.out.println("\n Press [Enter] to continue.");
                 sc.nextLine();
