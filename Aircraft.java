@@ -13,8 +13,8 @@ public class Aircraft extends AirVehicle{
     private ArrayList<Repairs> repairHistory = new ArrayList<>();
 
 
-    public Aircraft(int engineNum, int wingNum, int manufactureYear, int speed, String location, int cost, int altitude, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int parts, int minParts, int maxParts) {
-        super(engineNum, wingNum, manufactureYear, speed, location, cost, altitude,parts,minParts,maxParts);
+    public Aircraft(int engineNum, int wingNum, int manufactureYear, String serialNum, int speed, String location, int cost, int altitude, int cargoWeight, double storage, double maxCargoWeight, int maxJeepStorage, int parts, int minParts, int maxParts) {
+        super(engineNum, wingNum, manufactureYear, serialNum, speed, location, cost, altitude,parts,minParts,maxParts);
         this.cargoWeight = cargoWeight;
         this.storage = storage;
         this.maxCargoWeight = maxCargoWeight;
@@ -130,13 +130,15 @@ public class Aircraft extends AirVehicle{
         this.currentJeeps = currentJeeps;
     }
 
+    private int cargoWeight;
+    private double storage;
+    private double maxCargoWeight;
+    private int maxJeepStorage;
+    private int maxJetStorage;
+    private int currentJeeps = 0;
+    private Ship containedVehicle = null;
+
     public String toString() {
-        return "Aircraft{" +
-                "cargoWeight=" + cargoWeight +
-                ", storage=" + storage +
-                ", maxCargoWeight=" + maxCargoWeight +
-                ", maxJeepStorage=" + maxJeepStorage +
-                ", maxJetStorage=" + maxJetStorage +
-                '}';
+        return "Cargo Weight: " + cargoWeight + "\nStorage: " + storage + "Maximum cargo weight: " + maxCargoWeight + "Maximum jeep storage: " + maxJeepStorage + "Maximum jet storage: " + maxJetStorage + "Current Jeeps: " + currentJeeps + "Contained Vehicle: " + containedVehicle.getSerialNum() + "\n" + super.toString();
     }
 }
