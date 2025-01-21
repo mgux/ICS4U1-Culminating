@@ -30,6 +30,7 @@ public class Main {
         System.out.println("Goodbye!");
     }
 
+    //method to print the main menu of vehicle manager
     public static void printMenu() {
         System.out.print(ANSI_YELLOW);
         System.out.println("\n" +
@@ -42,7 +43,7 @@ public class Main {
                 "                                                                             ");
         System.out.print(ANSI_RESET);
         System.out.println("MADE BY TIANYUE, LUKE, MICHAEL\n");
-
+        
         Scanner sc = new Scanner(System.in);
         int selection = -1;
         String fileName;
@@ -53,6 +54,7 @@ public class Main {
         String serial = "";
         int manufactureYear = 0;
 
+        //Prompts user for option
         System.out.println("[0] - Find Fastest Vehicle");
         System.out.println("[1] - Find Certain Land Vehicle");
         System.out.println("[2] - Find Vehicles Over Certain Age");
@@ -69,6 +71,7 @@ public class Main {
         System.out.println("[0000] - QUIT");
         System.out.println();
 
+        //Keeps looping as long as user does not enter 0000
         while (!validInput) {
             System.out.println("Enter selection: ");
             try {
@@ -87,6 +90,7 @@ public class Main {
             }
         }
 
+        //Switchcase to see what option the user has picked.
         switch(selection) {
             case 0:
                 database.findFastestVehicle();
