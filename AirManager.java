@@ -8,13 +8,19 @@ import java.util.ArrayList;
 * */
 
 public class AirManager {
-    private final int CUR_YEAR = 2025;
-    private ArrayList<AirVehicle> airVehicles;
+    private final int CUR_YEAR = 2025;// The current year used to calculate the age of air vehicles.
+    private ArrayList<AirVehicle> airVehicles;// List to store AirVehicle objects.
 
+        // Constructor: Initializes the list of air vehicles.
     public AirManager() {
         airVehicles = new ArrayList<AirVehicle>();
     }
 
+        /**
+     * Reads aircraft data from a file and adds it to the airVehicles list.
+     * @param s The file path containing aircraft data.
+     * @return true if the aircraft is successfully read and added, false otherwise.
+     */
     public boolean readAircraftVehicle(String s)
     {
         boolean isRead = true;
@@ -59,6 +65,11 @@ public class AirManager {
         return isRead;
     }
 
+        /**
+     * Reads jet data from a file and adds it to the airVehicles list.
+     * @param s The file path containing jet data.
+     * @return true if the jet is successfully read and added, false otherwise.
+     */
     public boolean readJetVehicle(String s)
     {
         boolean isRead = true;
@@ -100,7 +111,12 @@ public class AirManager {
         }
         return isRead;
     }
-
+    
+    /**
+     * Writes the details of all air vehicles to a file.
+     * @param s The file path to write to.
+     * @return true if writing is successful, false otherwise.
+     */
     public boolean outAirVehicles(String s)
     {
         boolean isOut = true;
@@ -130,7 +146,9 @@ public class AirManager {
         return isOut;
     }
 
-
+    /**
+     * Sorts the air Vehicles by manufacture year and then by location alphabetically.
+     */
     public void sortManufactureLocation() {
         int n = airVehicles.size();
         for (int i = 0; i < n - 1; i++) {
@@ -151,7 +169,12 @@ public class AirManager {
             }
         }
     }
-
+    /**
+     * Searches for air vehicles by manufacture year and location.
+     * @param manufactureYear The manufacture year to search for.
+     * @param location The location to search for.
+     * @return A list of matching air vehicles.
+     */
     public ArrayList<AirVehicle> searchManufactureLocation(int manufactureYear, String location) {
         ArrayList<AirVehicle> result = new ArrayList<>();
         for (int i = 0; i < airVehicles.size(); i++) {
@@ -163,6 +186,11 @@ public class AirManager {
         return result;
     }
 
+    /**
+ * Searches for air vehicles with a specific number of wings.
+ * @param wingNum The number of wings to search for.
+ * @return A list of air vehicles that have the specified # of wings.
+ */
     public ArrayList<AirVehicle> searchVehicleWingNum(int wingNum) {
         ArrayList<AirVehicle> hasNumWing = new ArrayList<>();
         for (int i = 0; i < airVehicles.size(); i++) {
@@ -173,6 +201,11 @@ public class AirManager {
         return hasNumWing;
     }
 
+    /**
+ * Searches for an air vehicle with a specific serial number.
+ * @param serial The serial number to search for.
+ * @return The air vehicle with the specified serial number, or null if not found.
+ */
     public AirVehicle searchVehicleSerial(String serial) {
         for (int i = 0; i < airVehicles.size(); i++) {
             if (airVehicles.get(i).getSerialNum().equals(serial)) {
@@ -182,6 +215,9 @@ public class AirManager {
         return null;
     }
 
+    /**
+ * Sorts the air vehicles by their serial numbers in ascending order.
+ */
     public void sortSerial() {
         int n = airVehicles.size();
         boolean swapped = true;
@@ -201,7 +237,10 @@ public class AirManager {
         }
     }
 
-
+/**
+ * Finds the air vehicle with the highest altitude capability.
+ * @return The air vehicle with the h=ighest altitude.
+ */
     public AirVehicle findHighestVehicle() {
         AirVehicle highest = airVehicles.getFirst();
         for (int i = 1; i < airVehicles.size(); i++) {
@@ -212,6 +251,11 @@ public class AirManager {
         }
         return highest;
     }
+
+    /**
+ * Finds the aircraft with the largest cargo weight.
+ * @return The aircraft with the largest cargo weight.
+ */
 
     public Aircraft findBiggestCargoWeight() {
         int biggest = 0;
@@ -228,6 +272,11 @@ public class AirManager {
         return (Aircraft) airVehicles.get(index);
     }
 
+    /**
+ * Finds all jets with a specific missile type.
+ * @param type The missile type to search for.
+ * @return A list of jets that have the specified missile type
+ */
     public ArrayList<Jet> findJetsWithMissileType(String type) {
         ArrayList<Jet> jets = new ArrayList<>();
 
@@ -242,6 +291,11 @@ public class AirManager {
         return jets;
     }
 
+    /**
+ * Finds all air vehicles located at a specific location.
+ * @param loca The location to search for.
+ * @return A list of air vehicles located at the specified location
+ */
     public ArrayList<AirVehicle> findAtLocation(String loc) {
         ArrayList<AirVehicle> air = new ArrayList<>();
 
@@ -253,6 +307,10 @@ public class AirManager {
         return air;
     }
 
+    /**
+ * Finds the jet with the highest agility
+ * @return The jet with the highest agility.
+ */
     public Jet findMostAgileJet() {
         int agile = 0;
         int index = 0;
@@ -269,6 +327,11 @@ public class AirManager {
         return (Jet) airVehicles.get(index);
     }
 
+    /**
+ * Finds all air vehicles with a specific number of engines.
+ * @param num The number of engines to searchfor.
+ * @return A list of air vehicles with the specified number of engines.
+ */
     public ArrayList<AirVehicle> findEngineNum(int num) {
         ArrayList<AirVehicle> airWithEngineNum = new ArrayList<>();
         for (int i = 0; i < airVehicles.size(); i++) {
@@ -279,7 +342,12 @@ public class AirManager {
 
         return airWithEngineNum;
     }
-
+    
+/**
+ * Finds all air vehicles older than a specified age.
+ * @param age The age threshold.
+ * @return a list of air vehicles older than the specified age.
+ */
     public ArrayList<AirVehicle> findOverAge(int age) {
         ArrayList<AirVehicle> airOverAge = new ArrayList<>();
 
@@ -291,6 +359,10 @@ public class AirManager {
         return airOverAge;
     }
 
+    /**
+ * Finds the air vehicle with the highest speed
+ * @return The air vehicle with the highest speed.
+ */
     public AirVehicle findFastestAirVehicle()
     {
         AirVehicle temp = null;
@@ -308,6 +380,11 @@ public class AirManager {
         return temp;
     }
 
+    /**
+ * Finds the fastest jet among all air vehicles.
+ * @return Te fastest jet.
+ */
+
     public Jet findFastestJet() {
         int speed = 0;
         int index = 0;
@@ -324,6 +401,10 @@ public class AirManager {
         return (Jet) airVehicles.get(index);
     }
 
+    /**
+ * Finds the fastest aircraft among all air vehicles.
+ * @return The fastest aircraft.
+ */
     public Aircraft findFastestAircraft() {
         int speed = 0;
         int index = 0;
@@ -340,6 +421,10 @@ public class AirManager {
         return (Aircraft) airVehicles.get(index);
     }
 
+    /**
+ * Finds the most expensive air vehicle.
+ * @return The most expensive air vehicle.
+ */
     public AirVehicle findMostExpensiveAirVehicle() {
         AirVehicle air = null;
         for (int i = 0; i < airVehicles.size(); i++)
@@ -358,6 +443,11 @@ public class AirManager {
         return air;
     }
 
+    /**
+ * Repairs an air vehicle by its serial number.
+ * @param s The serial number of the air vehicle to repair.
+ * @return true if the repair was successful, false if the vehicle was not found.
+ */
     public boolean repairAirVehicle(String s)
     {
         AirVehicle temp = searchVehicleSerial(s);
@@ -367,7 +457,13 @@ public class AirManager {
         }
         return temp.addRepair();
     }
-
+    
+/**
+ * Updates the parts of an air vehicle by its serial number.
+ * @param s The serial number of the air vehicle.
+ * @param n The number of parts to update.
+ * @return true if the parts were successfully updated, false if the vehicle was not found.
+ */
     public boolean updateParts(String s, int n)
     {
         AirVehicle temp = searchVehicleSerial(s);
@@ -378,6 +474,10 @@ public class AirManager {
         return temp.removeParts(n);
     }
 
+/**
+ * Finds the most expensive aircraft among all air vehicles.
+ * @return The most expensive aircrat.
+ */
     public Aircraft mostExpensiveAircraft() {
         int price = 0;
         int index = 0;
@@ -393,7 +493,11 @@ public class AirManager {
 
         return (Aircraft) airVehicles.get(index);
     }
-
+    
+/**
+ * Finds the most expensive jet among all air vehicle.
+ * @return The most expensive jet.
+ */
     public Jet mostExpensiveJet() {
         int price = 0;
         int index = 0;
@@ -409,7 +513,12 @@ public class AirManager {
 
         return (Jet) airVehicles.get(index);
     }
-
+    
+/**
+ * Searches for air vehicles with a specific number of wings.
+ * @param wingNum The number of wings to search for.
+ * @return A list of air vehicles with the specified number of wing.
+ */
     public ArrayList<AirVehicle> searchVehicleWingNumber(int wingNum) {
         ArrayList<AirVehicle> airWingNum = new ArrayList<>();
 
@@ -432,7 +541,11 @@ public class AirManager {
         airVehicles.add(newJet);
         return true;
     }
-
+/**
+ * Removes a air vehicle by its serial number.
+ * @param serial The serial number of the air vehicle to remove.
+ * @return True if the air vehicle was successfully removed false otherwise
+ */
     public boolean removeAirVehicle(String serial) {
         if (searchVehicleSerial(serial) == null) {
             return false;
@@ -442,7 +555,11 @@ public class AirManager {
         }
         return true;
     }
-
+/**
+ * Finds the ship carrying ane specific jet by its serial number.
+ * @param serial The serial number of the jet.
+ * @return The ship carrying the jet, or null if not found.
+ */
     public Ship isCarriedJet(String serial) {
         Jet findJet = (Jet) searchVehicleSerial(serial);
         if (findJet == null) {
