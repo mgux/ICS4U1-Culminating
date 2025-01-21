@@ -62,15 +62,12 @@ public class Main {
         int manufactureYear = 0;
 
         System.out.println("[0] - Find Fastest Vehicle");
-        System.out.println("[1] - Find Vehicles Over Certain Age");
-        System.out.println("[2] - Find Certain Land Vehicle");
-        System.out.println("[3] - Find Certain Air Vehicle");
-        System.out.println("[2] - Find Certain Water Vehicle");
-        System.out.println("[3] - Find Certain Space Vehicle");
-        System.out.println("[4] - IMPORT EXISTING VEHICLE DATA");
+        System.out.println("[1] - Find Certain Land Vehicle");
+        System.out.println("[2] - Find Vehicles Over Certain Age");
+        System.out.println("[3] - Search manufacture year and location");
         System.out.println("[5] - EXPORT CURRENT VEHICLE DATA");
-        System.out.println("[6] - read sumbarine");
-        System.out.println("[7] - read ship");
+        System.out.println("[6] - Search vehicle by serial");
+        System.out.println("[7] - IMPORT EXISTING VEHICLE DATA");
         System.out.println("[8] - PROGRAM INFO");
         System.out.println("[9] - NEXT PAGE");
         System.out.println();
