@@ -24,6 +24,7 @@ public class Submarine extends WaterVehicle{
     private boolean docked;
     private Ship containedVehicle;
 
+   //constructor
     public Submarine(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int minParts, int maxParts, int depth, int nomberOfTorpedos, int underWaterVisibility, int maxTorpedos, boolean docked){
         super(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, maxParts, minParts);
         this.depth = depth;
@@ -111,6 +112,7 @@ public class Submarine extends WaterVehicle{
     }
 
     //class methods
+    //increments torpedo by  -1
     public boolean shootTorpedo(int amount){
         if(amount > numberOfTorpedos){
             System.out.println("Not enough torpedos to shoot");
