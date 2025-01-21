@@ -5,12 +5,14 @@ public class Repairs
 {
     final static double PART_COST = 99.99;
     private double totalRepairCost;
-    private static LocalDate repairDate;
+    private static LocalDate repairDate; //LocalDate to determine the date of the Repair
+    //ArrayList of LandVehicle, WaterVehicle, AirVehicle, SpaceVehicle
     private static ArrayList<LandVehicle> landRepairList = new ArrayList<LandVehicle>();
     private static ArrayList<WaterVehicle> waterRepairList = new ArrayList<WaterVehicle>();
     private static ArrayList<AirVehicle> airRepairList = new ArrayList<AirVehicle>();
     private static ArrayList<SpaceVehicle> spaceRepairList = new ArrayList<SpaceVehicle>();
 
+    //Constructors
     public Repairs(LandVehicle l)
     {
         totalRepairCost = calculateRepairs(l.getMaxParts()-l.getParts());
@@ -39,13 +41,13 @@ public class Repairs
         spaceRepairList.add(s);
         s.setParts(s.getMaxParts());
     }
-
-    public double calculateRepairs(int n)
+    
+    public double calculateRepairs(int n) //Calculates the cost of a Repair
     {
         return PART_COST*n;
     }
 
-    public void displayLandRepairs()
+    public void displayLandRepairs() //Displays all the LandVehicles that have been repaired
     {
         for (int i = 0; i < landRepairList.size(); i++)
         {
@@ -53,7 +55,7 @@ public class Repairs
         }
     }
 
-    public void displayWaterRepairs()
+    public void displayWaterRepairs() //Displays all the WaterVehicles that have been repaired
     {
         for (int i = 0; i < waterRepairList.size(); i++)
         {
@@ -61,7 +63,7 @@ public class Repairs
         }
     }
 
-    public void displayAirRepairs()
+    public void displayAirRepairs() //Displays all the AirVehicles that have been repaired
     {
         for (int i = 0; i < airRepairList.size(); i++)
         {
@@ -69,7 +71,7 @@ public class Repairs
         }
     }
 
-    public void displaySpaceRepairs()
+    public void displaySpaceRepairs() //Displays all the SpaceVehicles that have been repaired
     {
         for (int i = 0; i < spaceRepairList.size(); i++)
         {
@@ -77,12 +79,12 @@ public class Repairs
         }
     }
 
-    public Repairs compareRepairTime(Repairs other)
+    public Repairs compareRepairTime(Repairs other) //Returns the Repair that has the earlier date. If the date is the same, return this
     {
         return (((this.repairDate).isBefore(other.repairDate))?this:other);
     }
 
-    public String toString()
+    public String toString() //toString
     {
         return "Date: "+repairDate+"\nCost: "+totalRepairCost+"\n";
     }
