@@ -149,17 +149,21 @@ public abstract class WaterVehicle {
 
 
     //class methods
+    
+    //adds a repair
     public boolean addRepair(){
         Repairs r = new Repairs(this);
         repairHistory.add(r);
         return true;
     }
 
+   //method to remove parts
     public boolean removeParts(int remove){
         this.parts = parts - remove;
         return true;
     }
 
+   //method to get most recent exist repair (dosnt have to be completed repair)
     public Repairs getMostRecentRepair(){
         Repairs mostRecentRepair = repairHistory.get(0);
         for (int i = 1; i < repairHistory.size(); i++){
