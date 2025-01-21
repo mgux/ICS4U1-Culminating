@@ -119,6 +119,7 @@ public class AirManager {
                     out.write("Jet\n");
                 }
                 out.write((airVehicles.get(i)).toString());
+                out.newLine();
             }
             out.close();
         }
