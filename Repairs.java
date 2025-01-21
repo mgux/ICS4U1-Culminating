@@ -1,3 +1,11 @@
+/*
+Repairs.java
+Tianyue Zhao
+ICS4U1
+Jan 20th, 2025
+Description: Repair class, which contains all the methods of repairs
+*/
+
 import java.time.*;
 import java.util.*;
 
