@@ -31,7 +31,6 @@ public class WaterManager {
     public boolean addSubmarine(double fuelCapacity, boolean isNuclearPowered, int manufactureYear, String serialNum, int speed, String location, int cost, int parts, int minParts, int maxParts, int depth, int nomberOfTorpedos, int underWaterVisibility, int maxTorpedos, boolean docked){
         Submarine newSubmarine = new Submarine(fuelCapacity, isNuclearPowered, manufactureYear, serialNum, speed, location, cost, parts, minParts, maxParts, depth, nomberOfTorpedos, underWaterVisibility, maxTorpedos, docked);
         waterStorage.add(newSubmarine);
-        System.out.println("Hi submarine added");
         return true;
     }
     public boolean readShip(String fileName) {
@@ -121,12 +120,24 @@ public class WaterManager {
                     out.write("Ship\n");
                 }
                 out.write(waterStorage.get(i).toString());
+                out.newLine();
             }
             out.close();
         } catch (IOException io) {
             isOut = false;
         }
         return isOut;
+    }
+
+    public ArrayList<WaterVehicle> findOverAge(int age) {
+        ArrayList<WaterVehicle> waterOverAge = new ArrayList<>();
+
+        for (int i = 0; i < waterStorage.size(); i++) {
+            if (CUR_YEAR - waterStorage.get(i).getManufactureYear() > age) {
+                waterOverAge.add(waterStorage.get(i));
+            }
+        }
+        return waterOverAge;
     }
 
 
