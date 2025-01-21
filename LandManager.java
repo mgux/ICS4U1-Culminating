@@ -1,3 +1,11 @@
+/*
+LandManager.java
+Tianyue Zhao
+ICS4U1
+Jan 20th, 2025
+Description: LandManager class, which has a variety of methods about searching and sorting all LandVehicles within it
+*/
+
 import java.util.*;
 import java.io.*;
 
