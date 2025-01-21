@@ -28,6 +28,8 @@ public class Database {
     }
 
 
+
+
     public Database(LandManager l, WaterManager w, AirManager a, SpaceManager s) {
         this.landManager = l;
         this.waterManager = w;
@@ -40,7 +42,126 @@ public class Database {
         waterManager.sortManufactureLocation();
         spaceManager.sortmanufactureLocation();
         airManager.sortManufactureLocation();
-        System.out.println("Sorting was successful.");
+        System.out.println("Sorting by manufacture year and location was successful.");
+    }
+
+    public void sortSerial() {
+        landManager.sortSerial();
+        waterManager.sortSerial();
+        airManager.sortSerial();
+        spaceManager.sortSerial();
+        System.out.println("Sorting by serial was successful.");
+    }
+
+    public void addRepairVehicleSerial(String serial) {
+        LandVehicle l = landManager.searchSerial(serial);
+        if (l == null) {
+            WaterVehicle w = waterManager.searchVehicleSerial(serial);
+            if (w == null) {
+                AirVehicle a = airManager.searchVehicleSerial(serial);
+                if (a == null) {
+                    SpaceVehicle s = spaceManager.searchSerial(serial);
+                    if (s == null) {
+                        System.out.println("No existing vehicle found!");
+                    }
+                    else {
+                        System.out.println("SpaceVehicle");
+                        s.addRepair();
+                        System.out.println("Repair successfully added!");
+                    }
+
+                }
+                else {
+                    System.out.println("AirVehicle");
+                    a.addRepair();
+                    System.out.println("Repair successfully added!");
+                }
+
+            }
+            else {
+                System.out.println("WaterVehicle");
+                w.addRepair();
+                System.out.println("Repair successfully added!");
+            }
+
+        }
+        else {
+            System.out.println("LandVehicle");
+            l.addRepair();
+            System.out.println("Repair successfully added!");
+        }
+    }
+
+    public void removeVehicle(String serial) {
+        LandVehicle l = landManager.searchSerial(serial);
+        if (l == null) {
+            WaterVehicle w = waterManager.searchVehicleSerial(serial);
+            if (w == null) {
+                AirVehicle a = airManager.searchVehicleSerial(serial);
+                if (a == null) {
+                    SpaceVehicle s = spaceManager.searchSerial(serial);
+                    if (s == null) {
+                        System.out.println("No existing vehicle found!");
+                    }
+                    else {
+                        landManager.removeLandVehicle(serial);
+                        System.out.println("SpaceVehicle removed!");
+                    }
+
+                }
+                else {
+                    System.out.println("AirVehicle");
+                    airManager.removeAirVehicle(serial);
+                    System.out.println("AirVehicle removed!");
+                }
+
+            }
+            else {
+                System.out.println("WaterVehicle");
+                waterManager.removeWaterVehicle(serial);
+                System.out.println("WaterVehicle removed!");
+            }
+
+        }
+        else {
+            landManager.removeLandVehicle(serial);
+            System.out.println("LandVehicle removed!");
+        }
+    }
+
+    public void searchSerialRepairs(String serial) {
+        LandVehicle l = landManager.searchSerial(serial);
+        if (l == null) {
+            WaterVehicle w = waterManager.searchVehicleSerial(serial);
+            if (w == null) {
+                AirVehicle a = airManager.searchVehicleSerial(serial);
+                if (a == null) {
+                    SpaceVehicle s = spaceManager.searchSerial(serial);
+                    if (s == null) {
+                        System.out.println("No existing vehicle found!");
+                    }
+                    else {
+                        System.out.println("SpaceVehicle");
+                        System.out.println(s.getMostRecentRepairs());
+                    }
+
+                }
+                else {
+                    System.out.println("AirVehicle");
+                    System.out.println(a.getMostRecentRepairs());
+                }
+
+            }
+            else {
+                System.out.println("WaterVehicle");
+                System.out.println(w.getMostRecentRepair());
+            }
+
+        }
+        else {
+            System.out.println("LandVehicle");
+            System.out.println(l.getMostRecentRepair());
+        }
     }
 
     public void searchSerial(String serial) {
@@ -76,8 +197,6 @@ public class Database {
             System.out.println("LandVehicle");
             System.out.println(l);
         }
-
-
     }
 
     public boolean exportToFile(String fileName) {
