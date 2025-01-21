@@ -1,8 +1,14 @@
-import java.sql.SQLOutput;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Main class
 public class Main {
+
+    static LandManager landManager = new LandManager();
+    static WaterManager waterManager = new WaterManager();
+    static AirManager airManager = new AirManager();
+    static SpaceManager spaceManager = new SpaceManager();
+    static Database database = new Database(landManager, waterManager, airManager, spaceManager);
 
     // Declaring ANSI_RESET so that we can reset the color
     public static final String ANSI_RESET = "\u001B[0m";
@@ -33,13 +39,6 @@ public class Main {
     }
 
     public static void printMenu() {
-
-         LandManager landManager = new LandManager();
-         WaterManager waterManager = new WaterManager();
-         AirManager airManager = new AirManager();
-         SpaceManager spaceManager = new SpaceManager();
-        Database database = new Database(landManager, waterManager, airManager, spaceManager);
-
         System.out.print(ANSI_YELLOW);
         System.out.println("\n" +
                 "▗▖  ▗▖▗▄▄▄▖▗▖ ▗▖▗▄▄▄▖ ▗▄▄▖▗▖   ▗▄▄▄▖    ▗▖  ▗▖ ▗▄▖ ▗▖  ▗▖ ▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▄▖ \n" +
@@ -53,8 +52,14 @@ public class Main {
         System.out.println("MADE BY TIANYUE, LUKE, MICHAEL\n");
 
         Scanner sc = new Scanner(System.in);
-        int selection;
+        int selection = -1;
         String fileName;
+        boolean validInput = false;
+        boolean validInputAge = false;
+        int age = 0;
+        String location = "";
+        String serial = "";
+        int manufactureYear = 0;
 
         System.out.println("[0] - Find Fastest Vehicle");
         System.out.println("[1] - Find Vehicles Over Certain Age");
@@ -65,12 +70,23 @@ public class Main {
         System.out.println("[4] - IMPORT EXISTING VEHICLE DATA");
         System.out.println("[5] - EXPORT CURRENT VEHICLE DATA");
         System.out.println("[6] - read sumbarine");
+        System.out.println("[7] - read ship");
         System.out.println("[8] - PROGRAM INFO");
         System.out.println("[9] - NEXT PAGE");
         System.out.println();
-        System.out.print("Enter Selection: ");
-        selection = sc.nextInt();
 
+        while (!validInput) {
+            System.out.println("Enter selection: ");
+            try {
+                selection = sc.nextInt();
+                validInput = true;
+
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Enter a valid option!");
+                sc.nextLine();
+            }
+        }
 
         switch(selection) {
             case 0:
@@ -78,16 +94,68 @@ public class Main {
                break;
 
             case 1:
-                landManager.readJeepVehicle("Data.txt");
+                database.findMostExpensiveVehicle();
+                break;
+
+            case 2:
+                while (!validInputAge) {
+                    System.out.println("Enter age: ");
+                    try {
+                        age = sc.nextInt();
+                        validInputAge = true;
+
+                    } catch (InputMismatchException e) {
+                        System.out.println("Enter a valid option!");
+                        sc.nextLine();
+                    }
+                }
+                database.findVehiclesOverAge(age);
+                break;
+            case 3:
+                // search manufacture year and location
+                while (!validInputAge) {
+                    System.out.println("Enter year: ");
+                    try {
+                        manufactureYear = sc.nextInt();
+                        validInputAge = true;
+
+                    } catch (InputMismatchException e) {
+                        System.out.println("Enter a valid year!");
+                        sc.nextLine();
+                    }
+                }
+                sc.nextLine();
+
+                System.out.println("Enter location: ");
+                location = sc.nextLine();
+
+                database.searchManufactureLocation(manufactureYear,location);
+
+                System.out.println("\n Press [Enter] to continue.");
+                sc.nextLine();
+                printMenu();
+                break;
+            case 5:
+                // save file
+                System.out.println("Enter save file name: ");
+                sc.nextLine();
+                String save = sc.nextLine();
+                database.exportToFile(save);
                 break;
             case 6:
-
-                System.out.println("Enter the file name of the info");
                 sc.nextLine();
-                fileName = sc.nextLine();
-                boolean test = waterManager.readSubmarine(fileName);
-                System.out.println(test);
+                // search vehicle by serial
+                System.out.println("Enter the serial to search for: ");
+                serial = sc.nextLine();
+                database.searchSerial(serial);
+                System.out.println("\n Press [Enter] to continue.");
+                sc.nextLine();
                 printMenu();
+                break;
+            case 7:
+               database.readInput("Data.txt");
+                printMenu();
+                break;
 
 
         }
