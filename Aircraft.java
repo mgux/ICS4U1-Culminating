@@ -129,15 +129,7 @@ public class Aircraft extends AirVehicle{
     public void setCurrentJeeps(int currentJeeps) {
         this.currentJeeps = currentJeeps;
     }
-
-    private int cargoWeight;
-    private double storage;
-    private double maxCargoWeight;
-    private int maxJeepStorage;
-    private int maxJetStorage;
-    private int currentJeeps = 0;
-    private Ship containedVehicle = null;
-
+    
     public String toString() {
         return "Cargo Weight: " + cargoWeight + "\nStorage: " + storage + "Maximum cargo weight: " + maxCargoWeight + "Maximum jeep storage: " + maxJeepStorage + "Maximum jet storage: " + maxJetStorage + "Current Jeeps: " + currentJeeps + "Contained Vehicle: " + containedVehicle.getSerialNum() + "\n" + super.toString();
     }
