@@ -1,3 +1,12 @@
+/*
+SpaceVehicle.java
+Tianyue Zhao
+ICS4U1
+Jan 20th, 2025
+Description: The SpaceVehicle class has all the methods needed to compare SpaceVehicles
+*/
+
+
 import java.util.*;
 
 public abstract class SpaceVehicle
@@ -15,7 +24,7 @@ public abstract class SpaceVehicle
     final static int PART_SWAP_WORTH = 2;
     private ArrayList<Repairs> repairHistory = new ArrayList<Repairs>();
 
-    public SpaceVehicle(int n1, String s1, int n2, String s2, int n3, String s3, int n4, int n5, int n6, int n7)
+    public SpaceVehicle(int n1, String s1, int n2, String s2, int n3, String s3, int n4, int n5, int n6, int n7) //Constructor
     {
         altitude = n1;
         camera = s1;
@@ -29,6 +38,7 @@ public abstract class SpaceVehicle
         minParts = n7;
     }
 
+    //Accessors and Mutators
     public int getAltitude()
     {
         return altitude;
@@ -109,20 +119,20 @@ public abstract class SpaceVehicle
     {
         minParts = n;
     }
-    public SpaceVehicle compareCost(SpaceVehicle other)
+    public SpaceVehicle compareCost(SpaceVehicle other) //Returns other if the cost of other is larger than this
     {
         return ((this.getCost()>other.getCost())?this:other);
     }
-    public SpaceVehicle compareSpeed(SpaceVehicle other)
+    public SpaceVehicle compareSpeed(SpaceVehicle other) //Returns other if the speed of other is larger than this
     {
         return ((this.getSpeed()>other.getSpeed())?this:other);
     }
-    public SpaceVehicle compareAltitude(SpaceVehicle other)
+    public SpaceVehicle compareAltitude(SpaceVehicle other) //Returns other if the altitude of other is larger than this
     {
         return ((this.getAltitude()>other.getAltitude())?this:other);
     }
-    public abstract boolean isBroken();
-    public boolean removeParts(int n)
+    public abstract boolean isBroken(); //Abstrct isBroken to determine if a Vehicle is broken, returning true if it is and false otherwise
+    public boolean removeParts(int n) //Tries to remove an amount of parts from the Vehicle, returning true if successful and false otherwise
     {
         if (parts-n < minParts)
         {
@@ -131,13 +141,13 @@ public abstract class SpaceVehicle
         parts-=n;
         return true;
     }
-    public boolean addRepair()
+    public boolean addRepair() //Add a repair 
     {
         Repairs r = new Repairs(this);
         repairHistory.add(r);
         return true;
     }
-    public Repairs getMostRecentRepairs()
+    public Repairs getMostRecentRepairs() //Searches the repairHistory to get the most recent one
     {
         Repairs r = repairHistory.get(0);
         for (int i = 1; i < repairHistory.size(); i++)
@@ -146,7 +156,7 @@ public abstract class SpaceVehicle
         }
         return r;
     }
-    public String toString()
+    public String toString() //toString
     {
         return altitude+"\n"+camera+"\n"+manufactureYear+"\n"+serialNum+"\n"+speed+"\n"+location+"\n"+cost+"\n"+parts+"\n"+maxParts+"\n"+minParts+"\n";
     }
