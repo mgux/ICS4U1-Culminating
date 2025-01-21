@@ -1,6 +1,12 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/*
+* Programmer: Michael Gu
+* Last Updated: 2025-1-20
+*
+* */
+
 // Main class
 public class Main {
 
@@ -84,10 +90,16 @@ public class Main {
         switch(selection) {
             case 0:
                 database.findFastestVehicle();
+                System.out.println("\n Press [Enter] to continue.");
+                sc.nextLine();
+                printMenu();
                 break;
 
             case 1:
                 database.findMostExpensiveVehicle();
+                System.out.println("\n Press [Enter] to continue.");
+                sc.nextLine();
+                printMenu();
                 break;
 
             case 2:
