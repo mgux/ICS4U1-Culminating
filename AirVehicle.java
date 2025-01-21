@@ -176,16 +176,7 @@ public abstract class AirVehicle {
     }
 
     public String toString() {
-        return "AirVehicle{" +
-                "wingNum=" + wingNum +
-                ", manufactureYear=" + manufactureYear +
-                ", serialNum='" + serialNum + '\'' +
-                ", speed=" + speed +
-                ", location='" + location + '\'' +
-                ", cost=" + cost +
-                ", altitude=" + altitude +
-                ", partSwapWorth=" + PART_SWAP_WORTH +
-                ", engineNum=" + engineNum +
-                '}';
+        return "Engine Number: " + engineNum + "\nWing Number: " + wingNum + "\nManufacture Year: " + manufactureYear + "\nSerial Number: " + serialNum + "\nSpeed: " + speed + "\nLocation: " + location + "\nCost: " + cost + "\nAltitude" + altitude + "\nParts: " + parts +"\nMinparts: " + minParts  + "\nMaxparts: " + maxParts + "\nPart Swap Worth: " + PART_SWAP_WORTH;
     }
+
 }
