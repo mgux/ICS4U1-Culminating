@@ -4,73 +4,18 @@ import java.io.*;
 public class LandManager
 {
     final static int CUR_YEAR = 2025;
-    private ArrayList<LandVehicle> landStorage;
+    private ArrayList<LandVehicle> landStorage; //ArrayList of LandVehicles
 
-    public LandManager()
+    public LandManager() //Constructor
     {
         landStorage = new ArrayList<LandVehicle>();
     }
-
+    //Accessors and Mutators
     public int getCurSize()
     {
         return landStorage.size();
     }
-    public boolean readJeepVehicle(String s)
-    {
-        boolean isRead = true;
-        BufferedReader in;
-        try
-        {
-            in = new BufferedReader(new FileReader(s));
-            try
-            {
-                addJeep(Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
-            }
-            catch (NumberFormatException nfx)
-            {
-                isRead = false;
-            }
-            catch (NullPointerException npx)
-            {
-                isRead = false;
-            }
-            in.close();
-            System.out.println("true");
-        }
-        catch (IOException io)
-        {
-            isRead = false;
-        }
-        return isRead;
-    }
-    public boolean readTankVehicle(String s)
-    {
-        boolean isRead = true;
-        BufferedReader in;
-        try
-        {
-            in = new BufferedReader(new FileReader(s));
-            try
-            {
-                addTank(Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
-            }
-            catch (NumberFormatException nfx)
-            {
-                isRead = false;
-            }
-            catch (NullPointerException npx)
-            {
-                isRead = false;
-            }
-            in.close();
-        }
-        catch (IOException io)
-        {
-            isRead = false;
-        }
-        return isRead;
-    }
-    public boolean outLandVehicles(String s)
+    public boolean outLandVehicles(String s) //Outputs all LandVehicles to a file
     {
         boolean isOut = true;
         BufferedWriter out;
@@ -98,17 +43,17 @@ public class LandManager
         }
         return isOut;
     }
-    public boolean addJeep(int n1, int n2, int n3, String s1, int n4, String s2, int n5, int n6, int n7, int n8, int n9, double d)
+    public boolean addJeep(int n1, int n2, int n3, String s1, int n4, String s2, int n5, int n6, int n7, int n8, int n9, double d) //adds a new Jeep to the ArrayList
     {
         landStorage.add(new Jeep(n1, n2, n3, s1, n4, s2, n5, n6, n7, n8, n9, d));
         return true;
     }
-    public boolean addTank(int n1, int n2, int n3, String s1, int n4, String s2, int n5, int n6, int n7, int n8, int n9, double d)
+    public boolean addTank(int n1, int n2, int n3, String s1, int n4, String s2, int n5, int n6, int n7, int n8, int n9, double d) //adds a new Tank to the ArrayList
     {
         landStorage.add(new Tank(n1, n2, n3, s1, n4, s2, n5, n6, n7, n8, n9, d));
         return true;
     }
-    public LandVehicle searchSerial(String s)
+    public LandVehicle searchSerial(String s) //Search if a LandVehicle with the given serialNum exists
     {
         LandVehicle l = null;
         for (int i = 0; i < landStorage.size() && l == null; i++)
@@ -120,7 +65,7 @@ public class LandManager
         }
         return l;
     }
-    public boolean removeLandVehicle(String s)
+    public boolean removeLandVehicle(String s) //Removes a LandVehicle by the serialNum
     {
         LandVehicle temp = searchSerial(s);
         if (temp != null)
@@ -130,7 +75,7 @@ public class LandManager
         }
         return false;
     }
-    public boolean updateParts(String s, int n)
+    public boolean updateParts(String s, int n) //Updates the parts of a LandVehicle through the serialNum
     {
         LandVehicle temp = searchSerial(s);
         if (temp == null)
@@ -139,7 +84,7 @@ public class LandManager
         }
         return temp.removeParts(n);
     }
-    public boolean repair(String s)
+    public boolean repair(String s) //Adds a repair to a LandVehicle given the serialNum
     {
         LandVehicle temp = searchSerial(s);
         if (temp == null)
@@ -148,7 +93,7 @@ public class LandManager
         }
         return temp.addRepair();
     }
-    public Repairs getLastRepair(String s)
+    public Repairs getLastRepair(String s) //Returns the last Repair of the LandVehicle identified by the serialNum
     {
         LandVehicle l = searchSerial(s);
         if (l == null)
@@ -157,7 +102,7 @@ public class LandManager
         }
         return l.getMostRecentRepair();
     }
-    public LandVehicle[] searchManufactureLocation(int n, String s)
+    public LandVehicle[] searchManufactureLocation(int n, String s) //Returns an array of LandVehicles that have the same manufactureYear and are at the same location
     {
         LandVehicle temp;
         int num = 0;
@@ -180,7 +125,7 @@ public class LandManager
         }
         return arr;
     }
-    public boolean sortSerial()
+    public boolean sortSerial() //Sorts ArrayList by serialNum using Selection Sort
     {
         LandVehicle temp;
         int index;
@@ -201,7 +146,7 @@ public class LandManager
         }
         return true;
     }
-    public boolean sortmanufactureLocation ()
+    public boolean sortmanufactureLocation () //Sorts the array by the manufacture Year in descending order, with ties broken by the lexicographical order of the location using Bubble Sort
     {
         LandVehicle temp;
         int index;
@@ -225,7 +170,7 @@ public class LandManager
         }
         return true;
     }
-    public LandVehicle findFastestLand()
+    public LandVehicle findFastestLand() //Returns the LandVehicle with the highest speed
     {
         LandVehicle temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -241,7 +186,7 @@ public class LandManager
         }
         return temp;
     }
-    public LandVehicle findMostExpensiveLand()
+    public LandVehicle findMostExpensiveLand() //Returns the LandVehicle with the highest cost
     {
         LandVehicle temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -257,7 +202,7 @@ public class LandManager
         }
         return temp;
     }
-    public LandVehicle findMostSeatsLand()
+    public LandVehicle findMostSeatsLand() //Returns the LandVehicle with the most amount of seats
     {
         LandVehicle temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -273,7 +218,7 @@ public class LandManager
         }
         return temp;
     }
-    public Jeep findMostExpensiveJeep()
+    public Jeep findMostExpensiveJeep() //Returns the Jeep with the highest cost
     {
         Jeep temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -289,7 +234,7 @@ public class LandManager
         }
         return temp;
     }
-    public Jeep findFastestJeep()
+    public Jeep findFastestJeep() //Returns the Jeep with the highest Speed
     {
         Jeep temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -305,7 +250,7 @@ public class LandManager
         }
         return temp;
     }
-    public Jeep findHeaviestJeep()
+    public Jeep findHeaviestJeep() //Returns the Jeep with highest cargoWeight
     {
         Jeep temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -321,7 +266,7 @@ public class LandManager
         }
         return temp;
     }
-    public Jeep findLargestStorageSpaceJeep()
+    public Jeep findLargestStorageSpaceJeep() //Returns the Jeep with the most storageSpace
     {
         Jeep temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -337,7 +282,7 @@ public class LandManager
         }
         return temp;
     }
-    public Tank findMostExpensiveTank()
+    public Tank findMostExpensiveTank() //Returns  the Tank with the highest cost
     {
         Tank temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -353,7 +298,7 @@ public class LandManager
         }
         return temp;
     }
-    public Tank findFastestTank()
+    public Tank findFastestTank() //Returns the Tank with the fastest speed
     {
         Tank temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -369,7 +314,7 @@ public class LandManager
         }
         return temp;
     }
-    public Tank findLongestTank()
+    public Tank findLongestTank() //Returns the tank with the longest range
     {
         Tank temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -385,7 +330,7 @@ public class LandManager
         }
         return temp;
     }
-    public Tank findMostAmmoank()
+    public Tank findMostAmmoank() //Returns the Tank with the most Ammo
     {
         Tank temp = null;
         for (int i = 0; i < landStorage.size(); i++)
@@ -401,7 +346,7 @@ public class LandManager
         }
         return temp;
     }
-    public LandVehicle[] findOverAge(int n)
+    public LandVehicle[] findOverAge(int n) //Returns an array of LandVehicles that are over a certain age
     {
         int num = 0;
         for (int i = 0; i < landStorage.size(); i++)
@@ -422,7 +367,7 @@ public class LandManager
         }
         return l;
     }
-    public LandVehicle[] findAllAtLocation(String s)
+    public LandVehicle[] findAllAtLocation(String s) //Returns an array of LandVehicles that are at a certain location
     {
         int num = 0;
         for (int i = 0; i < landStorage.size(); i++)
@@ -444,7 +389,7 @@ public class LandManager
 
         return l;
     }
-    public Aircraft isCarriedJeep(String s)
+    public Aircraft isCarriedJeep(String s) //Returns the Aircraft that is carrying the Jeep that is found by serialNumber. If it is not being carried, returns null
     {
         LandVehicle l = searchSerial(s);
         Jeep j;
@@ -455,7 +400,7 @@ public class LandManager
         }
         return null;
     }
-    public Ship isCarriedTank(String s)
+    public Ship isCarriedTank(String s) //Returns the Ship that is carrying the Jeep that is found by serialNumber. If it is not being carried, returns null
     {
         LandVehicle l = searchSerial(s);
         Tank t;
