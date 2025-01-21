@@ -17,6 +17,7 @@ public class Database {
     private AirManager airManager;
     private SpaceManager spaceManager;
 
+    //accessors
     public LandManager getLandManager() {
         return landManager;
     }
@@ -35,7 +36,7 @@ public class Database {
 
 
 
-
+    //Database Constructor
     public Database(LandManager l, WaterManager w, AirManager a, SpaceManager s) {
         this.landManager = l;
         this.waterManager = w;
@@ -43,6 +44,7 @@ public class Database {
         this.spaceManager = s;
     }
 
+    //Sort by amnufacture and location
     public void sortManufactureLocation() {
         landManager.sortmanufactureLocation();
         waterManager.sortManufactureLocation();
@@ -51,6 +53,7 @@ public class Database {
         System.out.println("Sorting by manufacture year and location was successful.");
     }
 
+    //sort by serial num
     public void sortSerial() {
         landManager.sortSerial();
         waterManager.sortSerial();
@@ -59,6 +62,7 @@ public class Database {
         System.out.println("Sorting by serial was successful.");
     }
 
+    //adds repairs to a vehicle using serial
     public void addRepairVehicleSerial(String serial) {
         LandVehicle l = landManager.searchSerial(serial);
         if (l == null) {
@@ -98,6 +102,7 @@ public class Database {
         }
     }
 
+    //removes vehicle using serial
     public void removeVehicle(String serial) {
         LandVehicle l = landManager.searchSerial(serial);
         if (l == null) {
@@ -135,6 +140,7 @@ public class Database {
         }
     }
 
+    //Searchs for repairs using serail
     public void searchSerialRepairs(String serial) {
         LandVehicle l = landManager.searchSerial(serial);
         if (l == null) {
@@ -170,6 +176,7 @@ public class Database {
         }
     }
 
+    //Searches for vehicle using serial
     public void searchSerial(String serial) {
         LandVehicle l = landManager.searchSerial(serial);
         if (l == null) {
@@ -205,6 +212,7 @@ public class Database {
         }
     }
 
+    //Exports to file using filename
     public boolean exportToFile(String fileName) {
         landManager.outLandVehicles(fileName);
         waterManager.outWaterVehicles(fileName);
@@ -213,6 +221,7 @@ public class Database {
         return true;
     }
 
+    //Searchs for manufature using location
     public void searchManufactureLocation(int year, String loc) {
         System.out.println("Vehicles made in " + year + " currently in " + loc + ": ");
         LandVehicle[] vehicles = landManager.searchManufactureLocation(year, loc);
@@ -233,6 +242,7 @@ public class Database {
         }
     }
 
+    //finds vehicles over a certain age
     public void findVehiclesOverAge(int age) {
         LandVehicle[] vehicles1 = landManager.findOverAge(age);
         for (int i = 0; i < vehicles1.length; i++) {
@@ -252,6 +262,7 @@ public class Database {
         }
     }
 
+    //adds vehicle using console
     public boolean addVehicle()
     {
         Scanner sc = new Scanner(System.in);
@@ -650,6 +661,7 @@ public class Database {
         return b;
     }
 
+    //finds the most expensive vehicle in all classes
     public void findMostExpensiveVehicle() {
         ArrayList<Integer> mostExpensives = new ArrayList<>();
         AirVehicle mostExpensiveAir;
@@ -701,7 +713,7 @@ public class Database {
     }
 
 
-
+    //finds fastest vehicle in all classes
     public void findFastestVehicle() {
         Object fastest = null;
         int highestSpeed = 0;
@@ -872,6 +884,7 @@ public class Database {
         return true;
     }
 
+    ///reads iinfo from a file
     public boolean readInput(String str)
     {
         boolean isIn = true;
