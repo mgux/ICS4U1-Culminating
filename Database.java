@@ -44,7 +44,7 @@ public class Database {
         this.spaceManager = s;
     }
 
-    //Sort by amnufacture and location
+    //Sort by a manufacture and location
     public void sortManufactureLocation() {
         landManager.sortmanufactureLocation();
         waterManager.sortManufactureLocation();
@@ -53,7 +53,7 @@ public class Database {
         System.out.println("Sorting by manufacture year and location was successful.");
     }
 
-    //sort by serial num
+    //sort by serial number
     public void sortSerial() {
         landManager.sortSerial();
         waterManager.sortSerial();
