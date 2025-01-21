@@ -169,6 +169,16 @@ public abstract class AirVehicle {
         return true;
     }
 
+        public Repairs getMostRecentRepairs() //Returns the most recent repair by Date
+    {
+        Repairs r = repairHistory.get(0);
+        for (int i = 1; i < repairHistory.size(); i++)
+        {
+            r = r.compareRepairTime(repairHistory.get(i));
+        }
+        return r;
+    }
+
     public boolean isBroken() {
         if (parts < minParts) {
             return true;
@@ -180,13 +190,4 @@ public abstract class AirVehicle {
         return engineNum + "\n" + wingNum + "\n" + manufactureYear + "\n" + serialNum + "\n" + speed + "\n" + location + "\n" + cost + "\n" + altitude + "\n" + parts +"\n" + maxParts  + "\n" + minParts + "\n";
     }
 
-    public Repairs getMostRecentRepairs() //Returns the most recent repair by Date
-    {
-        Repairs r = repairHistory.get(0);
-        for (int i = 1; i < repairHistory.size(); i++)
-        {
-            r = r.compareRepairTime(repairHistory.get(i));
-        }
-        return r;
-    }
 }
