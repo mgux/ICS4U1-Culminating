@@ -1,3 +1,11 @@
+/*
+SerialNumGeneration.java
+Tianyue Zhao, Michael Gu, Luke Wei
+ICS4U1
+Jan 20th, 2025
+Description: Generates Serial Numbers for the Vehicles
+*/
+
 import java.util.*;
 
 public class SerialNumGeneration
@@ -12,6 +20,7 @@ public class SerialNumGeneration
     final static int AIR_VEHICLE_SERIAL_SIZE = 9;
     final static int SPACE_VEHICLE_SERIAL_SIZE = 8;
 
+    //Wrapper Methods
     public static String landVehicleGeneration()
     {
         String s = generateLandVehicle("");
@@ -48,31 +57,12 @@ public class SerialNumGeneration
         return s;
     }
 
+    //Recursion to generate the SerialNumbers: Generate a random number and append it to the already generated String. When it reaches a certain length, it is returned with a letter added to the front (W for WaterVehicles, L for LandVehicles, etc)
     public static String generateWaterVehicle(String s) {
         if (s.length() == WATER_VEHICLE_SERIAL_SIZE) {
             return "W" + s;
         }
         return generateWaterVehicle(s + (int) (Math.random() * DIGITS));
-    }
-
-    public static boolean addWaterVehicleSerial(String s) {
-        boolean isFound = false;
-        int mid, l = 0, r = WATER_VEHICLE_SERIALS.size() - 1;
-        while (l <= r && !isFound) {
-            mid = (l + r) / 2;
-            if (WATER_VEHICLE_SERIALS.get(mid).equals(s)) {
-                isFound = true;
-            }
-            if (WATER_VEHICLE_SERIALS.get(mid).compareTo(s) > 0) {
-                r = mid - 1;
-            } else {
-                l = mid + 1;
-            }
-        }
-        if (!isFound) {
-            WATER_VEHICLE_SERIALS.add(l, s);
-        }
-        return (!isFound);
     }
 
     public static String generateLandVehicle(String s)
@@ -84,6 +74,24 @@ public class SerialNumGeneration
         return generateLandVehicle(s+(int)(Math.random()*DIGITS));
     }
 
+    public static String generateAirVehicle(String s) {
+        if (s.length() == AIR_VEHICLE_SERIAL_SIZE)
+        {
+            return "A"+s;
+        }
+        return generateAirVehicle(s+(int)(Math.random()*DIGITS));
+    }
+
+    public static String generateSpaceVehicle(String s)
+    {
+        if (s.length() == SPACE_VEHICLE_SERIAL_SIZE)
+        {
+            return "S"+s;
+        }
+        return generateLandVehicle(s+(int)(Math.random()*DIGITS));
+    }
+
+    //Uses binary Search to search whether the generated SerialNum exists. If it is found, then return false. Otherwise, insert the generated SerialNum into their respective serialNum ArrayLists at where they would be found if they were already in the list to maintain a sorted list
     public static boolean addLandVehicleSerial(String s)
     {
         boolean isFound = false;
@@ -110,15 +118,6 @@ public class SerialNumGeneration
         }
         return (!isFound);
     }
-
-    public static String generateAirVehicle(String s) {
-        if (s.length() == AIR_VEHICLE_SERIAL_SIZE)
-        {
-            return "A"+s;
-        }
-        return generateAirVehicle(s+(int)(Math.random()*DIGITS));
-    }
-
     public static boolean addAirVehicleSerial(String s) {
         boolean isFound = false;
         int mid, l = 0, r = AIR_VEHICLE_SERIALS.size();
@@ -144,16 +143,24 @@ public class SerialNumGeneration
         }
         return (!isFound);
     }
-
-  
-
-    public static String generateSpaceVehicle(String s)
-    {
-        if (s.length() == SPACE_VEHICLE_SERIAL_SIZE)
-        {
-            return "S"+s;
+    public static boolean addWaterVehicleSerial(String s) {
+        boolean isFound = false;
+        int mid, l = 0, r = WATER_VEHICLE_SERIALS.size() - 1;
+        while (l <= r && !isFound) {
+            mid = (l + r) / 2;
+            if (WATER_VEHICLE_SERIALS.get(mid).equals(s)) {
+                isFound = true;
+            }
+            if (WATER_VEHICLE_SERIALS.get(mid).compareTo(s) > 0) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
         }
-        return generateLandVehicle(s+(int)(Math.random()*DIGITS));
+        if (!isFound) {
+            WATER_VEHICLE_SERIALS.add(l, s);
+        }
+        return (!isFound);
     }
     public static boolean addSpaceVehicleSerial(String s)
     {
@@ -181,6 +188,4 @@ public class SerialNumGeneration
         }
         return (!isFound);
     }
-
-   
 }
