@@ -1,17 +1,121 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import com.sun.security.jgss.GSSUtil;
+
+import java.util.*;
+import java.io.*;
 
 public class Database {
-    private LandManager landManager = new LandManager();
-    private WaterManager WaterManager = new WaterManager();
-    private AirManager AirManager = new AirManager();
-    private SpaceManager SpaceManager = new SpaceManager();
 
-    public Database(LandManager landManager, WaterManager waterManager, AirManager airManager, SpaceManager spaceManager) {
-        this.landManager = landManager;
-        this.WaterManager = waterManager;
-        this.AirManager = airManager;
-        this.SpaceManager = spaceManager;
+
+    private LandManager landManager;
+    private WaterManager waterManager;
+    private AirManager airManager;
+    private SpaceManager spaceManager;
+
+    public LandManager getLandManager() {
+        return landManager;
+    }
+
+    public WaterManager getWaterManager() {
+        return waterManager;
+    }
+
+    public AirManager getAirManager() {
+        return airManager;
+    }
+
+    public SpaceManager getSpaceManager() {
+        return spaceManager;
+    }
+
+    public Database(LandManager l, WaterManager w, AirManager a, SpaceManager s) {
+        this.landManager = l;
+        this.waterManager = w;
+        this.airManager = a;
+        this.spaceManager = s;
+    }
+
+    public void searchSerial(String serial) {
+        LandVehicle l = landManager.searchSerial(serial);
+        if (l == null) {
+            WaterVehicle w = waterManager.searchVehicleSerial(serial);
+            if (w == null) {
+                AirVehicle a = airManager.searchVehicleSerial(serial);
+                if (a == null) {
+                    SpaceVehicle s = spaceManager.searchSerial(serial);
+                    if (s == null) {
+                        System.out.println("No existing vehicle found!");
+                    }
+                    else {
+                        System.out.println("SpaceVehicle");
+                        System.out.println(s);
+                    }
+
+                }
+                else {
+                    System.out.println("AirVehicle");
+                    System.out.println(a);
+                }
+
+            }
+            else {
+                System.out.println("WaterVehicle");
+                System.out.println(w);
+            }
+
+        }
+        else {
+            System.out.println("LandVehicle");
+            System.out.println(l);
+        }
+
+
+    }
+
+    public boolean exportToFile(String fileName) {
+        landManager.outLandVehicles(fileName);
+        waterManager.outWaterVehicles(fileName);
+        airManager.outAirVehicles(fileName);
+        spaceManager.outSpaceVehicles(fileName);
+        return true;
+    }
+
+    public void searchManufactureLocation(int year, String loc) {
+        System.out.println("Vehicles made in " + year + " currently in " + loc + ": ");
+        LandVehicle[] vehicles = landManager.searchManufactureLocation(year, loc);
+        for (int i = 0; i < vehicles.length; i++) {
+            System.out.println(vehicles[i].getSerialNum());
+        }
+        ArrayList<WaterVehicle> vehicles2 = waterManager.searchVehicleManufactureLocation(year,loc);
+        for (int i = 0; i < vehicles2.size(); i++) {
+            System.out.println(vehicles2.get(i).getSerialNum());
+        }
+        ArrayList<AirVehicle> vehicles3 = airManager.searchManufactureLocation(year,loc);
+        for (int i = 0; i < vehicles3.size(); i++) {
+            System.out.println(vehicles3.get(i).getSerialNum());
+        }
+        SpaceVehicle[] vehicles4 = spaceManager.searchManufactureLocation(year,loc);
+        for (int i = 0; i < vehicles4.length; i++) {
+            System.out.println(vehicles4[i].getSerialNum());
+        }
+    }
+
+    public void findVehiclesOverAge(int age) {
+        LandVehicle[] vehicles1 = landManager.findOverAge(age);
+        for (int i = 0; i < vehicles1.length; i++) {
+            System.out.println(vehicles1[i].getSerialNum());
+        }
+        ArrayList<WaterVehicle> vehicles2 = waterManager.findOverAge(age);
+        for (int i = 0; i < vehicles2.size(); i++) {
+            System.out.println(vehicles2.get(i).getSerialNum());
+        }
+        ArrayList<AirVehicle> vehicles3 = airManager.findOverAge(age);
+        for (int i = 0; i < vehicles3.size(); i++) {
+            System.out.println(vehicles3.get(i).getSerialNum());
+        }
+        SpaceVehicle[] vehicles4 = spaceManager.findOverAge(age);
+        for (int i = 0; i < vehicles4.length; i++) {
+            System.out.println(vehicles4[i].getSerialNum());
+        }
     }
 
     public void findMostExpensiveVehicle() {
@@ -24,10 +128,10 @@ public class Database {
         int num = 0;
 
 
-        mostExpensiveAir = AirManager.findMostExpensiveAirVehicle();
-        mostExpensiveWater = WaterManager.findMostExpensiveWaterVehicle();
+        mostExpensiveAir = airManager.findMostExpensiveAirVehicle();
+        mostExpensiveWater = waterManager.findMostExpensiveWaterVehicle();
         mostExpensiveLand = landManager.findMostExpensiveLand();
-        mostExpensiveSpace = SpaceManager.findMostExpensiveSpace();
+        mostExpensiveSpace = spaceManager.findMostExpensiveSpace();
         int mostExpensiveAirValue = mostExpensiveAir.getCost();
         int mostExpensiveWaterValue = mostExpensiveWater.getCost();
         int mostExpensiveSpaceValue = mostExpensiveSpace.getCost();
@@ -46,25 +150,31 @@ public class Database {
             }
         }
 
-        System.out.print("The most expensive vehicle costs $" + mostExpensiveVehicle + " and is a ");
+        System.out.print("The most expensive vehicle costs $" + mostExpensiveVehicle + " and is a");
         switch (num) {
             case 0:
                 System.out.println(" air vehicle with serial " + mostExpensiveAir.getSerialNum());
+                break;
             case 1:
                 System.out.println(" water vehicle with serial " + mostExpensiveWater.getSerialNum());
+                break;
             case 2:
                 System.out.println(" space vehicle with serial " + mostExpensiveSpace.getSerialNum());
+                break;
             case 3:
                 System.out.println(" land vehicle with serial " + mostExpensiveLand.getSerialNum());
+                break;
         }
 
     }
+
+
 
     public void findFastestVehicle() {
         Object fastest = null;
         int highestSpeed = 0;
         int choice = -1;
-        Object fastestWater = WaterManager.findFastestWater();
+        Object fastestWater = waterManager.findFastestWater();
         if (fastestWater != null && ((WaterVehicle) fastestWater).getSpeed() > highestSpeed) {
             highestSpeed = ((WaterVehicle) fastestWater).getSpeed();
             fastest = fastestWater;
@@ -78,14 +188,14 @@ public class Database {
             choice = 1;
         }
 
-        Object fastestAir = AirManager.findFastestAirVehicle();
+        Object fastestAir = airManager.findFastestAirVehicle();
         if (fastestAir != null && ((AirVehicle) fastestAir).getSpeed() > highestSpeed) {
             highestSpeed = ((AirVehicle) fastestAir).getSpeed();
             fastest = fastestAir;
             choice = 2;
         }
 
-        Object fastestSpace = SpaceManager.findFastestSpace();
+        Object fastestSpace = spaceManager.findFastestSpace();
         if (fastestSpace != null && ((SpaceVehicle) fastestSpace).getSpeed() > highestSpeed) {
             highestSpeed = ((SpaceVehicle) fastestSpace).getSpeed();
             fastest = fastestSpace;
@@ -106,8 +216,6 @@ public class Database {
                 System.out.println("Fastest vehicle: " + ((SpaceVehicle)fastest).getSerialNum());
                 break;
         }
-
-        System.out.println(choice);
     }
 
     public boolean exchangeParts(String sourceSerial, String targetSerial) {
@@ -117,13 +225,13 @@ public class Database {
         Object targetVehicle = null;
 
         // Determine the type of the source vehicle
-        if ((sourceVehicle = WaterManager.searchVehicleSerial(sourceSerial)) != null) {
+        if ((sourceVehicle = waterManager.searchVehicleSerial(sourceSerial)) != null) {
             System.out.println("Source vehicle is a WaterVehicle.");
         } else if ((sourceVehicle = landManager.searchSerial(sourceSerial)) != null) {
             System.out.println("Source vehicle is a LandVehicle.");
-        } else if ((sourceVehicle = AirManager.searchVehicleSerial(sourceSerial)) != null) {
+        } else if ((sourceVehicle = airManager.searchVehicleSerial(sourceSerial)) != null) {
             System.out.println("Source vehicle is an AirVehicle.");
-        } else if ((sourceVehicle = SpaceManager.searchSerial(sourceSerial)) != null) {
+        } else if ((sourceVehicle = spaceManager.searchSerial(sourceSerial)) != null) {
             System.out.println("Source vehicle is a SpaceVehicle.");
         } else {
             System.out.println("Source vehicle not found.");
@@ -131,13 +239,13 @@ public class Database {
         }
 
         // Determine the type of the target vehicle
-        if ((targetVehicle = WaterManager.searchVehicleSerial(targetSerial)) != null) {
+        if ((targetVehicle = waterManager.searchVehicleSerial(targetSerial)) != null) {
             System.out.println("Target vehicle is a WaterVehicle.");
         } else if ((targetVehicle = landManager.searchSerial(targetSerial)) != null) {
             System.out.println("Target vehicle is a LandVehicle.");
-        } else if ((targetVehicle = AirManager.searchVehicleSerial(targetSerial)) != null) {
+        } else if ((targetVehicle = airManager.searchVehicleSerial(targetSerial)) != null) {
             System.out.println("Target vehicle is an AirVehicle.");
-        } else if ((targetVehicle = SpaceManager.searchSerial(targetSerial)) != null) {
+        } else if ((targetVehicle = spaceManager.searchSerial(targetSerial)) != null) {
             System.out.println("Target vehicle is a SpaceVehicle.");
         } else {
             System.out.println("Target vehicle not found.");
@@ -232,5 +340,135 @@ public class Database {
         return true;
     }
 
-
+    public boolean readInput(String str)
+    {
+        boolean isIn = true;
+        BufferedReader in;
+        try
+        {
+            in = new BufferedReader(new FileReader(str));
+            String s = in.readLine();
+            while (s != null)
+            {
+                try
+                {
+                    if (s.equals("Jeep"))
+                    {
+                        landManager.addJeep(Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
+                    }
+                    else if (s.equals("Tank"))
+                    {
+                        landManager.addTank(Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()));
+                    }
+                    else if (s.equals("Ship"))
+                    {
+                        waterManager.addShip(
+                                Double.parseDouble(in.readLine()),  // fuelCapacity
+                                Boolean.parseBoolean(in.readLine()), // isNuclearPowered
+                                Integer.parseInt(in.readLine()),   // manufactureYear
+                                in.readLine(),                     // serialNum
+                                Integer.parseInt(in.readLine()),   // speed
+                                in.readLine(),                     // location
+                                Integer.parseInt(in.readLine()),   // cost
+                                Integer.parseInt(in.readLine()),   // parts
+                                Integer.parseInt(in.readLine()),   // maxParts
+                                Integer.parseInt(in.readLine()),   // minParts
+                                Integer.parseInt(in.readLine()),   // buoyancy
+                                Integer.parseInt(in.readLine()),   // numberOfGuns
+                                in.readLine(),                     // type
+                                Integer.parseInt(in.readLine()),   // maxTankStorage
+                                Integer.parseInt(in.readLine()),   // maxAircraftStorage
+                                Integer.parseInt(in.readLine()),   // maxSubmarineStorage
+                                Integer.parseInt(in.readLine()),   // maxRocketStorage
+                                Integer.parseInt(in.readLine()),   // maxJetStorage
+                                Boolean.parseBoolean(in.readLine()) // docked
+                        );
+                    }
+                    else if (s.equals("Submarine"))
+                    {
+                        waterManager.addSubmarine(
+                                Double.parseDouble(in.readLine()),  // fuelCapacity
+                                Boolean.parseBoolean(in.readLine()), // isNuclearPowered
+                                Integer.parseInt(in.readLine()),   // manufactureYear
+                                in.readLine(),                     // serialNum
+                                Integer.parseInt(in.readLine()),   // speed
+                                in.readLine(),                     // location
+                                Integer.parseInt(in.readLine()),   // cost
+                                Integer.parseInt(in.readLine()),   // parts
+                                Integer.parseInt(in.readLine()),   // maxParts
+                                Integer.parseInt(in.readLine()),   // minParts
+                                Integer.parseInt(in.readLine()),   // depth
+                                Integer.parseInt(in.readLine()),   // numberOfTorpedos
+                                Integer.parseInt(in.readLine()),   // underWaterVisibility
+                                Integer.parseInt(in.readLine()),   // maxTorpedos
+                                Boolean.parseBoolean(in.readLine()) // docked
+                        );
+                    }
+                    else if (s.equals("Aircraft"))
+                    {
+                        airManager.addAircraft(
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                in.readLine(),
+                                Integer.parseInt(in.readLine()),
+                                in.readLine(),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Double.parseDouble(in.readLine()),
+                                Double.parseDouble(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine())
+                        );
+                    }
+                    else if (s.equals("Jet"))
+                    {
+                        airManager.addJet(
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                in.readLine(),
+                                Integer.parseInt(in.readLine()),
+                                in.readLine(),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                in.readLine(),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine()),
+                                Integer.parseInt(in.readLine())
+                        );
+                    }
+                    else if (s.equals("Rocket"))
+                    {
+                        spaceManager.addRocket(Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
+                    }
+                    else
+                    {
+                        spaceManager.addSatellite(Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), in.readLine(), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()), Double.parseDouble(in.readLine()), Double.parseDouble(in.readLine()));
+                    }
+                    s = in.readLine();
+                    s = in.readLine();
+                }
+                catch(NumberFormatException nfx)
+                {
+                    isIn = false;
+                }
+                catch(NullPointerException npx)
+                {
+                    isIn = false;
+                }
+            }
+            in.close();
+        }
+        catch (IOException iox)
+        {
+            isIn = false;
+        }
+        return isIn;
+    }
 }
