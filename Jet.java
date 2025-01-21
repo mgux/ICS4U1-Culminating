@@ -60,10 +60,6 @@ public class Jet extends AirVehicle{
 
 
     public String toString() {
-        return "Jet{" +
-                "missileType='" + missileType + '\'' +
-                ", agility=" + agility +
-                ", storageTaken=" + storageTaken +
-                '}';
+        return super.toString() + missileType + "\n" + agility + "\n" + storageTaken + "\n";
     }
 }
