@@ -4,7 +4,7 @@ import java.util.Scanner;
 /*
 * Programmer: Michael Gu
 * Last Updated: 2025-1-20
-*
+* This is the runner
 * */
 
 // Main class
