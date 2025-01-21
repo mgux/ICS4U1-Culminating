@@ -86,6 +86,7 @@ public class SpaceManager
                     out.write("Rocket\n");
                 }
                 out.write((spaceStorage.get(i)).toString());
+                out.newLine();
             }
             out.close();
         }
@@ -496,15 +497,15 @@ public class SpaceManager
         }
         return null;
     }
-//    public ArrayList<Satellite> carryingSatellites(String s)
-//    {
-//        SpaceVehicle sv = searchSerial(s);
-//        Rocket r;
-//        if (sv != null && sv instanceof Rocket)
-//        {
-//            r = (Rocket)sv;
-//            return r.getSatelliteInRocket();
-//        }
-//        return null;
-//    }
+    public ArrayList<Satellite> carryingSatellites(String s)
+    {
+        SpaceVehicle sv = searchSerial(s);
+        Rocket r;
+        if (sv != null && sv instanceof Rocket)
+        {
+            r = (Rocket)sv;
+            return r.containedVehicles();
+        }
+        return null;
+    }
 }
