@@ -88,6 +88,7 @@ public class LandManager
                     out.write("Tank\n");
                 }
                 out.write((landStorage.get(i)).toString());
+                out.newLine();
             }
             out.close();
         }
